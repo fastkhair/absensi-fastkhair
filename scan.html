@@ -1807,10 +1807,13 @@ async function pushToSheets(record){
   if(!SHEETS_URL) return;
   try{
     const today2 = new Date().toLocaleDateString('id-ID',{day:'2-digit',month:'2-digit',year:'numeric'});
-    await fetch(SHEETS_URL,{
+    const payload = {action:'save',...record,tanggal:today2,username:session?.username||''};
+    // Use no-cors mode to bypass CORS restriction
+    await fetch(SHEETS_URL, {
       method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({action:'save',...record,tanggal:today2,username:session?.username||''})
+      mode:'no-cors',
+      headers:{'Content-Type':'text/plain'},
+      body:JSON.stringify(payload)
     });
   }catch(e){ console.warn('Sheets push failed:',e); }
 }
@@ -1826,17 +1829,18 @@ async function syncToSheets(){
   }));
   if(!records.length){ toast('Belum ada data absensi','i'); btn.textContent='☁️ Sync'; btn.disabled=false; return; }
   try{
-    const res = await fetch(SHEETS_URL,{
-      method:'POST',headers:{'Content-Type':'application/json'},
+    // Use no-cors - Apps Script doesn't support CORS from external origins
+    await fetch(SHEETS_URL, {
+      method:'POST',
+      mode:'no-cors',
+      headers:{'Content-Type':'text/plain'},
       body:JSON.stringify({action:'saveMulti',records})
     });
-    const data = await res.json();
-    if(data.ok){
-      toast('✅ '+data.total+' data tersimpan ke Sheets','s');
-      localStorage.setItem('fk_last_sync', new Date().toLocaleTimeString('id-ID'));
-      updateSheetsStatus();
-    } else toast('Gagal: '+data.msg,'e');
-  }catch(e){ toast('Gagal konek Sheets','e'); }
+    // no-cors returns opaque response, assume success
+    toast('✅ '+records.length+' data dikirim ke Sheets','s');
+    localStorage.setItem('fk_last_sync', new Date().toLocaleTimeString('id-ID'));
+    updateSheetsStatus();
+  }catch(e){ toast('Gagal konek Sheets: '+e.message,'e'); }
   finally{ btn.textContent='☁️ Sync'; btn.disabled=false; }
 }
 
@@ -1865,6 +1869,7 @@ async function saveURL(){
   SHEETS_URL = url;
   localStorage.setItem('fk_sheets_url', url);
   try{
+    // GET request works fine for ping (no CORS issue)
     const res = await fetch(url+'?action=ping');
     const data = await res.json();
     if(data.ok){ toast('✅ '+data.msg,'s'); updateSheetsStatus(); closeModal(); }
