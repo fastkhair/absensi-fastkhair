@@ -1788,7 +1788,10 @@ function updateSyncStatus() {
   const el = document.getElementById('syncStatus');
   if (!el) return;
   const last = localStorage.getItem('fk_last_sync');
-  el.textContent = sheetsEnabled ? (last ? 'Sync terakhir: ' + last : 'Terhubung, belum sync') : 'Belum terhubung';
+  const now = new Date().toLocaleTimeString('id-ID');
+  el.textContent = sheetsEnabled 
+    ? (last ? '✓ Auto-refresh aktif · Update: ' + now : '✓ Terhubung · Auto-refresh 5 menit') 
+    : 'Belum terhubung';
   el.style.color = sheetsEnabled ? 'var(--green)' : 'var(--muted)';
 }
 let session = null;
@@ -1842,6 +1845,9 @@ function startApp(){
   renderDashboard();
   tickClock();
   updateSyncStatus();
+  // Auto-refresh dari Sheets setiap 5 menit
+  autoRefreshSheets();
+  setInterval(autoRefreshSheets, 5 * 60 * 1000);
 }
 
 // ════════════════════════════════════════
@@ -2361,6 +2367,45 @@ async function unduhPDF(){
     btn.textContent='✅ Selesai';
     setTimeout(()=>{btn.textContent='⬇ PDF';btn.disabled=false;},2500);
   }catch(e){btn.textContent='⬇ PDF';btn.disabled=false;toast('Gagal buat PDF: '+e.message,'e');}
+}
+
+// ════════════════════════════════════════
+// AUTO REFRESH
+// ════════════════════════════════════════
+async function autoRefreshSheets(){
+  if(!SHEETS_URL) return;
+  const today2 = new Date().toLocaleDateString('id-ID',{day:'2-digit',month:'2-digit',year:'numeric'});
+  const units = activeUnit==='all' ? ['pgtk','sd','smp','sma'] : [activeUnit];
+  let loaded = 0;
+  try{
+    for(const u of units){
+      const url = SHEETS_URL + '?action=load&unit=' + u + '&tanggal=' + encodeURIComponent(today2);
+      const res = await fetch(url);
+      const data = await res.json();
+      if(data.ok && data.data){
+        data.data.forEach(row=>{
+          if(row.nis && row.status){
+            attendance[row.nis] = {
+              status: row.status,
+              waktu: row.waktu||'—',
+              nama: row.nama,
+              kelas: row.kelas,
+              unit: row.unit
+            };
+            loaded++;
+          }
+        });
+      }
+    }
+    if(loaded > 0){
+      localStorage.setItem('fk_today', JSON.stringify(attendance));
+      renderDashboard();
+      if(document.getElementById('panel-rekap').classList.contains('active')) renderRekap();
+      // Update sync indicator
+      document.getElementById('syncStatus') && updateSyncStatus();
+      console.log('Auto-refresh: ' + loaded + ' data dimuat dari Sheets');
+    }
+  }catch(e){ console.warn('Auto-refresh gagal:', e); }
 }
 
 // ════════════════════════════════════════
