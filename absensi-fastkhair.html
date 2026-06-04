@@ -1763,11 +1763,17 @@ async function autoRefreshSheets(){
 
           data.data.forEach(row=>{
             if(!row.nis || !row.status) return;
-            const rowDate = String(row.tanggal||'').trim().substring(0,10);
             const rowDateFull = String(row.tanggal||'').trim();
-            // Check if matches any format
-            const match = formats.some(f=>rowDateFull.startsWith(f)||rowDate===f.substring(0,10));
-            if(!match) return;
+            // Extract just numbers from both dates and compare
+            const rowNums = rowDateFull.replace(/\D/g,'');
+            // Today in multiple formats
+            const matchDD = dd+mm+yyyy;   // 04062026
+            const matchYY = yyyy+mm+dd;   // 20260604
+            const rowMatch = rowNums===matchDD || rowNums===matchYY ||
+                             rowDateFull===dd+'/'+mm+'/'+yyyy ||
+                             rowDateFull===yyyy+'-'+mm+'-'+dd;
+            console.log('Row:', rowDateFull, 'nums:', rowNums, 'matchDD:', matchDD, 'match:', rowMatch);
+            if(!rowMatch) return;
             attendance[row.nis]={
               status:row.status,
               waktu:row.waktu||'—',
