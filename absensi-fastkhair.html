@@ -126,9 +126,6 @@ body{background:var(--bg);font-family:'Plus Jakarta Sans',sans-serif;color:var(-
 .panel{display:none;flex:1;padding:20px 22px;animation:fadeUp .25s ease}
 .panel.active{display:flex;flex-direction:column}
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-@keyframes scanMove{0%{top:5%}50%{top:90%}100%{top:5%}}
-#qr-reader video{width:100% !important;height:100% !important;object-fit:cover !important}
-#qr-reader{width:100% !important;height:100% !important}
 
 /* ═══════════════════════════════════════
    SHARED COMPONENTS
@@ -229,14 +226,9 @@ tr:hover td{background:#fafaf8}
 ═══════════════════════════════════════ */
 .scan-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 @media(max-width:800px){.scan-grid{grid-template-columns:1fr}}
-@media(max-width:600px){
-  .scan-grid{grid-template-columns:1fr;gap:10px}
-  #scanBox{min-height:320px !important;border-radius:0 !important}
-  #qr-reader video{width:100vw !important;height:60vw !important;object-fit:cover}
-  #qr-reader{width:100% !important}
-  .panel{padding:10px !important}
-}
-.scan-box{background:#111;border:2px solid #333;border-radius:11px;min-height:320px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0;overflow:hidden;position:relative}
+.scan-box{background:var(--bg);border:2px dashed var(--border);border-radius:11px;
+  min-height:240px;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;text-align:center;padding:20px}
 .scan-log{max-height:360px;overflow-y:auto}
 .sc-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--border);
   border-radius:9px;margin-bottom:7px;animation:slideIn .25s ease}
@@ -329,24 +321,24 @@ tr:hover td{background:#fafaf8}
 /* Kartu 85.6x54mm */
 .bc-card{background:#fff;border-radius:5px;border:1px solid #ccc;overflow:hidden;display:flex;flex-direction:column;aspect-ratio:85.6/54;box-shadow:0 2px 8px rgba(0,0,0,.1);animation:cardIn .2s ease both}
 @keyframes cardIn{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:scale(1)}}
-.bc-card .ch{padding:4px 7px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;gap:4px}
+.bc-card .ch{padding:5px 7px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;gap:4px}
 .bc-card .ch-l{display:flex;align-items:center;gap:5px;min-width:0;flex:1}
 .bc-card .ch-logo{width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;padding:2px}
 .bc-card .ch-logo img{width:100%;height:100%;object-fit:contain}
 .bc-card .ch-school{min-width:0;flex:1}
-.bc-card .ch-sn{font-size:7.5px;font-weight:800;color:#000;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.bc-card .ch-ss{font-size:6.5px;color:#000;margin-top:1px;white-space:nowrap;font-weight:700}
+.bc-card .ch-sn{font-size:7.5px;font-weight:800;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bc-card .ch-ss{font-size:6.5px;color:rgba(255,255,255,.7);margin-top:1px;white-space:nowrap}
 .bc-card .ch-num{font-family:'DM Mono',monospace;font-size:7px;color:rgba(255,255,255,.4);flex-shrink:0}
-.bc-card .cb{flex:1;padding:3px 7px 2px;display:flex;flex-direction:column;justify-content:space-between;min-height:0;overflow:hidden}
-.bc-card .cb-name{font-size:10.5px;font-weight:900;color:#000;line-height:1.25;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;word-break:break-word;letter-spacing:0.2px}
+.bc-card .cb{flex:1;padding:5px 7px 3px;display:flex;flex-direction:column;justify-content:space-between;min-height:0;overflow:hidden}
+.bc-card .cb-name{font-size:11px;font-weight:800;color:#1c1917;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;word-break:break-word}
 .bc-card .cb-pills{display:flex;gap:3px;overflow:hidden;margin-top:2px}
-.bc-card .pill{padding:1px 5px;border-radius:3px;font-family:'DM Mono',monospace;font-size:7px;background:#f0f0f0;border:1px solid #999;color:#000;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex-shrink:1}
+.bc-card .pill{padding:1px 5px;border-radius:3px;font-family:'DM Mono',monospace;font-size:7px;background:#f5f4f0;border:1px solid #e2ddd6;color:#78716c;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex-shrink:1}
 .bc-card .pill.kp{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:7px}
 .bc-card .cb-bc{border-top:1px dashed #ddd;padding:3px 5px 2px;text-align:center;background:#fff;flex-shrink:0}
 .bc-card .cb-bc svg,.bc-card .cb-bc canvas{width:100% !important;height:55px !important;display:block;max-width:100%}
 .bc-card .cf{background:#faf8f5;border-top:1px solid #eee;padding:2px 7px;display:flex;justify-content:space-between;align-items:center;flex-shrink:0}
-.bc-card .cf-l{font-size:6.5px;color:#333;font-weight:800;text-transform:uppercase;letter-spacing:.8px}
-.bc-card .cf-r{font-family:'DM Mono',monospace;font-size:6.5px;color:#333;font-weight:700}
+.bc-card .cf-l{font-size:6.5px;color:#999;font-weight:700;text-transform:uppercase;letter-spacing:.8px}
+.bc-card .cf-r{font-family:'DM Mono',monospace;font-size:6.5px;color:#bbb}
 
 /* ═══════════════════════════════════════
    PRINT
@@ -363,16 +355,15 @@ tr:hover td{background:#fafaf8}
     display:grid !important;
     grid-template-columns:repeat(4,85.6mm) !important;
     grid-auto-rows:54mm !important;
-    gap:4mm !important;
+    gap:3mm !important;
     padding:8mm;
-    page-break-inside:avoid;
   }
   .bc-card{width:85.6mm !important;height:54mm !important;aspect-ratio:unset !important;
     border:0.5px solid #bbb !important;box-shadow:none !important;border-radius:4px !important;
     break-inside:avoid !important;page-break-inside:avoid !important;
     overflow:hidden !important;display:flex !important;flex-direction:column !important}
-  .bc-card .cb-name{font-size:10.5px !important;font-weight:900 !important;color:#000 !important;line-height:1.3 !important}
-  .bc-card .cb-bc svg,.bc-card .cb-bc canvas{height:60px !important}
+  .bc-card .cb-name{font-size:10.5px !important;line-height:1.3 !important}
+  .bc-card .cb-bc svg,.bc-card .cb-bc canvas{height:44px !important}
   .bc-empty{display:none !important}
   @page{size:A4 portrait;margin:0}
 }
@@ -465,10 +456,10 @@ tr:hover td{background:#fafaf8}
         <button class="nitem" onclick="showPanel('barcode',this)"><span class="nico">🔖</span>Cetak Barcode</button>
         <button class="nitem" onclick="exportCSV()"><span class="nico">⬇️</span>Export CSV</button>
       </div>
-      <div style="padding:10px 12px;border-top:1px solid var(--border);flex-shrink:0">
-        <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:6px">☁️ Google Sheets</div>
-        <div id="syncStatus" style="font-size:10px;color:var(--muted);margin-bottom:7px">Belum terhubung</div>
-        <div style="display:flex;flex-direction:column;gap:5px">
+      <div style="padding:8px 12px;border-top:1px solid var(--border);flex-shrink:0">
+        <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:5px">☁️ Google Sheets</div>
+        <div id="syncStatus" style="font-size:9px;color:var(--muted);margin-bottom:6px">Memeriksa...</div>
+        <div style="display:flex;flex-direction:column;gap:4px">
           <button class="btn btn-g btn-sm" id="btnSync" onclick="syncAllToSheets()" style="font-size:10px;padding:5px 8px;justify-content:center">☁️ Sync ke Sheets</button>
           <button class="btn btn-g btn-sm" id="btnLoad" onclick="loadFromSheets()" style="font-size:10px;padding:5px 8px;justify-content:center">📥 Load dari Sheets</button>
           <button class="btn btn-g btn-sm" onclick="showSheetsConfig()" style="font-size:10px;padding:5px 8px;justify-content:center">⚙️ Atur URL</button>
@@ -522,24 +513,15 @@ tr:hover td{background:#fafaf8}
       </div>
 
       <!-- ── SCAN ── -->
-      <div class="panel" id="panel-scan" style="">
+      <div class="panel" id="panel-scan">
         <div class="page-title"><span>📷</span>Scan Absensi</div>
         <div class="scan-grid">
           <div class="card">
             <div class="card-h"><h3>Kamera Barcode</h3><p>Arahkan ke barcode murid</p></div>
             <div class="card-b">
               <div class="scan-box" id="scanBox">
-                <div id="scanIdle" style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:30px;width:100%;height:100%"><div style="font-size:52px;margin-bottom:12px;opacity:.2">📷</div><p style="color:var(--muted);font-size:14px;text-align:center">Tap tombol untuk aktifkan kamera</p></div>
-                <div id="qr-reader" style="width:100%;height:100%;display:none;position:absolute;inset:0;object-fit:cover"></div>
-              <div id="scanFrame" style="display:none;position:absolute;inset:0;pointer-events:none;align-items:center;justify-content:center;z-index:10">
-                <div style="width:70%;max-width:280px;height:35%;border:none;position:relative">
-                  <div style="position:absolute;top:0;left:0;width:28px;height:28px;border-top:3px solid #00e5ff;border-left:3px solid #00e5ff;border-radius:4px 0 0 0"></div>
-                  <div style="position:absolute;top:0;right:0;width:28px;height:28px;border-top:3px solid #00e5ff;border-right:3px solid #00e5ff;border-radius:0 4px 0 0"></div>
-                  <div style="position:absolute;bottom:0;left:0;width:28px;height:28px;border-bottom:3px solid #00e5ff;border-left:3px solid #00e5ff;border-radius:0 0 0 4px"></div>
-                  <div style="position:absolute;bottom:0;right:0;width:28px;height:28px;border-bottom:3px solid #00e5ff;border-right:3px solid #00e5ff;border-radius:0 0 4px 0"></div>
-                  <div id="scanLine" style="position:absolute;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#00e5ff,transparent);animation:scanMove 1.8s linear infinite"></div>
-                </div>
-              </div>
+                <div id="scanIdle"><div style="font-size:44px;margin-bottom:10px;opacity:.2">📷</div><p style="color:var(--muted);font-size:13px">Tap tombol untuk aktifkan kamera</p></div>
+                <div id="qr-reader" style="width:100%;display:none"></div>
               </div>
               <div style="display:flex;gap:9px;margin-top:12px;flex-wrap:wrap">
                 <button class="btn btn-p" id="btnStart" onclick="startScan()">▶ Mulai Scan</button>
@@ -673,7 +655,6 @@ tr:hover td{background:#fafaf8}
 // DATA
 // ════════════════════════════════════════
 const ALL_STUDENTS = [
-  // PGTK - 97 murid
   {nis:'24.01.S001',nama:'ALI AL ABRSISYAM',kelas:'PG 1',unit:'pgtk'},
   {nis:'24.01.S002',nama:'AZKIYA SHAKILA AZZAHRA',kelas:'PG 1',unit:'pgtk'},
   {nis:'24.01.S003',nama:'GENTA HAMIDAN ARTA',kelas:'PG 1',unit:'pgtk'},
@@ -771,7 +752,6 @@ const ALL_STUDENTS = [
   {nis:'24.01.S095',nama:'ZASKIA HAFIZA AZ-ZAHRA',kelas:'TK-B4',unit:'pgtk'},
   {nis:'24.01.S096',nama:'AULIA KHADIJAH PUTRI',kelas:'TK-B4',unit:'pgtk'},
   {nis:'24.01.S097',nama:'ALVARENDRA KAELAN KEENANTO',kelas:'TK-B5',unit:'pgtk'},
-  // SD - 604 murid
   {nis:'25.02.2099',nama:'ALESHA KANYA SABHIRA',kelas:'1 - JEDDAH',unit:'sd'},
   {nis:'25.02.2100',nama:'ALFARIZQY RASENDRIA NUGRAHA',kelas:'1 - JEDDAH',unit:'sd'},
   {nis:'25.02.2101',nama:'ASYIFA KHANZA PUTRI HERMAWAN',kelas:'1 - JEDDAH',unit:'sd'},
@@ -1075,7 +1055,6 @@ const ALL_STUDENTS = [
   {nis:'23.02.1954',nama:'EL FAYYADH AQILA HIDAYATULLAH',kelas:'3 - TIRMIDZI',unit:'sd'},
   {nis:'23.02.1957',nama:'KAYLILA FREESIA PARAMITHA',kelas:'3 - TIRMIDZI',unit:'sd'},
   {nis:'23.02.1898',nama:'KIANDRA MUHAMMAD ZIKRI SETIA',kelas:'3 - TIRMIDZI',unit:'sd'},
-  {nis:'23.02.1927',nama:'MUHAMMAD AKBAR RAJENDRA AS\'AD',kelas:'3 - TIRMIDZI',unit:'sd'},
   {nis:'23.02.1900',nama:'M. RAFSY QUTHHBI ZAIYAN',kelas:'3 - TIRMIDZI',unit:'sd'},
   {nis:'23.02.1963',nama:'MALVIN PRASAJA FERNANDO',kelas:'3 - TIRMIDZI',unit:'sd'},
   {nis:'23.02.1873',nama:'MUHAMMAD NIZAM ALFARIZI',kelas:'3 - TIRMIDZI',unit:'sd'},
@@ -1110,7 +1089,6 @@ const ALL_STUDENTS = [
   {nis:'22.02.1818',nama:'QUINSHA AFIYA KAMILA',kelas:'4 - IBNU KHOLDUN',unit:'sd'},
   {nis:'22.02.1821',nama:'RAIANKA ABINAYA RACHMAN',kelas:'4 - IBNU KHOLDUN',unit:'sd'},
   {nis:'22.02.1802',nama:'SAHILA PUJI LESTARI',kelas:'4 - IBNU KHOLDUN',unit:'sd'},
-  {nis:'22.02.1776',nama:'SAYID KEENAN ABQARI ALI BA\'BUD',kelas:'4 - IBNU KHOLDUN',unit:'sd'},
   {nis:'22.02.1779',nama:'SYARIFAH ARCILLA QIANA FAKHRIN',kelas:'4 - IBNU KHOLDUN',unit:'sd'},
   {nis:'22.02.1734',nama:'AHMAD BATARA KHAN',kelas:'4 - IBNU QOYYIM',unit:'sd'},
   {nis:'22.02.1785',nama:'ALKAYSHA RAKHSHANDRINA HARDJANTO',kelas:'4 - IBNU QOYYIM',unit:'sd'},
@@ -1206,7 +1184,6 @@ const ALL_STUDENTS = [
   {nis:'21.02.1688',nama:'PANDU BUMI PANDITA',kelas:'5 - KHALID',unit:'sd'},
   {nis:'21.02.1668',nama:'RUZAIN DWI SANJAYA ICHSAN',kelas:'5 - KHALID',unit:'sd'},
   {nis:'21.02.1715',nama:'SABRINA ALMEERA AULIA JASMINE',kelas:'5 - KHALID',unit:'sd'},
-  {nis:'23.02.1848',nama:'SACHIO ALBY YA\'AL P',kelas:'5 - KHALID',unit:'sd'},
   {nis:'21.02.1645',nama:'SHAHNAZ ASYIFA RAHADIAN',kelas:'5 - KHALID',unit:'sd'},
   {nis:'21.02.1695',nama:'AIERA RAISYA PUTRI',kelas:'5 - SALMAN',unit:'sd'},
   {nis:'21.02.1699',nama:'ARJUNA AZKA SENJAYA',kelas:'5 - SALMAN',unit:'sd'},
@@ -1227,7 +1204,6 @@ const ALL_STUDENTS = [
   {nis:'23.02.1973',nama:'QOMIRA NURSYIFA RAMDHANI',kelas:'5 - SALMAN',unit:'sd'},
   {nis:'21.02.1690',nama:'RANIA AISHA HUMAIRA',kelas:'5 - SALMAN',unit:'sd'},
   {nis:'21.02.1714',nama:'RIANA AFIKA QUINSHA NUGROHO',kelas:'5 - SALMAN',unit:'sd'},
-  {nis:'21.02.1644',nama:'SAJIDAH YASMIN SA\'DIAH',kelas:'5 - SALMAN',unit:'sd'},
   {nis:'21.02.1670',nama:'SOFIA CORDOBA BILQIS',kelas:'5 - SALMAN',unit:'sd'},
   {nis:'22.02.1837',nama:'SYAFIQ NUR ADITAMA',kelas:'5 - SALMAN',unit:'sd'},
   {nis:'21.02.1625',nama:'ABDURROHMAN ZAID AMANY',kelas:'5 - SHOLAHUDDIN',unit:'sd'},
@@ -1376,7 +1352,6 @@ const ALL_STUDENTS = [
   {nis:'20.02.1584',nama:'RHENO AVAIRO KHEANU AL FATIH',kelas:'6 - SYAFII',unit:'sd'},
   {nis:'20.02.1533',nama:'RIZKY NABIL RAMADHAN',kelas:'6 - SYAFII',unit:'sd'},
   {nis:'20.02.1611',nama:'VIONA ELYSIA',kelas:'6 - SYAFII',unit:'sd'},
-  // SMP - 283 murid
   {nis:'25.03.0751',nama:'AISYA KIRANA ARBA',kelas:'7 AL FAROBI',unit:'smp'},
   {nis:'25.03.0753',nama:'AJI MUHAMMAD IRFAN ZACKARY CHAIM',kelas:'7 AL FAROBI',unit:'smp'},
   {nis:'25.03.0754',nama:'ALFAREZEL RAFFASYA SYAHMI RAMA',kelas:'7 AL FAROBI',unit:'smp'},
@@ -1449,7 +1424,6 @@ const ALL_STUDENTS = [
   {nis:'25.03.0818',nama:'RAIHANNA DZAKIYYA MAISYARA',kelas:'7 AL KINDI',unit:'smp'},
   {nis:'25.03.0819',nama:'SARAH JANEETA MUMTAZ',kelas:'7 AL KINDI',unit:'smp'},
   {nis:'25.03.0820',nama:'SAYID ALTHAN SYARIF ALBAITY',kelas:'7 AL KINDI',unit:'smp'},
-  {nis:'25.03.0821',nama:'SAYID KENZI THAARIQ YAAFI BA\'BUD',kelas:'7 AL KINDI',unit:'smp'},
   {nis:'25.03.0822',nama:'SYAHID TRITAMA RAMADHAN',kelas:'7 AL KINDI',unit:'smp'},
   {nis:'25.03.0823',nama:'SYAQUILA ANNASYA NUGROHO',kelas:'7 AL KINDI',unit:'smp'},
   {nis:'24.03.0669',nama:'ADRIAN FEBRIANUR',kelas:'8 IBNU BAJJAH',unit:'smp'},
@@ -1535,7 +1509,6 @@ const ALL_STUDENTS = [
   {nis:'24.03.0725',nama:'AQILAH SEKAR PUTRI',kelas:'8 IBNU TUFAIL',unit:'smp'},
   {nis:'24.03.0696',nama:'ARKHAN FADIL AHMAD PRIHANDOKO',kelas:'8 IBNU TUFAIL',unit:'smp'},
   {nis:'24.03.0727',nama:'AURA LATISHA AQUEENA',kelas:'8 IBNU TUFAIL',unit:'smp'},
-  {nis:'24.03.0728',nama:'A\'YESYA NABILA AL ZEINA LESMANA',kelas:'8 IBNU TUFAIL',unit:'smp'},
   {nis:'24.03.0652',nama:'CALVIN ADAHEPA SORMIN',kelas:'8 IBNU TUFAIL',unit:'smp'},
   {nis:'24.03.0678',nama:'FAHMIDA SABIELA LESTARI',kelas:'8 IBNU TUFAIL',unit:'smp'},
   {nis:'24.03.0679',nama:'GUSTI RAFA ARSHAVIN',kelas:'8 IBNU TUFAIL',unit:'smp'},
@@ -1547,7 +1520,6 @@ const ALL_STUDENTS = [
   {nis:'24.03.0736',nama:'MUHAMMAD HIBRIZI',kelas:'8 IBNU TUFAIL',unit:'smp'},
   {nis:'24.03.0707',nama:'MUHAMMAD NARENDRA KHOSIM',kelas:'8 IBNU TUFAIL',unit:'smp'},
   {nis:'24.03.0748',nama:'NAFISA KIARA ANINDYA',kelas:'8 IBNU TUFAIL',unit:'smp'},
-  {nis:'24.03.0710',nama:'RANGGA MAZRU\'UL KHAIR ARIYANTO',kelas:'8 IBNU TUFAIL',unit:'smp'},
   {nis:'24.03.0738',nama:'SANAZ WASIANNAFIALIYA SANTOVA',kelas:'8 IBNU TUFAIL',unit:'smp'},
   {nis:'24.03.0665',nama:'SAYID RIZIQ ALHASNI',kelas:'8 IBNU TUFAIL',unit:'smp'},
   {nis:'24.03.0715',nama:'WINOLA QANITAH AFIFAH',kelas:'8 IBNU TUFAIL',unit:'smp'},
@@ -1570,7 +1542,6 @@ const ALL_STUDENTS = [
   {nis:'23.03.0578',nama:'NABILA DHIYA SYARAFANA DENTI SAIFUL',kelas:'9 IMAM GHOZALI',unit:'smp'},
   {nis:'23.03.0603',nama:'NADINE ZAHWA KHAYYIRAH',kelas:'9 IMAM GHOZALI',unit:'smp'},
   {nis:'23.03.0633',nama:'NADYA HANNAN',kelas:'9 IMAM GHOZALI',unit:'smp'},
-  {nis:'23.03.0555',nama:'NAYA QURRATA\'AYUNI',kelas:'9 IMAM GHOZALI',unit:'smp'},
   {nis:'23.03.0581',nama:'NIKITA ZAHRA WAHYUDI',kelas:'9 IMAM GHOZALI',unit:'smp'},
   {nis:'23.03.0606',nama:'NISRINA HIKARI ALTHAFUNISA',kelas:'9 IMAM GHOZALI',unit:'smp'},
   {nis:'23.03.0607',nama:'QISHA GADIZ MIZANA',kelas:'9 IMAM GHOZALI',unit:'smp'},
@@ -1697,1911 +1668,96 @@ if(localStorage.getItem('fk_date')!==today){ localStorage.setItem('fk_date',toda
 
 let attendance = JSON.parse(localStorage.getItem('fk_today')||'{}');
 
-// ════ GOOGLE SHEETS CONFIG ════════════════
-// Isi dengan URL Web App setelah deploy Apps Script
-let SHEETS_URL = localStorage.getItem('fk_sheets_url') || '';
+// ════ GOOGLE SHEETS ════════════════════
+let SHEETS_URL = localStorage.getItem('fk_sheets_url') || 'https://script.google.com/macros/s/AKfycbyMo3wwT93wNond4WaKRmkS5VLPa7RE-EmjLoQ0Ll5I1pfTKiULoOHaxKvUZAYuOCX2/exec';
 let sheetsEnabled = !!SHEETS_URL;
 
-function setSheetsURL(url) {
-  SHEETS_URL = url.trim();
-  sheetsEnabled = !!SHEETS_URL;
-  localStorage.setItem('fk_sheets_url', SHEETS_URL);
+function setSheetsURL(url){ SHEETS_URL=url.trim(); sheetsEnabled=!!SHEETS_URL; localStorage.setItem('fk_sheets_url',SHEETS_URL); }
+
+async function pushToSheets(record){
+  if(!sheetsEnabled) return;
+  try{
+    const today2=new Date().toLocaleDateString('id-ID',{day:'2-digit',month:'2-digit',year:'numeric'});
+    await fetch(SHEETS_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},
+      body:JSON.stringify({action:'save',...record,tanggal:today2,username:session?.username||''})});
+  }catch(e){ console.warn('push failed',e); }
 }
 
-// Kirim satu absensi ke Sheets
-async function pushToSheets(record) {
-  if (!sheetsEnabled) return;
-  try {
-    const today = new Date().toLocaleDateString('id-ID', {day:'2-digit',month:'2-digit',year:'numeric'});
-    const payload = { action:'save', ...record, tanggal: today, username: session?.username||'' };
-    await fetch(SHEETS_URL, {
-      method:'POST',
-      mode:'no-cors',
-      headers:{'Content-Type':'text/plain'},
-      body: JSON.stringify(payload)
-    });
-  } catch(e) { console.warn('Sheets push failed:', e); }
-}
-
-// Sync semua absensi hari ini ke Sheets
-async function syncAllToSheets() {
-  if (!sheetsEnabled) { toast('URL Google Sheets belum diisi','e'); return; }
-  const today = new Date().toLocaleDateString('id-ID', {day:'2-digit',month:'2-digit',year:'numeric'});
-  const records = Object.entries(attendance).map(([nis, ab]) => ({
-    nis, tanggal: today, nama: ab.nama||'', kelas: ab.kelas||'',
-    unit: ab.unit||'', status: ab.status||'', waktu: ab.waktu||'',
-    username: session?.username||''
+async function syncAllToSheets(){
+  if(!sheetsEnabled){toast('URL Google Sheets belum diisi','e');return;}
+  const today2=new Date().toLocaleDateString('id-ID',{day:'2-digit',month:'2-digit',year:'numeric'});
+  const records=Object.entries(attendance).map(([nis,ab])=>({
+    nis,tanggal:today2,nama:ab.nama||'',kelas:ab.kelas||'',unit:ab.unit||'',status:ab.status||'',waktu:ab.waktu||'',username:session?.username||''
   }));
-  if (!records.length) { toast('Belum ada data absensi hari ini','i'); return; }
-  
-  const btn = document.getElementById('btnSync');
-  if (btn) { btn.textContent = '⏳ Menyimpan...'; btn.disabled = true; }
-  
-  try {
-    await fetch(SHEETS_URL, {
-      method:'POST',
-      mode:'no-cors',
-      headers:{'Content-Type':'text/plain'},
-      body: JSON.stringify({ action:'saveMulti', records })
-    });
-    // no-cors returns opaque response, assume success
-    toast('✅ ' + records.length + ' data tersimpan ke Google Sheets', 's');
-    localStorage.setItem('fk_last_sync', new Date().toLocaleTimeString('id-ID'));
+  if(!records.length){toast('Belum ada data absensi','i');return;}
+  const btn=document.getElementById('btnSync');
+  if(btn){btn.textContent='⏳ Menyimpan...';btn.disabled=true;}
+  try{
+    await fetch(SHEETS_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},
+      body:JSON.stringify({action:'saveMulti',records})});
+    toast('✅ '+records.length+' data tersimpan ke Sheets','s');
+    localStorage.setItem('fk_last_sync',new Date().toLocaleTimeString('id-ID'));
     updateSyncStatus();
-  } catch(e) { toast('Gagal konek Sheets: ' + e.message, 'e'); }
-  finally { if(btn){btn.textContent='☁️ Sync ke Sheets';btn.disabled=false;} }
+  }catch(e){toast('Gagal sync: '+e.message,'e');}
+  finally{if(btn){btn.textContent='☁️ Sync ke Sheets';btn.disabled=false;}}
 }
 
-// Load absensi dari Sheets
-async function loadFromSheets() {
-  if (!sheetsEnabled) { toast('URL Google Sheets belum diisi','e'); return; }
-  const today = new Date().toLocaleDateString('id-ID', {day:'2-digit',month:'2-digit',year:'numeric'});
-  const unit = activeUnit==='all' ? Object.keys(UNITS).filter(k=>k!=='all') : [activeUnit];
-  
-  const btn = document.getElementById('btnLoad');
-  if (btn) { btn.textContent = '⏳ Memuat...'; btn.disabled = true; }
-  
-  try {
-    let loaded = 0;
-    for (const u of unit) {
-      const url = SHEETS_URL + '?action=load&unit=' + u + '&tanggal=' + encodeURIComponent(today);
-      const res = await fetch(url);
-      const data = await res.json();
-      if (data.ok && data.data) {
-        data.data.forEach(row => {
-          if (row.nis && row.status) {
-            attendance[row.nis] = { status:row.status, waktu:row.waktu||'—', nama:row.nama, kelas:row.kelas, unit:row.unit };
-            loaded++;
-          }
-        });
-      }
-    }
-    localStorage.setItem('fk_today', JSON.stringify(attendance));
-    renderDashboard();
-    if(document.getElementById('panel-rekap').classList.contains('active')) renderRekap();
-    toast(`📥 ${loaded} data dimuat dari Google Sheets`, 's');
-    updateSyncStatus();
-  } catch(e) { toast('Gagal load Sheets: ' + e.message, 'e'); }
-  finally { if(btn){btn.textContent='📥 Load dari Sheets';btn.disabled=false;} }
-}
-
-function updateSyncStatus() {
-  const el = document.getElementById('syncStatus');
-  if (!el) return;
-  const last = localStorage.getItem('fk_last_sync');
-  const now = new Date().toLocaleTimeString('id-ID');
-  el.textContent = sheetsEnabled 
-    ? (last ? '✓ Auto-refresh aktif · Update: ' + now : '✓ Terhubung · Auto-refresh 5 menit') 
-    : 'Belum terhubung';
-  el.style.color = sheetsEnabled ? 'var(--green)' : 'var(--muted)';
-}
-let session = null;
-let activeUnit = 'all';
-let scannerInst = null, scanCool = false;
-let cTrend=null,cDonut=null,cMT=null,cMD=null;
-
-// ════════════════════════════════════════
-// LOGIN
-// ════════════════════════════════════════
-function onUserInput(){
-  const acc = ACCOUNTS[document.getElementById('lUser').value.trim()];
-  document.getElementById('unitWrap').style.display = (acc&&acc.role==='koordinator') ? 'none' : 'block';
-}
-function setL(u,p,unit,isKoord){
-  document.getElementById('lUser').value=u;
-  document.getElementById('lPass').value=p;
-  document.getElementById('lUnit').value=unit;
-  document.getElementById('unitWrap').style.display=isKoord?'none':'block';
-  document.getElementById('lErr').style.display='none';
-}
-function doLogin(){
-  const u=document.getElementById('lUser').value.trim();
-  const p=document.getElementById('lPass').value.trim();
-  const unit=document.getElementById('lUnit').value;
-  const err=document.getElementById('lErr');
-  const acc=ACCOUNTS[u];
-  err.style.display='none';
-  if(!acc||acc.pass!==p){err.textContent='Username atau password salah.';err.style.display='block';return;}
-  if(acc.role==='koordinator'){session={...acc,username:u};activeUnit='all';startApp();return;}
-  if(!unit){err.textContent='Pilih unit terlebih dahulu.';err.style.display='block';return;}
-  if(acc.unit!==unit){err.textContent='Unit tidak sesuai akun ini.';err.style.display='block';return;}
-  session={...acc,username:u};activeUnit=acc.unit;startApp();
-}
-function doLogout(){
-  session=null; if(scannerInst)stopScan();
-  document.getElementById('app').style.display='none';
-  document.getElementById('loginScreen').style.display='flex';
-}
-
-// ════════════════════════════════════════
-// START APP
-// ════════════════════════════════════════
-function startApp(){
-  document.getElementById('loginScreen').style.display='none';
-  document.getElementById('app').style.display='flex';
-  document.getElementById('ahUser').textContent=session.avatar+' '+session.name;
-  document.getElementById('ahSub').textContent=UNITS[activeUnit]?.label||'Semua Unit';
-  if(session.role==='koordinator') document.getElementById('unitSwitcher').style.display='block';
-  setTheme(activeUnit);
-  renderDashboard();
-  tickClock();
-  updateSyncStatus();
-  // Auto-refresh dari Sheets setiap 5 menit
-  autoRefreshSheets();
-  setInterval(autoRefreshSheets, 5 * 60 * 1000);
-}
-
-// ════════════════════════════════════════
-// THEME
-// ════════════════════════════════════════
-function setTheme(unit){
-  const u=UNITS[unit]||UNITS.all;
-  document.documentElement.style.setProperty('--uc',u.color);
-  document.documentElement.style.setProperty('--ul',u.light);
-  document.getElementById('appHeader').style.background=u.color;
-  document.getElementById('ahSub').textContent=u.label;
-}
-function switchUnit(unit,btn){
-  activeUnit=unit;
-  document.querySelectorAll('.ubtn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  setTheme(unit);
-  renderDashboard();
-  if(document.getElementById('panel-rekap').classList.contains('active')) renderRekap();
-}
-
-// ════════════════════════════════════════
-// HELPERS
-// ════════════════════════════════════════
-function getStu(unit){ return (!unit||unit==='all') ? ALL_STUDENTS : ALL_STUDENTS.filter(s=>s.unit===unit); }
-function getStats(unit){
-  const list=getStu(unit), total=list.length;
-  const hadir=list.filter(s=>attendance[s.nis]?.status==='hadir').length;
-  const izin=list.filter(s=>attendance[s.nis]?.status==='izin').length;
-  const sakit=list.filter(s=>attendance[s.nis]?.status==='sakit').length;
-  const alpha=total-hadir-izin-sakit;
-  const pct=total>0?Math.round(hadir/total*100):0;
-  return{total,hadir,izin,sakit,alpha,pct};
-}
-function pct(a,b){return b>0?Math.round(a/b*100)+'%':'0%';}
-
-// ════════════════════════════════════════
-// PANELS
-// ════════════════════════════════════════
-function showPanel(name,btn){
-  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.nitem').forEach(b=>b.classList.remove('active'));
-  document.getElementById('panel-'+name).classList.add('active');
-  if(btn) btn.classList.add('active');
-  if(name==='rekap') renderRekap();
-  if(name==='barcode') bcRenderUnits();
-  if(name!=='scan'&&scannerInst) stopScan();
-}
-
-// ════════════════════════════════════════
-// DASHBOARD
-// ════════════════════════════════════════
-function renderDashboard(){
-  const isAll=session.role==='koordinator'&&activeUnit==='all';
-  document.getElementById('dashAll').style.display=isAll?'block':'none';
-  document.getElementById('dashUnit').style.display=isAll?'none':'block';
-  if(isAll) renderAllDash(); else renderUnitDash(activeUnit);
-}
-
-function renderAllDash(){
-  const ukeys=['pgtk','sd','smp','sma'];
-  document.getElementById('ucGrid').innerHTML=ukeys.map(uk=>{
-    const u=UNITS[uk],st=getStats(uk);
-    const c=st.pct>=90?'#16a34a':st.pct>=75?'#ca8a04':'#dc2626';
-    return `<div class="ucard-big" style="background:${u.light};color:${u.color}" onclick="drillUnit('${uk}')">
-      <div class="ucb-lbl">${u.icon} Unit Sekolah</div>
-      <div class="ucb-name" style="color:${u.color}">${u.label}</div>
-      <div class="ucb-pct" style="color:${u.color}">${st.pct}%</div>
-      <div class="ucb-sub">Kehadiran Hari Ini</div>
-      <div class="ucb-bar"><div class="ucb-fill" style="width:${st.pct}%;background:${u.color};opacity:.5"></div></div>
-      <div class="ucb-stats">
-        <div><div class="ucb-sv" style="color:${u.color}">${st.total}</div><div class="ucb-sl">Total</div></div>
-        <div><div class="ucb-sv" style="color:#16a34a">${st.hadir}</div><div class="ucb-sl">Hadir</div></div>
-        <div><div class="ucb-sv" style="color:#dc2626">${st.alpha}</div><div class="ucb-sl">Alpha</div></div>
-        <div><div class="ucb-sv" style="color:#ca8a04">${st.izin+st.sakit}</div><div class="ucb-sl">Izin</div></div>
-      </div></div>`;
-  }).join('');
-  const labs=['Sen','Sel','Rab','Kam','Jum','Sab','Hari ini'];
-  if(cMT) cMT.destroy();
-  cMT=new Chart(document.getElementById('cMT').getContext('2d'),{
-    type:'line',data:{labels:labs,datasets:ukeys.map(uk=>{
-      const u=UNITS[uk],st=getStats(uk);
-      return{label:u.label,data:labs.map((_,i)=>i===6?st.pct:Math.floor(75+Math.sin(i*1.5+ukeys.indexOf(uk))*12)),
-        borderColor:u.color,backgroundColor:u.color+'22',borderWidth:2.5,pointRadius:4,tension:.4,fill:false};
-    })},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{font:{family:'Plus Jakarta Sans',size:10},boxWidth:10,padding:10}}},
-      scales:{x:{grid:{display:false},ticks:{font:{family:'DM Mono',size:9}}},y:{min:50,max:100,grid:{color:'#f0ede6'},ticks:{font:{family:'DM Mono',size:9},callback:v=>v+'%'}}}}
-  });
-  if(cMD) cMD.destroy();
-  cMD=new Chart(document.getElementById('cMD').getContext('2d'),{
-    type:'doughnut',
-    data:{labels:ukeys.map(k=>UNITS[k].label),datasets:[{data:ukeys.map(k=>getStats(k).hadir),backgroundColor:ukeys.map(k=>UNITS[k].color),borderWidth:3,borderColor:'#fff'}]},
-    options:{responsive:true,maintainAspectRatio:false,cutout:'70%',plugins:{legend:{position:'bottom',labels:{font:{family:'Plus Jakarta Sans',size:10},padding:10,boxWidth:10}}}}
-  });
-}
-
-function drillUnit(uk){
-  activeUnit=uk;
-  document.querySelectorAll('.ubtn').forEach(b=>b.classList.remove('active'));
-  document.getElementById('ub-'+uk)?.classList.add('active');
-  setTheme(uk); renderDashboard();
-}
-
-function renderUnitDash(unit){
-  const st=getStats(unit);
-  document.getElementById('kT').textContent=st.total;
-  document.getElementById('kH').textContent=st.hadir;
-  document.getElementById('kA').textContent=st.alpha;
-  document.getElementById('kI').textContent=st.izin+st.sakit;
-  document.getElementById('kHP').textContent=pct(st.hadir,st.total);
-  document.getElementById('kAP').textContent=pct(st.alpha,st.total);
-  document.getElementById('kIP').textContent=pct(st.izin+st.sakit,st.total);
-  const labs=['Sen','Sel','Rab','Kam','Jum','Sab','Hari ini'];
-  if(cTrend) cTrend.destroy();
-  cTrend=new Chart(document.getElementById('cTrend').getContext('2d'),{
-    type:'bar',data:{labels:labs,datasets:[
-      {label:'Hadir',data:labs.map((_,i)=>i===6?st.hadir:Math.floor(st.total*.8+Math.sin(i*1.7)*st.total*.1)),backgroundColor:'#dcfce7',borderColor:'#16a34a',borderWidth:2,borderRadius:5,stack:'a'},
-      {label:'Alpha',data:labs.map((_,i)=>i===6?st.alpha:Math.max(0,Math.floor(st.total*.12+Math.cos(i*2)*2))),backgroundColor:'#fee2e2',borderColor:'#dc2626',borderWidth:2,borderRadius:5,stack:'a'},
-      {label:'Izin',data:labs.map((_,i)=>i===6?st.izin+st.sakit:Math.max(0,Math.floor(st.total*.05+Math.sin(i)*1))),backgroundColor:'#fef9c3',borderColor:'#ca8a04',borderWidth:2,borderRadius:5,stack:'a'}
-    ]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{font:{family:'Plus Jakarta Sans',size:10},boxWidth:10}}},
-      scales:{x:{stacked:true,grid:{display:false},ticks:{font:{family:'DM Mono',size:9}}},y:{stacked:true,beginAtZero:true,max:st.total+2,grid:{color:'#f0ede6'},ticks:{font:{family:'DM Mono',size:9}}}}}
-  });
-  if(cDonut) cDonut.destroy();
-  cDonut=new Chart(document.getElementById('cDonut').getContext('2d'),{
-    type:'doughnut',data:{labels:['Hadir','Alpha','Izin','Sakit'],
-      datasets:[{data:[st.hadir,st.alpha,st.izin,st.sakit],backgroundColor:['#16a34a','#dc2626','#1d4ed8','#ca8a04'],borderWidth:3,borderColor:'#fff',hoverOffset:5}]},
-    options:{responsive:true,maintainAspectRatio:false,cutout:'72%',plugins:{legend:{position:'bottom',labels:{font:{family:'Plus Jakarta Sans',size:10},padding:10,boxWidth:10}}}}
-  });
-  // Kelas progress
-  const km={};
-  getStu(unit).forEach(s=>{
-    if(!km[s.kelas]) km[s.kelas]={t:0,h:0,a:0,i:0};
-    km[s.kelas].t++;
-    const ab=attendance[s.nis];
-    if(ab?.status==='hadir') km[s.kelas].h++;
-    else if(ab?.status==='izin'||ab?.status==='sakit') km[s.kelas].i++;
-    else km[s.kelas].a++;
-  });
-  document.getElementById('kelasDiv').innerHTML=Object.entries(km).map(([k,d])=>{
-    const p2=Math.round(d.h/d.t*100),c=p2>=90?'#16a34a':p2>=75?'#ca8a04':'#dc2626';
-    return `<div class="kp-item"><div class="kp-top"><div><div class="kp-name">${k}</div><div class="kp-det">${d.h}/${d.t} hadir</div></div><span class="kp-pct" style="color:${c}">${p2}%</span></div><div class="prog"><div class="prog-f" style="width:${p2}%;background:${c}"></div></div></div>`;
-  }).join('')||'<p style="color:var(--muted);font-size:12px">Belum ada data</p>';
-  // Heatmap
-  const now=new Date(),dim=new Date(now.getFullYear(),now.getMonth()+1,0).getDate();
-  const fd=new Date(now.getFullYear(),now.getMonth(),1).getDay();
-  let hm='';
-  for(let i=0;i<fd;i++) hm+=`<div style="aspect-ratio:1;border-radius:3px;background:var(--bg);opacity:.2"></div>`;
-  for(let d=1;d<=dim;d++){
-    const isWe=(new Date(now.getFullYear(),now.getMonth(),d).getDay())%6===0;
-    const isFut=d>now.getDate(),isT=d===now.getDate();
-    const p2=isT?st.pct:Math.floor(75+Math.sin(d*1.3)*15);
-    const bg=isWe||isFut?'var(--bg)':p2>=90?'#16a34a':p2>=80?'#4ade80':'#bbf7d0';
-    const op=isFut||isWe?'opacity:.3;':'';
-    const bd=isT?'outline:2px solid var(--uc);outline-offset:1px;':'';
-    hm+=`<div style="aspect-ratio:1;border-radius:3px;background:${bg};${op}${bd}cursor:default" title="${d}"></div>`;
-  }
-  document.getElementById('hmGrid').innerHTML=hm;
-}
-
-// ════════════════════════════════════════
-// REKAP
-// ════════════════════════════════════════
-function renderRekap(){
-  const unit=activeUnit==='all'?null:activeUnit;
-  const list=getStu(unit);
-  const fk=document.getElementById('fKelas').value;
-  const fs=document.getElementById('fStatus').value;
-  document.getElementById('rekapSub').textContent=list.length+' murid · '+( UNITS[activeUnit]?.label||'Semua');
-  const allKelas=[...new Set(list.map(s=>s.kelas))].sort();
-  const sel=document.getElementById('fKelas'),cur=sel.value;
-  sel.innerHTML='<option value="">Semua Kelas</option>';
-  allKelas.forEach(k=>{const o=document.createElement('option');o.value=k;o.textContent=k;if(k===cur)o.selected=true;sel.appendChild(o);});
-  let rows=list.map(s=>{const ab=attendance[s.nis];return{...s,status:ab?.status||'alpha',waktu:ab?.waktu||'—'};});
-  if(fk) rows=rows.filter(r=>r.kelas===fk);
-  if(fs) rows=rows.filter(r=>r.status===fs);
-  const colors=['#0ea5e9','#16a34a','#7c3aed','#ea580c','#0f4c81','#dc2626'];
-  const bmap={hadir:'<span class="badge bh">✓ Hadir</span>',alpha:'<span class="badge ba">✗ Alpha</span>',izin:'<span class="badge bi">i Izin</span>',sakit:'<span class="badge bs">+ Sakit</span>'};
-  const tbody=document.getElementById('rekapBody');
-  if(!rows.length){tbody.innerHTML='<tr><td colspan="8" style="text-align:center;color:var(--muted);padding:24px">Tidak ada data</td></tr>';return;}
-  tbody.innerHTML=rows.map((r,i)=>{
-    const c=colors[i%colors.length],u=UNITS[r.unit]||UNITS.all;
-    return `<tr>
-      <td style="color:var(--muted);font-family:'DM Mono',monospace;font-size:10px">${i+1}</td>
-      <td><div style="display:flex;align-items:center;gap:7px"><div style="width:24px;height:24px;border-radius:50%;background:${c}18;color:${c};display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0">${r.nama.charAt(0)}</div><span style="font-weight:700;font-size:11px">${r.nama}</span></div></td>
-      <td style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted)">${r.nis}</td>
-      <td style="font-size:11px">${r.kelas}</td>
-      <td><span style="background:${u.light};color:${u.color};padding:2px 7px;border-radius:4px;font-size:10px;font-weight:700">${u.label}</span></td>
-      <td>${bmap[r.status]||bmap.alpha}</td>
-      <td style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted)">${r.waktu}</td>
-      <td><select class="inp" style="padding:4px 7px;font-size:10px;width:auto" onchange="setStatus('${r.nis}',this.value)">
-        <option value="">—</option><option value="hadir">Hadir</option>
-        <option value="izin">Izin</option><option value="sakit">Sakit</option><option value="alpha">Alpha</option>
-      </select></td></tr>`;
-  }).join('');
-}
-function setStatus(nis,status){
-  if(!status)return;
-  const s=ALL_STUDENTS.find(x=>x.nis===nis);
-  const t=new Date().toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'});
-  if(status==='alpha') delete attendance[nis];
-  else attendance[nis]={status,waktu:t,nama:s?.nama,kelas:s?.kelas,unit:s?.unit};
-  localStorage.setItem('fk_today',JSON.stringify(attendance));
-  renderRekap();renderDashboard();
-  toast(s?.nama+' → '+status,'i');
-  if(s) pushToSheets({nis,status,waktu:t,nama:s.nama,kelas:s.kelas,unit:s.unit});
-}
-function resetToday(){
-  if(!confirm('Reset absensi hari ini?'))return;
-  const unit=activeUnit==='all'?null:activeUnit;
-  getStu(unit).forEach(s=>delete attendance[s.nis]);
-  localStorage.setItem('fk_today',JSON.stringify(attendance));
-  renderRekap();renderDashboard();toast('Absensi direset','i');
-}
-
-// ════════════════════════════════════════
-// SCAN
-// ════════════════════════════════════════
-async function startScan(){
-  document.getElementById('scanIdle').style.display='none';
-  document.getElementById('qr-reader').style.display='block';
-  document.getElementById('scanBox').style.border='2px solid var(--uc)';
-  document.getElementById('btnStart').style.display='none';
-  document.getElementById('btnStop').style.display='inline-flex';
-
-  const onScan = code=>{
-    if(!scanCool){scanCool=true;doAbsensi(code.trim());setTimeout(()=>scanCool=false,2500);}
-  };
-  const onErr = ()=>{};
-  const config = {fps:10, qrbox:{width:250,height:120}};
-
-  scannerInst = new Html5Qrcode('qr-reader');
-
-  // Tampilkan overlay scan frame
-  document.getElementById('scanFrame') && (document.getElementById('scanFrame').style.display='flex');
-
-  // Coba kamera belakang dulu
-  try{
-    await scannerInst.start({facingMode:{exact:'environment'}}, config, onScan, onErr);
-    return;
-  }catch(e1){
-    console.warn('Kamera belakang gagal, coba environment biasa:', e1);
-  }
-
-  // Fallback: environment tanpa exact
-  try{
-    await scannerInst.start({facingMode:'environment'}, config, onScan, onErr);
-    return;
-  }catch(e2){
-    console.warn('Environment gagal, coba user:', e2);
-  }
-
-  // Fallback: kamera depan
-  try{
-    await scannerInst.start({facingMode:'user'}, config, onScan, onErr);
-    return;
-  }catch(e3){
-    console.warn('User gagal, coba deviceId:', e3);
-  }
-
-  // Fallback terakhir: cari kamera yang tersedia
-  try{
-    const devices = await Html5Qrcode.getCameras();
-    if(!devices || devices.length===0) throw new Error('Tidak ada kamera');
-    // Coba kamera terakhir (biasanya belakang)
-    const cam = devices[devices.length-1];
-    toast('Menggunakan: ' + cam.label, 'i');
-    await scannerInst.start(cam.id, config, onScan, onErr);
-    return;
-  }catch(e4){
-    toast('Kamera tidak bisa diakses: ' + e4.message, 'e');
-    resetScanUI();
-  }
-}
-async function stopScan(){
-  if(scannerInst){try{await scannerInst.stop();}catch(e){}scannerInst=null;}
-  resetScanUI();
-}
-function resetScanUI(){
-  document.getElementById('scanIdle').style.display='flex';
-  document.getElementById('qr-reader').style.display='none';
-  const sf=document.getElementById('scanFrame');
-  if(sf) sf.style.display='none';
-  document.getElementById('scanBox').style.border='2px dashed var(--border)';
-  document.getElementById('btnStart').style.display='inline-flex';
-  document.getElementById('btnStop').style.display='none';
-}
-function doManual(){
-  const v=document.getElementById('manualNis').value.trim();
-  if(!v)return;doAbsensi(v);document.getElementById('manualNis').value='';
-}
-function doAbsensi(nis){
-  const s=ALL_STUDENTS.find(x=>x.nis===nis);
-  const t=new Date().toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
-  const log=document.getElementById('scLog');
-  const empty=log.querySelector('div[style*="padding:28px"]');
-  if(empty)empty.remove();
-  let type,ico,name2,meta;
-  if(!s){type='err';ico='❓';name2='NIS tidak dikenal';meta=nis;toast(`NIS "${nis}" tidak terdaftar`,'e');}
-  else if(attendance[nis]){type='dup';ico='⚠️';name2=s.nama;meta='Sudah absen pukul '+attendance[nis].waktu;toast(s.nama+' sudah absen','i');}
-  else{
-    attendance[nis]={status:'hadir',waktu:t,nama:s.nama,kelas:s.kelas,unit:s.unit};
-    localStorage.setItem('fk_today',JSON.stringify(attendance));
-    type='ok';ico='✅';name2=s.nama;meta=s.kelas+' · '+t;
-    toast(s.nama+' ✓ Hadir!','s');renderDashboard();
-    if(navigator.vibrate) navigator.vibrate([80]);
-    pushToSheets({nis,status:'hadir',waktu:t,nama:s.nama,kelas:s.kelas,unit:s.unit});
-  }
-  const div=document.createElement('div');
-  div.className='sc-item '+type;
-  div.innerHTML=`<div class="sc-ico">${ico}</div><div style="flex:1;min-width:0"><div style="font-weight:700;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${name2}</div><div style="font-size:10px;color:var(--muted);margin-top:2px">${meta}</div></div><div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);white-space:nowrap">${t}</div>`;
-  log.insertBefore(div,log.firstChild);
-  document.getElementById('scCount').textContent=Object.values(attendance).filter(a=>a.status==='hadir').length+' murid absen';
-}
-
-// ════════════════════════════════════════
-// BARCODE GENERATOR
-// ════════════════════════════════════════
-let bcUnit=null, bcSelKelas=new Set(), bcSelNis=new Set();
-
-function bcGoStep(n){
-  if(n===2&&!bcUnit)return;
-  if(n===3&&bcSelKelas.size===0)return;
-  [1,2,3].forEach(i=>{
-    document.getElementById('bcp'+i).classList.toggle('active',i===n);
-    const st=document.getElementById('bcs'+i);
-    const sb=document.getElementById('bcsb'+i);
-    st.className='bcs'+(i===n?' active':i<n?' done':'');
-    sb.textContent=i<n?'✓':String(i);
-  });
-  if(n===2) bcRenderKelas();
-  if(n===3) bcRenderNama();
-}
-
-function bcRenderUnits(){
-  const g=document.getElementById('bcUnitGrid');
-  g.innerHTML='';
-  Object.entries(UNITS).filter(([k])=>k!=='all').forEach(([k,u])=>{
-    const cnt=ALL_STUDENTS.filter(s=>s.unit===k).length;
-    if(!cnt) return;
-    const sel=bcUnit===k;
-    const div=document.createElement('div');
-    div.className='bc-ucard'+(sel?' sel':'');
-    div.style.cssText=sel?'border-color:'+u.color+';background:'+u.light:'';
-    div.innerHTML='<div class="bc-ucard-icon">'+u.icon+'</div>'
-      +'<div class="bc-ucard-name" style="color:'+(sel?u.color:'var(--text)')+'">'+u.label+'</div>'
-      +'<div class="bc-ucard-cnt">'+cnt+' murid</div>';
-    div.addEventListener('click', ()=>bcPickUnit(k));
-    g.appendChild(div);
-  });
-}
-
-function bcPickUnit(unit){
-  bcUnit=unit;bcSelKelas.clear();bcSelNis.clear();
-  const u=UNITS[unit];
-  document.documentElement.style.setProperty('--uc',u.color);
-  document.documentElement.style.setProperty('--ul',u.light);
-  bcRenderUnits();
-  document.getElementById('bcN1').disabled=false;
-  setTimeout(()=>bcGoStep(2),180);
-}
-
-function bcRenderKelas(){
-  const u=UNITS[bcUnit];
-  document.getElementById('bcp2title').textContent='Kelas '+u.label;
-  const kelasList=[...new Set(ALL_STUDENTS.filter(s=>s.unit===bcUnit).map(s=>s.kelas))]
-    .sort((a,b)=>a.localeCompare(b,undefined,{numeric:true}));
-  const wrap=document.getElementById('bcKelasList');
-  wrap.innerHTML='';
-  kelasList.forEach(k=>{
-    const cnt=ALL_STUDENTS.filter(s=>s.unit===bcUnit&&s.kelas===k).length;
-    const sel=bcSelKelas.has(k);
-    const div=document.createElement('div');
-    div.className='bc-kelas-item'+(sel?' sel':'');
-    div.style.cssText=sel?'border-color:'+u.color+';background:'+u.light:'';
-    div.innerHTML='<div class="bck-chk">'+(sel?'&#10003;':'')+'</div>'
-      +'<div><div style="font-size:12px;font-weight:700">'+k+'</div>'
-      +'<div style="font-size:10px;color:var(--muted)">'+cnt+' murid</div></div>';
-    div.addEventListener('click', ()=>bcToggleKelas(k));
-    wrap.appendChild(div);
-  });
-  document.getElementById('bcN2').disabled=bcSelKelas.size===0;
-}
-
-function bcToggleKelas(k){
-  bcSelKelas.has(k)?bcSelKelas.delete(k):bcSelKelas.add(k);
-  bcSelNis.clear();bcRenderKelas();
-  document.getElementById('bcN2').disabled=bcSelKelas.size===0;
-}
-function bcAllKelas(){
-  ALL_STUDENTS.filter(s=>s.unit===bcUnit).forEach(s=>bcSelKelas.add(s.kelas));
-  bcSelNis.clear(); bcRenderKelas();
-  document.getElementById('bcN2').disabled=false;
-}
-function bcNoneKelas(){
-  bcSelKelas.clear(); bcSelNis.clear(); bcRenderKelas();
-  document.getElementById('bcN2').disabled=true;
-}
-
-function bcGetFiltered(){
-  const q=document.getElementById('bcSearch').value.toLowerCase();
-  let list=ALL_STUDENTS.filter(s=>s.unit===bcUnit&&bcSelKelas.has(s.kelas));
-  if(q) list=list.filter(s=>s.nama.toLowerCase().includes(q)||s.nis.includes(q));
-  return list;
-}
-
-function bcRenderNama(){
-  const list=bcGetFiltered();
-  const wrap=document.getElementById('bcNamaList');
-  wrap.innerHTML='';
-  list.forEach(s=>{
-    const sel=bcSelNis.has(s.nis);
-    const div=document.createElement('div');
-    div.className='bc-nama-item'+(sel?' sel':'');
-    div.innerHTML='<div class="bcn-chk">'+(sel?'&#10003;':'')+'</div>'
-      +'<div><div class="bcn-text">'+s.nama+'</div>'
-      +'<div class="bcn-meta">'+s.nis+' &middot; '+s.kelas+'</div></div>';
-    div.addEventListener('click', ()=>bcToggleNis(s.nis));
-    wrap.appendChild(div);
-  });
-  bcUpdCount();
-}
-function bcToggleNis(nis){bcSelNis.has(nis)?bcSelNis.delete(nis):bcSelNis.add(nis);bcRenderNama();}
-function bcAllNama(){bcGetFiltered().forEach(s=>bcSelNis.add(s.nis));bcRenderNama();}
-function bcNoneNama(){bcGetFiltered().forEach(s=>bcSelNis.delete(s.nis));bcRenderNama();}
-
-function bcUpdCount(){
-  const n=bcSelNis.size;
-  document.getElementById('bcSelCnt').textContent=n;
-  document.getElementById('bcBtnPreview').disabled=n===0;
-  document.getElementById('bcN3').disabled=n===0;
-  document.getElementById('bcCountB').textContent=n+' kartu';
-  document.getElementById('bcCountB').style.display=n>0?'inline-flex':'none';
-  document.getElementById('bcBtnCetak').style.display=n>0?'inline-flex':'none';
-  document.getElementById('bcBtnPdf').style.display=n>0?'inline-flex':'none';
-}
-
-function bcRenderCards(){
-  const list=ALL_STUDENTS.filter(s=>bcSelNis.has(s.nis));
-  const grid=document.getElementById('bcGrid');
-  const empty=document.getElementById('bcEmpty');
-  if(!list.length){grid.style.display='none';empty.style.display='block';return;}
-  empty.style.display='none';grid.style.display='grid';
-  grid.innerHTML=list.map((s,i)=>{
-    const u=UNITS[s.unit]||UNITS.smp;
-    return `<div class="bc-card" style="border:1.5px solid #aaa;border-radius:6px;overflow:hidden;display:flex;flex-direction:column;aspect-ratio:85.6/54;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.15)">
-
-  <!-- HEADER -->
-  <div style="background:#fff;border-bottom:3px solid ${u.color};padding:3px 7px;display:flex;align-items:center;gap:5px;flex-shrink:0">
-    <img src="${ICON}" style="width:20px;height:20px;object-fit:contain;flex-shrink:0">
-    <div style="flex:1;min-width:0;overflow:hidden">
-      <div style="font-size:7px;font-weight:900;color:#000;letter-spacing:0.2px;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Yayasan Fastabiqul Khairat</div>
-      <div style="font-size:6px;font-weight:700;color:#444;margin-top:0px;white-space:nowrap">Samarinda &middot; <span style="color:${u.color};font-weight:900">${u.label}</span></div>
-    </div>
-    <div style="font-family:'DM Mono',monospace;font-size:7px;color:${u.color};font-weight:800;flex-shrink:0">#${String(i+1).padStart(2,'0')}</div>
-  </div>
-
-  <!-- NAMA MURID -->
-  <div style="padding:3px 7px 2px;flex-shrink:0">
-    <div style="font-size:10px;font-weight:900;color:#000;line-height:1.2;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;word-break:break-word">${s.nama}</div>
-    <div style="display:flex;gap:4px;margin-top:2px;flex-wrap:nowrap;overflow:hidden">
-      <span style="padding:1px 5px;border-radius:3px;font-family:'DM Mono',monospace;font-size:7px;background:#f0f0f0;border:1px solid #999;color:#000;font-weight:800;white-space:nowrap;flex-shrink:0">${s.nis}</span>
-      <span style="padding:1px 5px;border-radius:3px;font-size:7px;font-weight:900;background:${u.light};color:${u.color};border:1px solid ${u.color};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex-shrink:1">${s.kelas}</span>
-    </div>
-  </div>
-
-  <!-- BARCODE -->
-  <div style="flex:1;padding:1px 5px;display:flex;align-items:center;justify-content:center;min-height:0;overflow:hidden;background:#fff">
-    <svg id="bcsvg${i}" style="width:100%;display:block"></svg>
-  </div>
-
-  <!-- FOOTER -->
-  <div style="background:#f5f5f5;border-top:1px solid #ddd;padding:2px 7px;display:flex;justify-content:space-between;align-items:center;flex-shrink:0">
-    <div style="font-size:6px;color:#333;font-weight:800;text-transform:uppercase;letter-spacing:.5px">Kartu Absensi</div>
-    <div style="font-family:'DM Mono',monospace;font-size:6px;color:#333;font-weight:700">2025/2026</div>
-  </div>
-
-</div>`;
-  }).join('');
-  setTimeout(()=>{
-    list.forEach((s,i)=>{
-      try{JsBarcode(`#bcsvg${i}`,s.nis,{
-  format:'CODE128',
-  width:2.2,
-  height:50,
-  displayValue:true,
-  fontSize:10,
-  margin:4,
-  background:'#ffffff',
-  lineColor:'#000000',
-  textAlign:'center'
-});}
-      catch(e){}
-    });
-  },400);
-}
-
-// ════════════════════════════════════════
-// UNDUH PDF
-// ════════════════════════════════════════
-
-// ════════════════════════════════════════
-// AUTO REFRESH
-// ════════════════════════════════════════
 async function autoRefreshSheets(){
-  if(!SHEETS_URL) return;
-  const today2 = new Date().toLocaleDateString('id-ID',{day:'2-digit',month:'2-digit',year:'numeric'});
-  const units = activeUnit==='all' ? ['pgtk','sd','smp','sma'] : [activeUnit];
-  let loaded = 0;
+  if(!sheetsEnabled) return;
+  const today2=new Date().toLocaleDateString('id-ID',{day:'2-digit',month:'2-digit',year:'numeric'});
+  const units=activeUnit==='all'?['pgtk','sd','smp','sma']:[activeUnit];
+  let loaded=0;
   try{
     for(const u of units){
-      const url = SHEETS_URL + '?action=load&unit=' + u + '&tanggal=' + encodeURIComponent(today2);
-      const res = await fetch(url);
-      const data = await res.json();
-      if(data.ok && data.data){
+      const url=SHEETS_URL+'?action=load&unit='+u+'&tanggal='+encodeURIComponent(today2);
+      const res=await fetch(url);
+      const data=await res.json();
+      if(data.ok&&data.data){
         data.data.forEach(row=>{
-          if(row.nis && row.status){
-            attendance[row.nis] = {
-              status: row.status,
-              waktu: row.waktu||'—',
-              nama: row.nama,
-              kelas: row.kelas,
-              unit: row.unit
-            };
+          if(row.nis&&row.status){
+            attendance[row.nis]={status:row.status,waktu:row.waktu||'—',nama:row.nama,kelas:row.kelas,unit:row.unit};
             loaded++;
           }
         });
       }
     }
-    if(loaded > 0){
-      localStorage.setItem('fk_today', JSON.stringify(attendance));
+    if(loaded>0){
+      localStorage.setItem('fk_today',JSON.stringify(attendance));
       renderDashboard();
       if(document.getElementById('panel-rekap').classList.contains('active')) renderRekap();
-      // Update sync indicator
-      document.getElementById('syncStatus') && updateSyncStatus();
-      console.log('Auto-refresh: ' + loaded + ' data dimuat dari Sheets');
     }
-  }catch(e){ console.warn('Auto-refresh gagal:', e); }
+  }catch(e){console.warn('auto-refresh failed',e);}
 }
 
-// ════════════════════════════════════════
-// EXPORT CSV
-// ════════════════════════════════════════
-function exportCSV(){
-  const unit=activeUnit==='all'?null:activeUnit;
-  const list=getStu(unit);
-  if(!list.length){toast('Tidak ada data','e');return;}
-  const rows=[['No','Nama','NIS','Kelas','Unit','Status','Waktu']];
-  list.forEach((s,i)=>{
-    const ab=attendance[s.nis];
-    rows.push([i+1,s.nama,s.nis,s.kelas,UNITS[s.unit]?.label||s.unit,ab?.status||'alpha',ab?.waktu||'-']);
-  });
-  const csv=rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\n');
-  const a=Object.assign(document.createElement('a'),{href:URL.createObjectURL(new Blob(['\ufeff'+csv],{type:'text/csv'})),download:`Absensi_${UNITS[activeUnit]?.label||'Semua'}_${new Date().toLocaleDateString('id-ID').replace(/\//g,'-')}.csv`});
-  a.click();URL.revokeObjectURL(a.href);
-  toast('CSV diunduh','s');
+async function loadFromSheets(){
+  if(!sheetsEnabled){toast('URL Sheets belum diisi','e');return;}
+  const btn=document.getElementById('btnLoad');
+  if(btn){btn.textContent='⏳ Memuat...';btn.disabled=true;}
+  try{await autoRefreshSheets();toast('📥 Data dimuat dari Sheets','s');}
+  catch(e){toast('Gagal: '+e.message,'e');}
+  finally{if(btn){btn.textContent='📥 Load dari Sheets';btn.disabled=false;}}
 }
 
-// ════════════════════════════════════════
-// CLOCK & TOAST
-// ════════════════════════════════════════
-function tickClock(){
-  const now=new Date();
-  const s=now.toLocaleTimeString('id-ID')+' · '+now.toLocaleDateString('id-ID',{weekday:'short',day:'2-digit',month:'short'});
-  document.getElementById('sbClock').textContent=s;
-  setTimeout(tickClock,1000);
+function updateSyncStatus(){
+  const el=document.getElementById('syncStatus');
+  if(!el) return;
+  const now=new Date().toLocaleTimeString('id-ID');
+  el.textContent=sheetsEnabled?'✓ Terhubung · Update: '+now:'Belum terhubung';
+  el.style.color=sheetsEnabled?'var(--green)':'var(--muted)';
 }
-function toast(msg,type){
-  const icons={s:'✅',e:'❌',i:'ℹ️'};
-  const wrap=document.getElementById('toastWrap');
-  const div=document.createElement('div');
-  div.className='toast '+(type||'i');
-  div.innerHTML=`<span>${icons[type||'i']||'ℹ️'}</span><span>${msg}</span>`;
-  wrap.appendChild(div);
-  setTimeout(()=>{div.style.transition='.3s';div.style.opacity='0';setTimeout(()=>div.remove(),300);},3500);
-}
-</script>
 
-<!-- SHEETS CONFIG MODAL -->
-<div id="sheetsModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(6px);z-index:200;align-items:center;justify-content:center;padding:20px">
-  <div style="background:#fff;border-radius:16px;padding:26px;width:100%;max-width:480px;box-shadow:0 20px 50px rgba(0,0,0,.3);animation:popIn .3s ease">
-    <div style="font-size:16px;font-weight:800;margin-bottom:4px">⚙️ Pengaturan Google Sheets</div>
-    <div style="font-size:11px;color:var(--muted);margin-bottom:18px">Masukkan URL Web App dari Google Apps Script</div>
-
-    <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:6px">Web App URL</div>
-    <input type="text" id="sheetsUrlInput" style="width:100%;background:var(--bg);border:1.5px solid var(--border);border-radius:8px;padding:10px 13px;font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;color:var(--text);outline:none;margin-bottom:10px" placeholder="https://script.google.com/macros/s/...">
-    
-    <div style="background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:12px;margin-bottom:16px;font-size:11px;line-height:1.6;color:#166534">
-      <strong>Cara mendapatkan URL:</strong><br>
-      1. Buka Google Sheets → <strong>Extensions → Apps Script</strong><br>
-      2. Paste kode Apps Script yang sudah disiapkan<br>
-      3. Klik <strong>Deploy → New Deployment</strong><br>
-      4. Type: <strong>Web App</strong>, Execute as: <strong>Me</strong>, Access: <strong>Anyone</strong><br>
-      5. Copy URL yang muncul, paste di sini
-    </div>
-
-    <div style="display:flex;gap:9px">
-      <button onclick="closeSheetsModal()" style="flex:1;padding:10px;background:var(--bg);border:1.5px solid var(--border);border-radius:8px;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:700;cursor:pointer">Batal</button>
-      <button onclick="saveSheetsURL()" style="flex:2;padding:10px;background:var(--uc);color:#fff;border:none;border-radius:8px;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:700;cursor:pointer">💾 Simpan & Test</button>
-    </div>
-  </div>
-</div>
-
-<script>
-function showSheetsConfig(){
-  document.getElementById('sheetsUrlInput').value = SHEETS_URL;
-  document.getElementById('sheetsModal').style.display='flex';
-}
+function showSheetsConfig(){ document.getElementById('sheetsModal').style.display='flex'; }
 function closeSheetsModal(){ document.getElementById('sheetsModal').style.display='none'; }
 async function saveSheetsURL(){
-  const url = document.getElementById('sheetsUrlInput').value.trim();
-  if(!url){ toast('URL tidak boleh kosong','e'); return; }
+  const url=document.getElementById('sheetsUrlInput').value.trim();
+  if(!url){toast('URL tidak boleh kosong','e');return;}
   setSheetsURL(url);
-  // Test connection
   try{
-    const res = await fetch(url + '?action=ping');
-    const data = await res.json();
-    if(data.ok){
-      toast('✅ Terhubung: ' + data.msg, 's');
-      updateSyncStatus();
-      closeSheetsModal();
-    } else { toast('Respons tidak valid: ' + JSON.stringify(data), 'e'); }
-  } catch(e){ toast('Gagal konek: ' + e.message + ' — Pastikan deployment sudah benar', 'e'); }
-}
-</script>
-</body>
-</html>// ════ UNDUH PDF ════════════════════════
-
-// ════════════════════════════════════════
-// DATA
-// ════════════════════════════════════════
-const ALL_STUDENTS = [
-  // PGTK - 97 murid
-  {nis:'24.01.S001',nama:'ALI AL ABRSISYAM',kelas:'PG 1',unit:'pgtk'},
-  {nis:'24.01.S002',nama:'AZKIYA SHAKILA AZZAHRA',kelas:'PG 1',unit:'pgtk'},
-  {nis:'24.01.S003',nama:'GENTA HAMIDAN ARTA',kelas:'PG 1',unit:'pgtk'},
-  {nis:'24.01.S004',nama:'GIRI NATA JAGAD',kelas:'PG 1',unit:'pgtk'},
-  {nis:'24.01.S005',nama:'MUHAMMAD SYAKIR BALILAH PUTRA R',kelas:'PG 1',unit:'pgtk'},
-  {nis:'24.01.S006',nama:'NAUSHAD ZEHAN SUFIAN',kelas:'PG 1',unit:'pgtk'},
-  {nis:'24.01.S007',nama:'ZAINAB ADZKIYA',kelas:'PG 1',unit:'pgtk'},
-  {nis:'24.01.S008',nama:'MUHAMMAD FAHEEM ABIDIN',kelas:'PG 1',unit:'pgtk'},
-  {nis:'24.01.S009',nama:'ALESHA ZAHRANA ZALFA',kelas:'PG 2',unit:'pgtk'},
-  {nis:'24.01.S010',nama:'ARSENIO ALSHAD ALSHAKI',kelas:'PG 2',unit:'pgtk'},
-  {nis:'24.01.S011',nama:'GENTA ADWITYA PAMUNGKAS',kelas:'PG 2',unit:'pgtk'},
-  {nis:'24.01.S012',nama:'GHANIA OMIRA ZAAHIDAH',kelas:'PG 2',unit:'pgtk'},
-  {nis:'24.01.S013',nama:'MIKAIL OEMAR PUTRA',kelas:'PG 2',unit:'pgtk'},
-  {nis:'24.01.S014',nama:'MUHAMMAD ASTARANINO BASKARA',kelas:'PG 2',unit:'pgtk'},
-  {nis:'24.01.S015',nama:'MUHAMMAD FEZA ARYATAMA',kelas:'PG 2',unit:'pgtk'},
-  {nis:'24.01.S016',nama:'RACHEL CORRIE ASMAKAFI',kelas:'PG 2',unit:'pgtk'},
-  {nis:'24.01.S017',nama:'MASACHIO ELRAMDAN RAZIQ',kelas:'PG 2',unit:'pgtk'},
-  {nis:'24.01.S018',nama:'ADIKARA RUMI KHARISMA',kelas:'TK-A1',unit:'pgtk'},
-  {nis:'24.01.S019',nama:'ADZKIYA KARTIKA BARITO',kelas:'TK-A1',unit:'pgtk'},
-  {nis:'24.01.S020',nama:'ALESHA ZAINAB MARFAYARA',kelas:'TK-A1',unit:'pgtk'},
-  {nis:'24.01.S021',nama:'ALMAHYRA SHEZA AVICENNA RACHMAN',kelas:'TK-A1',unit:'pgtk'},
-  {nis:'24.01.S022',nama:'ALTHARIQ BARRY IBRAHIM',kelas:'TK-A1',unit:'pgtk'},
-  {nis:'24.01.S023',nama:'ASHEEQA NOURA SHAQEENA',kelas:'TK-A1',unit:'pgtk'},
-  {nis:'24.01.S024',nama:'FAJRI AHMAD GHANI',kelas:'TK-A1',unit:'pgtk'},
-  {nis:'24.01.S025',nama:'FREYA BELLOVA',kelas:'TK-A1',unit:'pgtk'},
-  {nis:'24.01.S026',nama:'KHALIFA ABQARY KHARISNA',kelas:'TK-A1',unit:'pgtk'},
-  {nis:'24.01.S027',nama:'LUTHFI BUKTI XAVIER',kelas:'TK-A1',unit:'pgtk'},
-  {nis:'24.01.S028',nama:'MERIZA IMAN',kelas:'TK-A1',unit:'pgtk'},
-  {nis:'24.01.S029',nama:'MUHAMMAD ATHARRAZKA ZULKARAMI',kelas:'TK-A1',unit:'pgtk'},
-  {nis:'24.01.S030',nama:'PUTRA ATHALLAH EMRAN',kelas:'TK-A1',unit:'pgtk'},
-  {nis:'24.01.S031',nama:'RAYSHIVA MAHESA KUSUMA',kelas:'TK-A1',unit:'pgtk'},
-  {nis:'24.01.S032',nama:'REYNAND GUSTIN ABDILLAH',kelas:'TK-A1',unit:'pgtk'},
-  {nis:'24.01.S033',nama:'ZAFIRA ARINI ALMAHYRA',kelas:'TK-A1',unit:'pgtk'},
-  {nis:'24.01.S034',nama:'ALESHA PUTRI NAUFALYN RABBANI',kelas:'TK-A2',unit:'pgtk'},
-  {nis:'24.01.S035',nama:'ALFARIQ HAGIA PUTRA NASUTION',kelas:'TK-A2',unit:'pgtk'},
-  {nis:'24.01.S036',nama:'ARSAKHA IBRAHIM WIKANTARA',kelas:'TK-A2',unit:'pgtk'},
-  {nis:'24.01.S037',nama:'ATTALLAH ILHAM DEVANKA',kelas:'TK-A2',unit:'pgtk'},
-  {nis:'24.01.S038',nama:'DELLEST ASHRAHANI SUPRIYANTO',kelas:'TK-A2',unit:'pgtk'},
-  {nis:'24.01.S039',nama:'EL FATIH PUTRA BUMI',kelas:'TK-A2',unit:'pgtk'},
-  {nis:'24.01.S040',nama:'FATIMAH AL MUNAWAROH TRIBUANA',kelas:'TK-A2',unit:'pgtk'},
-  {nis:'24.01.S041',nama:'HAFIZ ALFARABI RIZKIANDRA',kelas:'TK-A2',unit:'pgtk'},
-  {nis:'24.01.S042',nama:'HANNANIA ALMAHYRA RHESA',kelas:'TK-A2',unit:'pgtk'},
-  {nis:'24.01.S043',nama:'MUHAMMAD AHSAN KAMIL',kelas:'TK-A2',unit:'pgtk'},
-  {nis:'24.01.S044',nama:'MAEZURRA BAHIRA ADVA',kelas:'TK-A2',unit:'pgtk'},
-  {nis:'24.01.S045',nama:'MEYRISA VINDRI ARMEIRA',kelas:'TK-A2',unit:'pgtk'},
-  {nis:'24.01.S046',nama:'MUHAMMAD KENZIE HAFIZHAN',kelas:'TK-A2',unit:'pgtk'},
-  {nis:'24.01.S047',nama:'MUHAMMAD RAFKA PUTRASYIDA',kelas:'TK-A2',unit:'pgtk'},
-  {nis:'24.01.S048',nama:'NAJMA KANATAQIYYA A ANSHORI',kelas:'TK-A2',unit:'pgtk'},
-  {nis:'24.01.S049',nama:'NASYIFA LAVANYA PUTRI NUGRAHA',kelas:'TK-A2',unit:'pgtk'},
-  {nis:'24.01.S050',nama:'IBRAHIM DANISWARA PUTRA WIBOWO',kelas:'TK-A2',unit:'pgtk'},
-  {nis:'24.01.S051',nama:'AHMAD OMAR SHAUQUILLE',kelas:'TK-B1',unit:'pgtk'},
-  {nis:'24.01.S052',nama:'ALSAKI SYAILENDRA ZINEDINE SAPUTRA',kelas:'TK-B1',unit:'pgtk'},
-  {nis:'24.01.S053',nama:'ARSY PERMATA HANGIN',kelas:'TK-B1',unit:'pgtk'},
-  {nis:'24.01.S054',nama:'DANISH RAYYAN AULIYA',kelas:'TK-B1',unit:'pgtk'},
-  {nis:'24.01.S055',nama:'DAYANG KANESYA ALIFIA RENALDY',kelas:'TK-B1',unit:'pgtk'},
-  {nis:'24.01.S056',nama:'MIQDAD NISAR AHMAD MODAK',kelas:'TK-B1',unit:'pgtk'},
-  {nis:'24.01.S057',nama:'MUHAMMAD ABDUL QODIR AL JAILANI',kelas:'TK-B1',unit:'pgtk'},
-  {nis:'24.01.S058',nama:'MUHAMMAD RAZKA RENALDI',kelas:'TK-B1',unit:'pgtk'},
-  {nis:'24.01.S059',nama:'NAIRA CALLISTA DIANNISA',kelas:'TK-B1',unit:'pgtk'},
-  {nis:'24.01.S060',nama:'QINARA QORRI AINA',kelas:'TK-B1',unit:'pgtk'},
-  {nis:'24.01.S061',nama:'ZIA AISYAH ALMEERA',kelas:'TK-B1',unit:'pgtk'},
-  {nis:'24.01.S062',nama:'HILMA SHAFIA HARIYOKO',kelas:'TK-B1',unit:'pgtk'},
-  {nis:'24.01.S063',nama:'ABIYARRA MUHAMMAD ZIKRI SETIA',kelas:'TK-B2',unit:'pgtk'},
-  {nis:'24.01.S064',nama:'AHMAD KENAN SANTOSO',kelas:'TK-B2',unit:'pgtk'},
-  {nis:'24.01.S065',nama:'AILEEN NAYARA RINDA',kelas:'TK-B2',unit:'pgtk'},
-  {nis:'24.01.S066',nama:'ALKAFI PUTRA SHABIR',kelas:'TK-B2',unit:'pgtk'},
-  {nis:'24.01.S067',nama:'AMIRA ZAKIYAH PRABOWO',kelas:'TK-B2',unit:'pgtk'},
-  {nis:'24.01.S068',nama:'GUSTI QIANA FARAISHA HUMAIRA',kelas:'TK-B2',unit:'pgtk'},
-  {nis:'24.01.S069',nama:'MUHAMMAD ALFANDY FHUDOIL',kelas:'TK-B2',unit:'pgtk'},
-  {nis:'24.01.S070',nama:'NAYLA KHANZA AZZAHRA',kelas:'TK-B2',unit:'pgtk'},
-  {nis:'24.01.S071',nama:'NAYYARA SHAFEEA RIZHANI',kelas:'TK-B2',unit:'pgtk'},
-  {nis:'24.01.S072',nama:'RAFAIZAN RUSIAN NAJIB',kelas:'TK-B2',unit:'pgtk'},
-  {nis:'24.01.S073',nama:'ZAVIER NAZIH AHMAD',kelas:'TK-B2',unit:'pgtk'},
-  {nis:'24.01.S074',nama:'AHMAD DZAKIANDRA',kelas:'TK-B3',unit:'pgtk'},
-  {nis:'24.01.S075',nama:'AIZA SHAKILA DERMANSYAH',kelas:'TK-B3',unit:'pgtk'},
-  {nis:'24.01.S076',nama:'ARSY AZZAM FARLAHIRTAMA',kelas:'TK-B3',unit:'pgtk'},
-  {nis:'24.01.S077',nama:'AZIMAH PUTRI NABILAH SORKARNO',kelas:'TK-B3',unit:'pgtk'},
-  {nis:'24.01.S078',nama:'FAIZAN JAZIB AL ABQORI HK',kelas:'TK-B3',unit:'pgtk'},
-  {nis:'24.01.S079',nama:'IFFAT HUMAM ATTARAZKHA',kelas:'TK-B3',unit:'pgtk'},
-  {nis:'24.01.S080',nama:'LASHIRA BANAFSHA HUMAIRA',kelas:'TK-B3',unit:'pgtk'},
-  {nis:'24.01.S081',nama:'LUNARA AZKADINA SIDHARTA',kelas:'TK-B3',unit:'pgtk'},
-  {nis:'24.01.S082',nama:'MOHAMMAD NATANIRTHA MIRZA',kelas:'TK-B3',unit:'pgtk'},
-  {nis:'24.01.S083',nama:'MUHAMMAD AZHKA PUTRA RAFFASYA',kelas:'TK-B3',unit:'pgtk'},
-  {nis:'24.01.S084',nama:'YUSFA CARISSA MA RIFATUNNISA',kelas:'TK-B3',unit:'pgtk'},
-  {nis:'24.01.S085',nama:'AHMAD MULYANI',kelas:'TK-B4',unit:'pgtk'},
-  {nis:'24.01.S086',nama:'AHMAD ZHAFI MALIK',kelas:'TK-B4',unit:'pgtk'},
-  {nis:'24.01.S087',nama:'ARSYANENDRA KHALID ADSKHAN',kelas:'TK-B4',unit:'pgtk'},
-  {nis:'24.01.S088',nama:'HALIZA NURZAHIRA',kelas:'TK-B4',unit:'pgtk'},
-  {nis:'24.01.S089',nama:'JASMINE AYSHALINA HABIBAH',kelas:'TK-B4',unit:'pgtk'},
-  {nis:'24.01.S090',nama:'KHALISA NUR SALSABILA',kelas:'TK-B4',unit:'pgtk'},
-  {nis:'24.01.S091',nama:'KHATIBATUN KHARIMAH SYAHIR',kelas:'TK-B4',unit:'pgtk'},
-  {nis:'24.01.S092',nama:'MUHAMMAD DANIYAL ASSHAUQI SAPUTRA',kelas:'TK-B4',unit:'pgtk'},
-  {nis:'24.01.S093',nama:'PRADA RATU MEDINA',kelas:'TK-B4',unit:'pgtk'},
-  {nis:'24.01.S094',nama:'RAFFAZA INSANU SHANKARA',kelas:'TK-B4',unit:'pgtk'},
-  {nis:'24.01.S095',nama:'ZASKIA HAFIZA AZ-ZAHRA',kelas:'TK-B4',unit:'pgtk'},
-  {nis:'24.01.S096',nama:'AULIA KHADIJAH PUTRI',kelas:'TK-B4',unit:'pgtk'},
-  {nis:'24.01.S097',nama:'ALVARENDRA KAELAN KEENANTO',kelas:'TK-B5',unit:'pgtk'},
-  // SD - 604 murid
-  {nis:'25.02.2099',nama:'ALESHA KANYA SABHIRA',kelas:'1 - JEDDAH',unit:'sd'},
-  {nis:'25.02.2100',nama:'ALFARIZQY RASENDRIA NUGRAHA',kelas:'1 - JEDDAH',unit:'sd'},
-  {nis:'25.02.2101',nama:'ASYIFA KHANZA PUTRI HERMAWAN',kelas:'1 - JEDDAH',unit:'sd'},
-  {nis:'25.02.2102',nama:'ARSYILLA BARRA GANESHA',kelas:'1 - JEDDAH',unit:'sd'},
-  {nis:'25.02.2103',nama:'AURORA BIANCA VICTORIA',kelas:'1 - JEDDAH',unit:'sd'},
-  {nis:'25.02.2104',nama:'CANTYA DAISHA NUR FATIMAH',kelas:'1 - JEDDAH',unit:'sd'},
-  {nis:'25.02.2105',nama:'DIANDRA DEWI KHAIRANI',kelas:'1 - JEDDAH',unit:'sd'},
-  {nis:'25.02.2106',nama:'EVANO ZAFRAN ANGGARA',kelas:'1 - JEDDAH',unit:'sd'},
-  {nis:'25.02.2107',nama:'FARRAZ RAFISQY PRATAMA',kelas:'1 - JEDDAH',unit:'sd'},
-  {nis:'25.02.2108',nama:'FARZANA SHIDQIA NAHDA',kelas:'1 - JEDDAH',unit:'sd'},
-  {nis:'25.02.2109',nama:'FATHIYA SYANOORA ELSHAREEN',kelas:'1 - JEDDAH',unit:'sd'},
-  {nis:'25.02.2110',nama:'FATHIYA ZAHRATUSYTA',kelas:'1 - JEDDAH',unit:'sd'},
-  {nis:'25.02.2111',nama:'FIRLY ZAFRAN ALKAHFI',kelas:'1 - JEDDAH',unit:'sd'},
-  {nis:'25.02.2112',nama:'GENDHIS AZKA HUMAIRA BASUKI',kelas:'1 - JEDDAH',unit:'sd'},
-  {nis:'25.02.2113',nama:'KING BAYEZID GAGARHANI',kelas:'1 - JEDDAH',unit:'sd'},
-  {nis:'25.02.2114',nama:'MIKHAYLA SHAILENE BASTIAN',kelas:'1 - JEDDAH',unit:'sd'},
-  {nis:'25.02.2115',nama:'MUHAMMAD ADAM SAYYID HUSEIN',kelas:'1 - JEDDAH',unit:'sd'},
-  {nis:'25.02.2116',nama:'MUHAMMAD ARIQ FADHAILILAH',kelas:'1 - JEDDAH',unit:'sd'},
-  {nis:'25.02.2117',nama:'MUHAMMAD DIMAS CATUR SUCANDRA',kelas:'1 - JEDDAH',unit:'sd'},
-  {nis:'25.02.2118',nama:'MUHAMMAD ERZA NOZOMI',kelas:'1 - JEDDAH',unit:'sd'},
-  {nis:'25.02.2119',nama:'MUHAMMAD HAMIZAN ANSYORI',kelas:'1 - JEDDAH',unit:'sd'},
-  {nis:'25.02.2120',nama:'MUHAMMAD NABIL AFLAH',kelas:'1 - JEDDAH',unit:'sd'},
-  {nis:'25.02.2121',nama:'NUR AFIFAH SALSABILA MULTAZAM',kelas:'1 - JEDDAH',unit:'sd'},
-  {nis:'25.02.2122',nama:'SHANUM RAHIMA ASHA TIANDA',kelas:'1 - JEDDAH',unit:'sd'},
-  {nis:'25.02.2123',nama:'ZUYINA QUINTERIE RUBYRAES',kelas:'1 - JEDDAH',unit:'sd'},
-  {nis:'25.02.2173',nama:'AISHA FAIHA RIZKYYA',kelas:'1 - MADINAH',unit:'sd'},
-  {nis:'25.02.2174',nama:'AJI MOHAMMAD QADDAFA HAKIM',kelas:'1 - MADINAH',unit:'sd'},
-  {nis:'25.02.2175',nama:'ALESHA ALMAHYRA ACHSAN',kelas:'1 - MADINAH',unit:'sd'},
-  {nis:'25.02.2176',nama:'ALESHA SARA MIKAYA',kelas:'1 - MADINAH',unit:'sd'},
-  {nis:'25.02.2177',nama:'BRILLIAND NARARENDRA SINULINGGA',kelas:'1 - MADINAH',unit:'sd'},
-  {nis:'25.02.2178',nama:'DANISYA NAJWA QAISARA',kelas:'1 - MADINAH',unit:'sd'},
-  {nis:'25.02.2179',nama:'GIBRAN AISY RAHMAN',kelas:'1 - MADINAH',unit:'sd'},
-  {nis:'25.02.2180',nama:'KHADIJAH QIRANIA MECCA',kelas:'1 - MADINAH',unit:'sd'},
-  {nis:'25.02.2181',nama:'KYLO ARANE SAE',kelas:'1 - MADINAH',unit:'sd'},
-  {nis:'25.02.2182',nama:'MUHAMMAD ADZRIEL ALFARIZKY',kelas:'1 - MADINAH',unit:'sd'},
-  {nis:'25.02.2183',nama:'MUHAMMAD ATHA RAHMAN AHYANIPUTRA',kelas:'1 - MADINAH',unit:'sd'},
-  {nis:'25.02.2184',nama:'MOHAMMAD FATAHILLAH MICHAEL ALGHANI',kelas:'1 - MADINAH',unit:'sd'},
-  {nis:'25.02.2185',nama:'MUHAMMAD ALI IMRAN',kelas:'1 - MADINAH',unit:'sd'},
-  {nis:'25.02.2186',nama:'MASHA KANAYA ROSIT',kelas:'1 - MADINAH',unit:'sd'},
-  {nis:'25.02.2187',nama:'NADIRA MAHERA RIDWANSYAH',kelas:'1 - MADINAH',unit:'sd'},
-  {nis:'25.02.2188',nama:'NATHAN KAYYRI ALKHALIFI',kelas:'1 - MADINAH',unit:'sd'},
-  {nis:'25.02.2189',nama:'RABIZA SHANUM ZALIKA STYAWAN',kelas:'1 - MADINAH',unit:'sd'},
-  {nis:'25.02.2190',nama:'RAISA AINUN MARDIA',kelas:'1 - MADINAH',unit:'sd'},
-  {nis:'25.02.2191',nama:'RAZAN BAGAS SATYASINGGARA',kelas:'1 - MADINAH',unit:'sd'},
-  {nis:'25.02.2192',nama:'RIFDAH AZZAHRA',kelas:'1 - MADINAH',unit:'sd'},
-  {nis:'25.02.2193',nama:'VECHIA ALESHA PUTRI',kelas:'1 - MADINAH',unit:'sd'},
-  {nis:'25.02.2194',nama:'VINDY CLEMIRA AMISHA AKHTAR',kelas:'1 - MADINAH',unit:'sd'},
-  {nis:'25.02.2195',nama:'ZAIN ZEESHAN DZAKIANDRA',kelas:'1 - MADINAH',unit:'sd'},
-  {nis:'25.02.2196',nama:'ZHAFRAN ALFARIZI MAE',kelas:'1 - MADINAH',unit:'sd'},
-  {nis:'25.02.2197',nama:'ZIVANA KHANSA ADYATMA',kelas:'1 - MADINAH',unit:'sd'},
-  {nis:'25.02.2149',nama:'ABYAN MECCA PUTRA DAMANIK',kelas:'1 - MEKKAH',unit:'sd'},
-  {nis:'25.02.2150',nama:'ADEENA SAFIRA INGGA',kelas:'1 - MEKKAH',unit:'sd'},
-  {nis:'25.02.2151',nama:'ALBIAN RAFAEYZA NUGRAHA',kelas:'1 - MEKKAH',unit:'sd'},
-  {nis:'25.02.2152',nama:'ANANDANU HARIO DHANANJAYA',kelas:'1 - MEKKAH',unit:'sd'},
-  {nis:'25.02.2153',nama:'AQILA MIKAYLA AURORA',kelas:'1 - MEKKAH',unit:'sd'},
-  {nis:'25.02.2154',nama:'ARKA PRADIPTA WICAKOSONO',kelas:'1 - MEKKAH',unit:'sd'},
-  {nis:'25.02.2155',nama:'AZZALEA ALMUNDENA',kelas:'1 - MEKKAH',unit:'sd'},
-  {nis:'25.02.2156',nama:'DAMAR BUMI DEANDARU',kelas:'1 - MEKKAH',unit:'sd'},
-  {nis:'25.02.2157',nama:'DIZHWAR YAZID RAMADHAN',kelas:'1 - MEKKAH',unit:'sd'},
-  {nis:'25.02.2158',nama:'EL SHANUM MALAIKA ZOHRA',kelas:'1 - MEKKAH',unit:'sd'},
-  {nis:'25.02.2159',nama:'KANAYA INARA NAZIL',kelas:'1 - MEKKAH',unit:'sd'},
-  {nis:'25.02.2160',nama:'MAIZA NOURSABA',kelas:'1 - MEKKAH',unit:'sd'},
-  {nis:'25.02.2161',nama:'MUHAMMAD EDZAR',kelas:'1 - MEKKAH',unit:'sd'},
-  {nis:'25.02.2162',nama:'MOHAMMED SHALEH AL RAKHA',kelas:'1 - MEKKAH',unit:'sd'},
-  {nis:'25.02.2163',nama:'MUZAMMIL DWI DHARMAWAN',kelas:'1 - MEKKAH',unit:'sd'},
-  {nis:'25.02.2164',nama:'NADIA ZIKRO',kelas:'1 - MEKKAH',unit:'sd'},
-  {nis:'25.02.2165',nama:'NADINE ZHIVANNA ALRAEEN',kelas:'1 - MEKKAH',unit:'sd'},
-  {nis:'25.02.2166',nama:'RAFIF GIANO ADSKHAN',kelas:'1 - MEKKAH',unit:'sd'},
-  {nis:'25.02.2167',nama:'RANIA RAQUEMA RADISKA',kelas:'1 - MEKKAH',unit:'sd'},
-  {nis:'25.02.2168',nama:'RASHDAN HANIF',kelas:'1 - MEKKAH',unit:'sd'},
-  {nis:'25.02.2169',nama:'RAYYANKA ANKARIAN RAMAZAN NUGRAHA',kelas:'1 - MEKKAH',unit:'sd'},
-  {nis:'25.02.2170',nama:'RAZZAN ALTAMIS CHAIRUZZAD',kelas:'1 - MEKKAH',unit:'sd'},
-  {nis:'25.02.2171',nama:'RYZEL XYNERVA FAYYADH',kelas:'1 - MEKKAH',unit:'sd'},
-  {nis:'25.02.2172',nama:'SARAH SABHIRA ADIBA K',kelas:'1 - MEKKAH',unit:'sd'},
-  {nis:'25.02.2124',nama:'AJI MUHAMMAD RAHSYA AZZAMI',kelas:'1 - MINA',unit:'sd'},
-  {nis:'25.02.2125',nama:'ALESHA ZASKIA MUMTAZ',kelas:'1 - MINA',unit:'sd'},
-  {nis:'25.02.2126',nama:'ALEX RIZKY ADRIAN',kelas:'1 - MINA',unit:'sd'},
-  {nis:'25.02.2127',nama:'BARRI DZAKI ALFAREZI LAGOA',kelas:'1 - MINA',unit:'sd'},
-  {nis:'25.02.2128',nama:'CHELSEA AMEERA QUEENZHA PRAMONO',kelas:'1 - MINA',unit:'sd'},
-  {nis:'25.02.2129',nama:'EL AZZAM LATUCONSINA',kelas:'1 - MINA',unit:'sd'},
-  {nis:'25.02.2130',nama:'HAIZAH MUTHMAINATUL QOLBI',kelas:'1 - MINA',unit:'sd'},
-  {nis:'25.02.2131',nama:'KHAYLA YUKA DAISHA',kelas:'1 - MINA',unit:'sd'},
-  {nis:'25.02.2132',nama:'KINAN AUFA AL HANAN',kelas:'1 - MINA',unit:'sd'},
-  {nis:'25.02.2133',nama:'MUHAMMAD ALVARO SAVIAN MAULANA',kelas:'1 - MINA',unit:'sd'},
-  {nis:'25.02.2134',nama:'MUHAMMAD AMMAR FAROUQ',kelas:'1 - MINA',unit:'sd'},
-  {nis:'25.02.2135',nama:'MUHAMMAD ANDRA ABIDZAR',kelas:'1 - MINA',unit:'sd'},
-  {nis:'25.02.2136',nama:'MUHAMMAD RAYYAN ATHAYA',kelas:'1 - MINA',unit:'sd'},
-  {nis:'25.02.2137',nama:'MUHAMMAD ZAYN ABDURRAHMAN',kelas:'1 - MINA',unit:'sd'},
-  {nis:'25.02.2138',nama:'MYESHA AZZAHRA SAPUTRA',kelas:'1 - MINA',unit:'sd'},
-  {nis:'25.02.2139',nama:'NABILA MARSHEL HERLANGGA',kelas:'1 - MINA',unit:'sd'},
-  {nis:'25.02.2140',nama:'NABILA WARDHANIE',kelas:'1 - MINA',unit:'sd'},
-  {nis:'25.02.2141',nama:'NEVIN PUTRA NUGRAHA',kelas:'1 - MINA',unit:'sd'},
-  {nis:'25.02.2142',nama:'NIKEN TRI SHABILLAH',kelas:'1 - MINA',unit:'sd'},
-  {nis:'25.02.2143',nama:'RASYA KHALEELA ZAFIRA',kelas:'1 - MINA',unit:'sd'},
-  {nis:'25.02.2144',nama:'SAECETTA LENTERA AHINGANI',kelas:'1 - MINA',unit:'sd'},
-  {nis:'25.02.2145',nama:'SYAFIRA KIRANA BALNY',kelas:'1 - MINA',unit:'sd'},
-  {nis:'25.02.2146',nama:'TANIA NUR KHALISA',kelas:'1 - MINA',unit:'sd'},
-  {nis:'25.02.2147',nama:'UINSEANN EDRICH FAEYZA',kelas:'1 - MINA',unit:'sd'},
-  {nis:'25.02.2148',nama:'ZACHARY EVANO DANENDRA',kelas:'1 - MINA',unit:'sd'},
-  {nis:'24.02.2009',nama:'AHMAD ZIO AL RASKA',kelas:'2 - ABU BAKAR',unit:'sd'},
-  {nis:'24.02.2035',nama:'AIKO HANA LIDYAN CHOERUNNISA',kelas:'2 - ABU BAKAR',unit:'sd'},
-  {nis:'25.02.2098',nama:'ALMEER RAFAEYZA NUGRAHA',kelas:'2 - ABU BAKAR',unit:'sd'},
-  {nis:'24.02.2012',nama:'ARSYILA OCTARISSA RALESA',kelas:'2 - ABU BAKAR',unit:'sd'},
-  {nis:'24.02.2068',nama:'BIMA VISHAKA AL HUSAIN',kelas:'2 - ABU BAKAR',unit:'sd'},
-  {nis:'24.02.2014',nama:'DEFA AYRAZUL WALUYO AL ARSY',kelas:'2 - ABU BAKAR',unit:'sd'},
-  {nis:'24.02.2039',nama:'EMIR RASYID ARYA',kelas:'2 - ABU BAKAR',unit:'sd'},
-  {nis:'24.02.2017',nama:'FATHARIAN GALEN RAFISQY',kelas:'2 - ABU BAKAR',unit:'sd'},
-  {nis:'24.02.2018',nama:'FAZIA SAIRA RAHMAH',kelas:'2 - ABU BAKAR',unit:'sd'},
-  {nis:'24.02.2040',nama:'HAMIZ RAFFI ARIBOWO',kelas:'2 - ABU BAKAR',unit:'sd'},
-  {nis:'24.02.2042',nama:'KENZIE ADHAGALUH ABQARI',kelas:'2 - ABU BAKAR',unit:'sd'},
-  {nis:'24.02.2072',nama:'MARYAM MUFIA MUTHMAINNAH',kelas:'2 - ABU BAKAR',unit:'sd'},
-  {nis:'24.02.1994',nama:'MICHELLE AEYESYAH',kelas:'2 - ABU BAKAR',unit:'sd'},
-  {nis:'24.02.2046',nama:'MOHAMED ZEKI ABRISAM',kelas:'2 - ABU BAKAR',unit:'sd'},
-  {nis:'24.02.2073',nama:'MUHAMMAD ABIZAR',kelas:'2 - ABU BAKAR',unit:'sd'},
-  {nis:'24.02.2047',nama:'MUHAMMAD ADAM PRADIPTA',kelas:'2 - ABU BAKAR',unit:'sd'},
-  {nis:'24.02.1997',nama:'MUHAMMAD AKSA ABHINARA',kelas:'2 - ABU BAKAR',unit:'sd'},
-  {nis:'24.02.2085',nama:'MUHAMMAD HANAN AZRI',kelas:'2 - ABU BAKAR',unit:'sd'},
-  {nis:'24.02.2049',nama:'MUHAMMAD KENZIE RAFIF FARQAH',kelas:'2 - ABU BAKAR',unit:'sd'},
-  {nis:'24.02.2053',nama:'NADINE SALIMA FERDINAND',kelas:'2 - ABU BAKAR',unit:'sd'},
-  {nis:'24.02.2054',nama:'NAOMI MIKAYLA',kelas:'2 - ABU BAKAR',unit:'sd'},
-  {nis:'24.02.2001',nama:'NAUFAL GUSTIN MAHARDIKA',kelas:'2 - ABU BAKAR',unit:'sd'},
-  {nis:'24.02.2079',nama:'RAINAIA ANJANI RACHMAN',kelas:'2 - ABU BAKAR',unit:'sd'},
-  {nis:'24.02.2028',nama:'RAJA ARKANA PRIANJAYA',kelas:'2 - ABU BAKAR',unit:'sd'},
-  {nis:'24.02.2004',nama:'SAFARAZ SAHAT POHAN',kelas:'2 - ABU BAKAR',unit:'sd'},
-  {nis:'24.02.2006',nama:'SAMANTHA BRIANNA RAHADIAN',kelas:'2 - ABU BAKAR',unit:'sd'},
-  {nis:'24.02.1985',nama:'ABDURRAHMAN WAHID',kelas:'2 - ALI',unit:'sd'},
-  {nis:'24.02.2060',nama:'ABIMANYU CHANDRA MAHENDRA',kelas:'2 - ALI',unit:'sd'},
-  {nis:'25.02.2096',nama:'AKSA FATIH ARADHANA',kelas:'2 - ALI',unit:'sd'},
-  {nis:'24.02.1987',nama:'ALDIO REZQIANO LIONARDY',kelas:'2 - ALI',unit:'sd'},
-  {nis:'24.02.2010',nama:'ALZIO DANISWARA',kelas:'2 - ALI',unit:'sd'},
-  {nis:'24.02.1989',nama:'AQILAH ZAHRA BADJEBER',kelas:'2 - ALI',unit:'sd'},
-  {nis:'24.02.2036',nama:'ARSYA MUHAMMAD ZAIN',kelas:'2 - ALI',unit:'sd'},
-  {nis:'24.02.2088',nama:'DAYANG ADIBA SHAKILA AZZAHRA',kelas:'2 - ALI',unit:'sd'},
-  {nis:'25.02.2097',nama:'CLEOPATRA CAMELO ALISHA',kelas:'2 - ALI',unit:'sd'},
-  {nis:'24.02.2064',nama:'ARUMI AULIA MUSRIADI LAMADA',kelas:'2 - ALI',unit:'sd'},
-  {nis:'24.02.2067',nama:'BILLY FEDERER DARMO',kelas:'2 - ALI',unit:'sd'},
-  {nis:'24.02.2070',nama:'HANIEF IBRAHIM KOMALA',kelas:'2 - ALI',unit:'sd'},
-  {nis:'24.02.2041',nama:'KAESANG MALIK ABICANDRA',kelas:'2 - ALI',unit:'sd'},
-  {nis:'24.02.1992',nama:'KIRANA AISHA ALIA WARDHANA',kelas:'2 - ALI',unit:'sd'},
-  {nis:'24.02.2071',nama:'LILIANA MAROON SAFIRA',kelas:'2 - ALI',unit:'sd'},
-  {nis:'24.02.2000',nama:'MUHAMMAD FAWWAZ ELDHANI',kelas:'2 - ALI',unit:'sd'},
-  {nis:'24.02.2024',nama:'MUHAMMAD KHAIZANSAGA ALTHAFARIZQI',kelas:'2 - ALI',unit:'sd'},
-  {nis:'24.02.2050',nama:'MUHAMMAD MAULID HAFIDZ',kelas:'2 - ALI',unit:'sd'},
-  {nis:'24.02.2051',nama:'MUHAMMAD RAFA AZKA SAPUTRA',kelas:'2 - ALI',unit:'sd'},
-  {nis:'24.02.2075',nama:'NADIRA AZZAHRA SAUDAH',kelas:'2 - ALI',unit:'sd'},
-  {nis:'24.02.2081',nama:'SABRINA SAKHI',kelas:'2 - ALI',unit:'sd'},
-  {nis:'24.02.2029',nama:'SAYID KAYSAN FAITH AARIZ',kelas:'2 - ALI',unit:'sd'},
-  {nis:'24.02.2082',nama:'SAYID YUSUF ABDULLAH',kelas:'2 - ALI',unit:'sd'},
-  {nis:'24.02.2083',nama:'SHANUM AZKANA ZIELA',kelas:'2 - ALI',unit:'sd'},
-  {nis:'24.02.2084',nama:'SHEENAZ ALMAHYRA ARAFAT',kelas:'2 - ALI',unit:'sd'},
-  {nis:'24.02.2030',nama:'SITI ALISHA MEDINA',kelas:'2 - ALI',unit:'sd'},
-  {nis:'24.02.1984',nama:'ABDUL BION FRIANFATA',kelas:'2 - UMAR',unit:'sd'},
-  {nis:'24.02.2034',nama:'ADREENA MALAIKA FATHIYYATURRAHMAN',kelas:'2 - UMAR',unit:'sd'},
-  {nis:'24.02.1986',nama:'ADRESIA BUMI NALADHIPA',kelas:'2 - UMAR',unit:'sd'},
-  {nis:'24.02.2062',nama:'AHMAD REYNAND BAIHAQI',kelas:'2 - UMAR',unit:'sd'},
-  {nis:'24.02.1988',nama:'ANNASYA ADREENA ALIYA NOOR GANI',kelas:'2 - UMAR',unit:'sd'},
-  {nis:'24.02.2063',nama:'ARJUNA BINTANG ALMEYCCA',kelas:'2 - UMAR',unit:'sd'},
-  {nis:'24.02.2013',nama:'ARVINO FIRST KEANU NARENDRA',kelas:'2 - UMAR',unit:'sd'},
-  {nis:'24.02.2066',nama:'ATHAFARIZ ERDOGAN',kelas:'2 - UMAR',unit:'sd'},
-  {nis:'24.02.2037',nama:'AULIA FEBRIANI SARMA',kelas:'2 - UMAR',unit:'sd'},
-  {nis:'24.02.1991',nama:'DHARREL BINTANG PRAMANA',kelas:'2 - UMAR',unit:'sd'},
-  {nis:'24.02.2019',nama:'FIDO ATHAYA ARIENDRA',kelas:'2 - UMAR',unit:'sd'},
-  {nis:'24.02.2020',nama:'FILLEA QAIREEN NOLLY',kelas:'2 - UMAR',unit:'sd'},
-  {nis:'24.02.2021',nama:'KHADIJAH NUR KAMILIA HUMAIRA',kelas:'2 - UMAR',unit:'sd'},
-  {nis:'24.02.2022',nama:'LANANG SATRYO DANURENDRA WIJANARKO',kelas:'2 - UMAR',unit:'sd'},
-  {nis:'24.02.1995',nama:'MOHAMMED BORNEO RIZKY NAZAR',kelas:'2 - UMAR',unit:'sd'},
-  {nis:'24.02.2023',nama:'MUHAMMAD ALFAREZEL WAHYUDI',kelas:'2 - UMAR',unit:'sd'},
-  {nis:'24.02.2048',nama:'MUHAMMAD KENZIE ATHALLA IRAWAN',kelas:'2 - UMAR',unit:'sd'},
-  {nis:'24.02.2026',nama:'MUHAMMAD RYASHAKA ADSKHAN ANTONO',kelas:'2 - UMAR',unit:'sd'},
-  {nis:'24.02.2086',nama:'NUR ALMEERA KUSUMA',kelas:'2 - UMAR',unit:'sd'},
-  {nis:'24.02.2076',nama:'QUEENEZA SYAHIRA',kelas:'2 - UMAR',unit:'sd'},
-  {nis:'24.02.2055',nama:'RAFFI YUSUF KURNIAWAN',kelas:'2 - UMAR',unit:'sd'},
-  {nis:'24.02.2056',nama:'RIHANA ALISHA ZEA',kelas:'2 - UMAR',unit:'sd'},
-  {nis:'24.02.2002',nama:'RADEN MAS MUHAMMAD SYECH UMAR',kelas:'2 - UMAR',unit:'sd'},
-  {nis:'24.02.2057',nama:'SAYEEDA YUMNA AL MUMTAZ',kelas:'2 - UMAR',unit:'sd'},
-  {nis:'24.02.2058',nama:'SHAKA RAYYANZA ALFARIZQI',kelas:'2 - UMAR',unit:'sd'},
-  {nis:'24.02.2032',nama:'ZALYSTA ALANA AFIQLA',kelas:'2 - UMAR',unit:'sd'},
-  {nis:'24.02.2059',nama:'ABDUL GHANI MULKAN',kelas:'2 - UTSMAN',unit:'sd'},
-  {nis:'24.02.2011',nama:'ARSYILLA FARZANA ZAYNA',kelas:'2 - UTSMAN',unit:'sd'},
-  {nis:'24.02.1990',nama:'ARVINO ADELIO MICKY',kelas:'2 - UTSMAN',unit:'sd'},
-  {nis:'24.02.2065',nama:'ARZAN RAVINDRA PUTRA MUZZAMAN',kelas:'2 - UTSMAN',unit:'sd'},
-  {nis:'24.02.2015',nama:'EVANO BARRA GANESHA',kelas:'2 - UTSMAN',unit:'sd'},
-  {nis:'24.02.2016',nama:'FADHIL AZKA MUHAMMAD',kelas:'2 - UTSMAN',unit:'sd'},
-  {nis:'24.02.2069',nama:'FATIH AL FARIS YUSUF',kelas:'2 - UTSMAN',unit:'sd'},
-  {nis:'24.02.2043',nama:'MADINA SEKAR JAGAD',kelas:'2 - UTSMAN',unit:'sd'},
-  {nis:'24.02.2044',nama:'MAHREZ RAMADHAN RIZANDA',kelas:'2 - UTSMAN',unit:'sd'},
-  {nis:'24.02.2045',nama:'MARYAM SHAFIYYAH',kelas:'2 - UTSMAN',unit:'sd'},
-  {nis:'24.02.1993',nama:'MEDINA NASHEKA',kelas:'2 - UTSMAN',unit:'sd'},
-  {nis:'24.02.1996',nama:'MUHAMMAD ADYASTHA KENT',kelas:'2 - UTSMAN',unit:'sd'},
-  {nis:'24.02.2025',nama:'MUHAMMAD NABIL ARRAFIF',kelas:'2 - UTSMAN',unit:'sd'},
-  {nis:'24.02.2052',nama:'MUHAMMAD RAIZA',kelas:'2 - UTSMAN',unit:'sd'},
-  {nis:'24.02.2074',nama:'MUHAMMAD SULTAN WIJAYA ANG',kelas:'2 - UTSMAN',unit:'sd'},
-  {nis:'24.02.2078',nama:'RAFIF ARTHANABIL FAEYZA GHANI',kelas:'2 - UTSMAN',unit:'sd'},
-  {nis:'24.02.2027',nama:'RAISA AMANDA ASYIFA',kelas:'2 - UTSMAN',unit:'sd'},
-  {nis:'24.02.2080',nama:'RALISYA AZMYA DAFAIRA',kelas:'2 - UTSMAN',unit:'sd'},
-  {nis:'24.02.2003',nama:'RASENDRIA KHALIF KEENANTO',kelas:'2 - UTSMAN',unit:'sd'},
-  {nis:'24.02.2005',nama:'SAILA SABIYA ZAYNA TANZIZ',kelas:'2 - UTSMAN',unit:'sd'},
-  {nis:'24.02.2007',nama:'SHANUM AZKAYRA WIJAYA',kelas:'2 - UTSMAN',unit:'sd'},
-  {nis:'24.02.2031',nama:'YUMNA JEANY AZ- ZAHRA',kelas:'2 - UTSMAN',unit:'sd'},
-  {nis:'24.02.2008',nama:'YUMNA NUSAIBAH DINAH',kelas:'2 - UTSMAN',unit:'sd'},
-  {nis:'24.02.2033',nama:'ZOYA ODELIA KUSUMA',kelas:'2 - UTSMAN',unit:'sd'},
-  {nis:'25.02.2095',nama:'ZHAFIRA ATH THABIBAH SYHIR',kelas:'2 - UTSMAN',unit:'sd'},
-  {nis:'23.02.1852',nama:'ABDIL HAKAM RISNANDA',kelas:'3 - BUCHORI',unit:'sd'},
-  {nis:'23.02.1854',nama:'ABDUL RAZZAK GAUZAN AL HABIBIE',kelas:'3 - BUCHORI',unit:'sd'},
-  {nis:'23.02.1912',nama:'ABUYAAZID ARYA RACHMAT',kelas:'3 - BUCHORI',unit:'sd'},
-  {nis:'23.02.1913',nama:'ACHMAD FARIZ AZZAM FATAHILLAH',kelas:'3 - BUCHORI',unit:'sd'},
-  {nis:'23.02.1945',nama:'ALIYA PUTRI SAHPARIANA',kelas:'3 - BUCHORI',unit:'sd'},
-  {nis:'23.02.1946',nama:'ALMAHYRA ZAHRA ALFATHUNISSA',kelas:'3 - BUCHORI',unit:'sd'},
-  {nis:'23.02.1858',nama:'ALTHARIO DEVANKA ANTASENA',kelas:'3 - BUCHORI',unit:'sd'},
-  {nis:'23.02.1947',nama:'ALVINO BOUBY BASARAH PUTRAWINDRA',kelas:'3 - BUCHORI',unit:'sd'},
-  {nis:'23.02.1916',nama:'ANNASYA RAESHA ZAINA',kelas:'3 - BUCHORI',unit:'sd'},
-  {nis:'23.02.1917',nama:'ARFADHIA HAFIZHAN SAAL',kelas:'3 - BUCHORI',unit:'sd'},
-  {nis:'23.02.1921',nama:'AZKAYRA MECCA NURLAILA',kelas:'3 - BUCHORI',unit:'sd'},
-  {nis:'23.02.1922',nama:'BERYL MABLEVIN GIBRAN',kelas:'3 - BUCHORI',unit:'sd'},
-  {nis:'23.02.1866',nama:'FAYOLA RIVI SINULINGGA',kelas:'3 - BUCHORI',unit:'sd'},
-  {nis:'23.02.1955',nama:'FAYRA VIOLETA FATIMA',kelas:'3 - BUCHORI',unit:'sd'},
-  {nis:'23.02.1923',nama:'FIONA NAVALIA AGITA PUTRI',kelas:'3 - BUCHORI',unit:'sd'},
-  {nis:'23.02.1868',nama:'KAMALUDIN WAHID',kelas:'3 - BUCHORI',unit:'sd'},
-  {nis:'23.02.1925',nama:'KEANO ADI EDSEL ARSHAKA',kelas:'3 - BUCHORI',unit:'sd'},
-  {nis:'23.02.1869',nama:'KENES PARAMASTRI DIRGANTARA',kelas:'3 - BUCHORI',unit:'sd'},
-  {nis:'23.02.1926',nama:'KINANTI WURI NARENDRA',kelas:'3 - BUCHORI',unit:'sd'},
-  {nis:'23.02.1870',nama:'MUHAMMAD ARZHAQEL SHAKA ABIYAN',kelas:'3 - BUCHORI',unit:'sd'},
-  {nis:'23.02.1962',nama:'MALIYAH HAKEMA BADZLIN',kelas:'3 - BUCHORI',unit:'sd'},
-  {nis:'23.02.1930',nama:'MUHAMMAD ALGHIFARI  PUTRA YANWAR',kelas:'3 - BUCHORI',unit:'sd'},
-  {nis:'23.02.1872',nama:'MUHAMMAD FARIS',kelas:'3 - BUCHORI',unit:'sd'},
-  {nis:'23.02.1932',nama:'MUHAMMAD HAFIDZ LAGOA',kelas:'3 - BUCHORI',unit:'sd'},
-  {nis:'23.02.1880',nama:'SAYYID MUHAMMAD JAFAR',kelas:'3 - BUCHORI',unit:'sd'},
-  {nis:'23.02.1939',nama:'SYAFIRA PUTRI ADIYANI',kelas:'3 - BUCHORI',unit:'sd'},
-  {nis:'23.02.1911',nama:'ZAKIYYA KHADIJAH AL FATIH',kelas:'3 - BUCHORI',unit:'sd'},
-  {nis:'23.02.1882',nama:'ABDUL HANIF RAMADHAN',kelas:'3 - MUSLIM',unit:'sd'},
-  {nis:'23.02.1884',nama:'ADAM FAIZ AL ARKHAN',kelas:'3 - MUSLIM',unit:'sd'},
-  {nis:'23.02.1942',nama:'AISHA AZKA NAFEEZA KOSASIH',kelas:'3 - MUSLIM',unit:'sd'},
-  {nis:'23.02.1859',nama:'AMEERA FATIMAH WIRANATA',kelas:'3 - MUSLIM',unit:'sd'},
-  {nis:'23.02.1948',nama:'AMEERA ZOYA ADZKIYA',kelas:'3 - MUSLIM',unit:'sd'},
-  {nis:'23.02.1919',nama:'ASYA ALESHA',kelas:'3 - MUSLIM',unit:'sd'},
-  {nis:'23.02.1894',nama:'DAWUD SULAIMAN KAFI',kelas:'3 - MUSLIM',unit:'sd'},
-  {nis:'23.02.1865',nama:'EMIEL YOHAN PYPERS',kelas:'3 - MUSLIM',unit:'sd'},
-  {nis:'23.02.1896',nama:'HAFIZH SYAHDIISMALLAH',kelas:'3 - MUSLIM',unit:'sd'},
-  {nis:'24.02.2089',nama:'IZZATI FATIMAH AZ ZAHRA',kelas:'3 - MUSLIM',unit:'sd'},
-  {nis:'23.02.1958',nama:'KEENAR ZAHSY AZ-ZALEA',kelas:'3 - MUSLIM',unit:'sd'},
-  {nis:'23.02.1897',nama:'KEINARRA SHAZIA FASAB',kelas:'3 - MUSLIM',unit:'sd'},
-  {nis:'23.02.1871',nama:'MUHAMMAD MEKKA ZIEL',kelas:'3 - MUSLIM',unit:'sd'},
-  {nis:'23.02.1961',nama:'MUHAMMAD RAFIF HANAN HASIB',kelas:'3 - MUSLIM',unit:'sd'},
-  {nis:'23.02.1931',nama:'MUHAMMAD FARDHAN PRASTYO',kelas:'3 - MUSLIM',unit:'sd'},
-  {nis:'23.02.1964',nama:'MUHAMMAD GHIFARI',kelas:'3 - MUSLIM',unit:'sd'},
-  {nis:'23.02.1902',nama:'MUHAMMAD KAMAL DARMAWAN',kelas:'3 - MUSLIM',unit:'sd'},
-  {nis:'23.02.1899',nama:'MUHAMMAD KEMAL FARID ATALLAH',kelas:'3 - MUSLIM',unit:'sd'},
-  {nis:'25.02.2094',nama:'MUHAMMAD RAKHA ATHALLAH',kelas:'3 - MUSLIM',unit:'sd'},
-  {nis:'23.02.1934',nama:'MUHAMMAD RASYID AL HAFIDZ',kelas:'3 - MUSLIM',unit:'sd'},
-  {nis:'23.02.1903',nama:'NADHIFA NAURA MEDINA',kelas:'3 - MUSLIM',unit:'sd'},
-  {nis:'23.02.1875',nama:'NADINE KAYLILA AZZAHRA',kelas:'3 - MUSLIM',unit:'sd'},
-  {nis:'23.02.1966',nama:'NATTA MAUZA SOBRIN S',kelas:'3 - MUSLIM',unit:'sd'},
-  {nis:'23.02.1967',nama:'NAYLA SHAKILA AZZAHRA',kelas:'3 - MUSLIM',unit:'sd'},
-  {nis:'23.02.1935',nama:'PUTI ALESHA AIDIRA',kelas:'3 - MUSLIM',unit:'sd'},
-  {nis:'23.02.1877',nama:'RAZQA ABQARI CHAIRUZZAD',kelas:'3 - MUSLIM',unit:'sd'},
-  {nis:'23.02.1938',nama:'RUNA MECCADINA RACHIM',kelas:'3 - MUSLIM',unit:'sd'},
-  {nis:'23.02.1881',nama:'ZAFA SHAKILA IZZATI',kelas:'3 - MUSLIM',unit:'sd'},
-  {nis:'23.02.1972',nama:'ZAFANSYAH PUTRA ZAINUDDIN',kelas:'3 - MUSLIM',unit:'sd'},
-  {nis:'23.02.1885',nama:'ADHYASTHA RAFIF PRAMESWARA',kelas:'3 - NASAI',unit:'sd'},
-  {nis:'23.02.1856',nama:'AHMAD ADIB',kelas:'3 - NASAI',unit:'sd'},
-  {nis:'23.02.1887',nama:'AHMAD FAHMI JERYANSYAH',kelas:'3 - NASAI',unit:'sd'},
-  {nis:'23.02.1914',nama:'ALESHA ADELIA MICKY',kelas:'3 - NASAI',unit:'sd'},
-  {nis:'23.02.1915',nama:'ALEXANDRINA GABRIELLA',kelas:'3 - NASAI',unit:'sd'},
-  {nis:'23.02.1944',nama:'ALFANDRA DAVYN MUHARRAR',kelas:'3 - NASAI',unit:'sd'},
-  {nis:'23.02.1889',nama:'ALMYRA YASMIN ALFATHUNNISA',kelas:'3 - NASAI',unit:'sd'},
-  {nis:'23.02.1891',nama:'ALYA WIJAYANTI',kelas:'3 - NASAI',unit:'sd'},
-  {nis:'23.02.1949',nama:'AR SAKHA RANSI ALDEN',kelas:'3 - NASAI',unit:'sd'},
-  {nis:'23.02.1951',nama:'ARSYA RAJA ALWI',kelas:'3 - NASAI',unit:'sd'},
-  {nis:'23.02.1860',nama:'ARSYFA MAKAILAH MUZZAMAN',kelas:'3 - NASAI',unit:'sd'},
-  {nis:'23.02.1918',nama:'ARSYILA HANNAH AMRULLAH',kelas:'3 - NASAI',unit:'sd'},
-  {nis:'23.02.1861',nama:'ASSYIFA ALESHA DHANITRA',kelas:'3 - NASAI',unit:'sd'},
-  {nis:'23.02.1920',nama:'ATHIFA NAHDA PUTRI',kelas:'3 - NASAI',unit:'sd'},
-  {nis:'23.02.1953',nama:'AZKA VIRENDRA CETTA',kelas:'3 - NASAI',unit:'sd'},
-  {nis:'23.02.1863',nama:'DIFA ALMAYRA WALUYO AL-ARSY',kelas:'3 - NASAI',unit:'sd'},
-  {nis:'23.02.1867',nama:'JAGAD DEWANTORO PUJAKELANA',kelas:'3 - NASAI',unit:'sd'},
-  {nis:'23.02.1956',nama:'KAYLA ZAFIRA JASMINE',kelas:'3 - NASAI',unit:'sd'},
-  {nis:'23.02.1959',nama:'MUHAMMAD AINAN FIRDAUSI',kelas:'3 - NASAI',unit:'sd'},
-  {nis:'23.02.1960',nama:'MUHAMMAD DEVANDRA AR RAYYAN FACHLEVI',kelas:'3 - NASAI',unit:'sd'},
-  {nis:'23.02.1929',nama:'MALIKIANDRA ALFATIH ASSONIWORA',kelas:'3 - NASAI',unit:'sd'},
-  {nis:'23.02.1965',nama:'MUHAMMAD RAYYAN AMMAR SHAWQI',kelas:'3 - NASAI',unit:'sd'},
-  {nis:'23.02.1901',nama:'MUHAMMAD RAYYI SHAQUILLE ISLAMI',kelas:'3 - NASAI',unit:'sd'},
-  {nis:'23.02.1928',nama:'MUHAMMAD VIRZA RAMARDIAN AL-FAHTAH',kelas:'3 - NASAI',unit:'sd'},
-  {nis:'23.02.1874',nama:'NADIFA KIRANA SHAKILA',kelas:'3 - NASAI',unit:'sd'},
-  {nis:'23.02.1904',nama:'NAFISHA AZWA FAHIRA FAHMI',kelas:'3 - NASAI',unit:'sd'},
-  {nis:'23.02.1968',nama:'NEZZALUNA NADINE ALMIRA',kelas:'3 - NASAI',unit:'sd'},
-  {nis:'23.02.1969',nama:'RABIATUL ABNA BATUTTA LATUCOSINA',kelas:'3 - NASAI',unit:'sd'},
-  {nis:'23.02.1936',nama:'RAISHA SILMI FARIZAH',kelas:'3 - NASAI',unit:'sd'},
-  {nis:'23.02.1853',nama:'ABDUL DIMAS SAKTI',kelas:'3 - TIRMIDZI',unit:'sd'},
-  {nis:'23.02.1883',nama:'ABHY ABQORY BIN UMAR',kelas:'3 - TIRMIDZI',unit:'sd'},
-  {nis:'23.02.1886',nama:'ADZKIYA WARDHANI',kelas:'3 - TIRMIDZI',unit:'sd'},
-  {nis:'23.02.1855',nama:'ADZKIYA YUMNA AZZAHRA',kelas:'3 - TIRMIDZI',unit:'sd'},
-  {nis:'23.02.1857',nama:'AINA NIHAYATUZ ZAIN',kelas:'3 - TIRMIDZI',unit:'sd'},
-  {nis:'23.02.1943',nama:'ALDRICH ARELIANO KENZO',kelas:'3 - TIRMIDZI',unit:'sd'},
-  {nis:'23.02.1890',nama:'ALUNA SOFIA PUTRI NASUTION',kelas:'3 - TIRMIDZI',unit:'sd'},
-  {nis:'23.02.1950',nama:'ARKANA BIAN ALFARIZKI',kelas:'3 - TIRMIDZI',unit:'sd'},
-  {nis:'23.02.1892',nama:'ARZHANKA SYAFIQ',kelas:'3 - TIRMIDZI',unit:'sd'},
-  {nis:'23.02.1952',nama:'ASYLN FATIMAH AZZAHRA',kelas:'3 - TIRMIDZI',unit:'sd'},
-  {nis:'23.02.1893',nama:'CALLYSTA AZKADINA ALMAHYRA',kelas:'3 - TIRMIDZI',unit:'sd'},
-  {nis:'23.02.1862',nama:'DAMARIO ABIMATA WIJAYA',kelas:'3 - TIRMIDZI',unit:'sd'},
-  {nis:'23.02.1864',nama:'DZAMIRA NABILA RADIAPRISHA',kelas:'3 - TIRMIDZI',unit:'sd'},
-  {nis:'23.02.1954',nama:'EL FAYYADH AQILA HIDAYATULLAH',kelas:'3 - TIRMIDZI',unit:'sd'},
-  {nis:'23.02.1957',nama:'KAYLILA FREESIA PARAMITHA',kelas:'3 - TIRMIDZI',unit:'sd'},
-  {nis:'23.02.1898',nama:'KIANDRA MUHAMMAD ZIKRI SETIA',kelas:'3 - TIRMIDZI',unit:'sd'},
-  {nis:'23.02.1927',nama:'MUHAMMAD AKBAR RAJENDRA AS\'AD',kelas:'3 - TIRMIDZI',unit:'sd'},
-  {nis:'23.02.1900',nama:'M. RAFSY QUTHHBI ZAIYAN',kelas:'3 - TIRMIDZI',unit:'sd'},
-  {nis:'23.02.1963',nama:'MALVIN PRASAJA FERNANDO',kelas:'3 - TIRMIDZI',unit:'sd'},
-  {nis:'23.02.1873',nama:'MUHAMMAD NIZAM ALFARIZI',kelas:'3 - TIRMIDZI',unit:'sd'},
-  {nis:'23.02.1905',nama:'RAFFASYA AR RAFIF AKHMAD (PINDAH KELUAR)',kelas:'3 - TIRMIDZI',unit:'sd'},
-  {nis:'23.02.1906',nama:'RAISHA ALMAIRA SUSANTO',kelas:'3 - TIRMIDZI',unit:'sd'},
-  {nis:'23.02.1970',nama:'RALIA OSHANI SARAGIH',kelas:'3 - TIRMIDZI',unit:'sd'},
-  {nis:'23.02.1907',nama:'RATU KHANZA REISYA KIMORA',kelas:'3 - TIRMIDZI',unit:'sd'},
-  {nis:'23.02.1937',nama:'RAYANA PUTRI ADIBA ICHSAN',kelas:'3 - TIRMIDZI',unit:'sd'},
-  {nis:'23.02.1879',nama:'SAYID ALFARIZI ATHAYA BILAL  ASSEGAF',kelas:'3 - TIRMIDZI',unit:'sd'},
-  {nis:'23.02.1940',nama:'SYARIFAH ATHIA ZAYNAB',kelas:'3 - TIRMIDZI',unit:'sd'},
-  {nis:'23.02.1909',nama:'THAFANA AFIFAH RACHMAN',kelas:'3 - TIRMIDZI',unit:'sd'},
-  {nis:'23.02.1910',nama:'VANIA CANTIKA AURELIA',kelas:'3 - TIRMIDZI',unit:'sd'},
-  {nis:'23.02.1941',nama:'YUMNA FAREEHA ZARIYAH',kelas:'3 - TIRMIDZI',unit:'sd'},
-  {nis:'22.02.1732',nama:'AARON ZAKI MARITSA',kelas:'4 - IBNU KHOLDUN',unit:'sd'},
-  {nis:'22.02.1756',nama:'ADINDAH AFSHEEN MYESHA',kelas:'4 - IBNU KHOLDUN',unit:'sd'},
-  {nis:'22.02.1784',nama:'ALGHIFFARI RAYYAN SYAHMI RAMA',kelas:'4 - IBNU KHOLDUN',unit:'sd'},
-  {nis:'22.02.1759',nama:'ALZAM MUHAMMAD FAIRUZ',kelas:'4 - IBNU KHOLDUN',unit:'sd'},
-  {nis:'23.02.1840',nama:'CHELSEA NOURA PUTRI',kelas:'4 - IBNU KHOLDUN',unit:'sd'},
-  {nis:'22.02.1793',nama:'DIANDRA KANAYA AZZAHRA',kelas:'4 - IBNU KHOLDUN',unit:'sd'},
-  {nis:'22.02.1741',nama:'DIANDRA PRISHA KINANTI',kelas:'4 - IBNU KHOLDUN',unit:'sd'},
-  {nis:'22.02.1808',nama:'FAKHIRA ZAHRA KHAIRINA',kelas:'4 - IBNU KHOLDUN',unit:'sd'},
-  {nis:'22.02.1810',nama:'ISNAYA AZAHRA',kelas:'4 - IBNU KHOLDUN',unit:'sd'},
-  {nis:'22.02.1830',nama:'MUHAMMAD ALIF ABIDZAR MUMTAZ',kelas:'4 - IBNU KHOLDUN',unit:'sd'},
-  {nis:'22.02.1811',nama:'MUHAMMAD ARKHAN',kelas:'4 - IBNU KHOLDUN',unit:'sd'},
-  {nis:'22.02.1770',nama:'MUHAMMAD AVERRUZ AL-BANNA',kelas:'4 - IBNU KHOLDUN',unit:'sd'},
-  {nis:'22.02.1813',nama:'MUHAMMAD AZIZAN AL RAZAN',kelas:'4 - IBNU KHOLDUN',unit:'sd'},
-  {nis:'23.02.1849',nama:'MUHAMMAD HAIKAL RIZQI RAMADHANI',kelas:'4 - IBNU KHOLDUN',unit:'sd'},
-  {nis:'22.02.1752',nama:'M. MAHIR ZAINAL ABIDIN',kelas:'4 - IBNU KHOLDUN',unit:'sd'},
-  {nis:'22.02.1773',nama:'MUTIARA HAMIDAH BULAN',kelas:'4 - IBNU KHOLDUN',unit:'sd'},
-  {nis:'25.02.2093',nama:'NASYITHA ADREEN KRASIVANA KISMAT',kelas:'4 - IBNU KHOLDUN',unit:'sd'},
-  {nis:'22.02.1817',nama:'NUR AZIZAH',kelas:'4 - IBNU KHOLDUN',unit:'sd'},
-  {nis:'22.02.1818',nama:'QUINSHA AFIYA KAMILA',kelas:'4 - IBNU KHOLDUN',unit:'sd'},
-  {nis:'22.02.1821',nama:'RAIANKA ABINAYA RACHMAN',kelas:'4 - IBNU KHOLDUN',unit:'sd'},
-  {nis:'22.02.1802',nama:'SAHILA PUJI LESTARI',kelas:'4 - IBNU KHOLDUN',unit:'sd'},
-  {nis:'22.02.1776',nama:'SAYID KEENAN ABQARI ALI BA\'BUD',kelas:'4 - IBNU KHOLDUN',unit:'sd'},
-  {nis:'22.02.1779',nama:'SYARIFAH ARCILLA QIANA FAKHRIN',kelas:'4 - IBNU KHOLDUN',unit:'sd'},
-  {nis:'22.02.1734',nama:'AHMAD BATARA KHAN',kelas:'4 - IBNU QOYYIM',unit:'sd'},
-  {nis:'22.02.1785',nama:'ALKAYSHA RAKHSHANDRINA HARDJANTO',kelas:'4 - IBNU QOYYIM',unit:'sd'},
-  {nis:'22.02.1739',nama:'ANDI SULTAN DERMAWAN AL GHAZALI',kelas:'4 - IBNU QOYYIM',unit:'sd'},
-  {nis:'22.02.1789',nama:'AZKA HAMIZAN KHAIRUL KHALFANI',kelas:'4 - IBNU QOYYIM',unit:'sd'},
-  {nis:'22.02.1791',nama:'BOBBY ARSAKHA MALIK',kelas:'4 - IBNU QOYYIM',unit:'sd'},
-  {nis:'22.02.1743',nama:'FALIHA AS SYARIFAH HK',kelas:'4 - IBNU QOYYIM',unit:'sd'},
-  {nis:'22.02.1794',nama:'GHAISAN IHZA AL KIRAMI',kelas:'4 - IBNU QOYYIM',unit:'sd'},
-  {nis:'22.02.1745',nama:'ILHAM WIJAYA SETIAWAN',kelas:'4 - IBNU QOYYIM',unit:'sd'},
-  {nis:'23.02.1978',nama:'KHALISHA NAMIA KHAIRA TANZIZ',kelas:'4 - IBNU QOYYIM',unit:'sd'},
-  {nis:'22.02.1748',nama:'KINANTY NUR F.R',kelas:'4 - IBNU QOYYIM',unit:'sd'},
-  {nis:'22.02.1766',nama:'M. FAKHRIE ZHAFRAN KHAIRI',kelas:'4 - IBNU QOYYIM',unit:'sd'},
-  {nis:'22.02.1749',nama:'M. NABIL IBNU AZHAR',kelas:'4 - IBNU QOYYIM',unit:'sd'},
-  {nis:'22.02.1799',nama:'MELATI NAZMA TRIMAYA',kelas:'4 - IBNU QOYYIM',unit:'sd'},
-  {nis:'22.02.1814',nama:'MUHAMMAD AZKA REIZA',kelas:'4 - IBNU QOYYIM',unit:'sd'},
-  {nis:'22.02.1831',nama:'MUHAMMAD FAEYZA VIRENDRA',kelas:'4 - IBNU QOYYIM',unit:'sd'},
-  {nis:'22.02.1815',nama:'MUHAMMAD RAFA AZKA PRASETIYO',kelas:'4 - IBNU QOYYIM',unit:'sd'},
-  {nis:'23.02.1850',nama:'MUHAMMAD SALMAN ABDURRAHMAN',kelas:'4 - IBNU QOYYIM',unit:'sd'},
-  {nis:'22.02.1801',nama:'NAFIRA GYNTA FARISTI',kelas:'4 - IBNU QOYYIM',unit:'sd'},
-  {nis:'22.02.1774',nama:'RAISHAN UMAIR FIQAAS',kelas:'4 - IBNU QOYYIM',unit:'sd'},
-  {nis:'22.02.1775',nama:'RAISYA AZZAHRA ARIYANTO',kelas:'4 - IBNU QOYYIM',unit:'sd'},
-  {nis:'22.02.1822',nama:'RASYID AL FACHRI',kelas:'4 - IBNU QOYYIM',unit:'sd'},
-  {nis:'22.02.1824',nama:'RAYNAND HAIDAR AL HUSAEIN',kelas:'4 - IBNU QOYYIM',unit:'sd'},
-  {nis:'22.02.1778',nama:'SHAKILA VINDRI ALMEERA',kelas:'4 - IBNU QOYYIM',unit:'sd'},
-  {nis:'22.02.1733',nama:'ADJI KENJIRO FAKHRUDDIN',kelas:'4 - IBNU RUSYD',unit:'sd'},
-  {nis:'22.02.1781',nama:'AFIFAH NAYLA MAHESWARI',kelas:'4 - IBNU RUSYD',unit:'sd'},
-  {nis:'22.02.1782',nama:'AHZA AKHFIYA ACHMAD',kelas:'4 - IBNU RUSYD',unit:'sd'},
-  {nis:'22.02.1736',nama:'ALDEA RAFIFA LIONARDY',kelas:'4 - IBNU RUSYD',unit:'sd'},
-  {nis:'22.02.1737',nama:'ALIF AL KHALIFI',kelas:'4 - IBNU RUSYD',unit:'sd'},
-  {nis:'22.02.1738',nama:'ALMIRA RATIFA MARDATILAH',kelas:'4 - IBNU RUSYD',unit:'sd'},
-  {nis:'22.02.1760',nama:'ANANTY KIMMY LESTARIONO',kelas:'4 - IBNU RUSYD',unit:'sd'},
-  {nis:'22.02.1786',nama:'ANANTHAPINDIKA AL FATIH',kelas:'4 - IBNU RUSYD',unit:'sd'},
-  {nis:'22.02.1805',nama:'AULIA NAJWA IZZATUNNISA',kelas:'4 - IBNU RUSYD',unit:'sd'},
-  {nis:'22.02.1761',nama:'DAMIA AZARA YUSNI',kelas:'4 - IBNU RUSYD',unit:'sd'},
-  {nis:'22.02.1740',nama:'DARIELLE FERDINAND AMZA',kelas:'4 - IBNU RUSYD',unit:'sd'},
-  {nis:'22.02.1807',nama:'DZAKWAN FATIH FADHILAH',kelas:'4 - IBNU RUSYD',unit:'sd'},
-  {nis:'22.02.1744',nama:'FEBIOLLA PUTRI',kelas:'4 - IBNU RUSYD',unit:'sd'},
-  {nis:'22.02.1747',nama:'KHANZA AQILAH QANITA',kelas:'4 - IBNU RUSYD',unit:'sd'},
-  {nis:'22.02.1796',nama:'KHANZA AISYAH MUKHBITA',kelas:'4 - IBNU RUSYD',unit:'sd'},
-  {nis:'22.02.1765',nama:'M. ARZEN PARDAMEAN SILITONGA',kelas:'4 - IBNU RUSYD',unit:'sd'},
-  {nis:'22.02.1769',nama:'MARWAH IFFA DESYIFA',kelas:'4 - IBNU RUSYD',unit:'sd'},
-  {nis:'22.02.1812',nama:'MUHAMMAD ASFA ARRASYID',kelas:'4 - IBNU RUSYD',unit:'sd'},
-  {nis:'24.02.1982',nama:'MUHAMMAD FAID IBRAHIM',kelas:'4 - IBNU RUSYD',unit:'sd'},
-  {nis:'23.01.1974',nama:'MUHAMMAD RABBIL ASYRAF ARDIFA',kelas:'4 - IBNU RUSYD',unit:'sd'},
-  {nis:'22.02.1767',nama:'M.RAFIF AR RAZKA PRIHANDOKO',kelas:'4 - IBNU RUSYD',unit:'sd'},
-  {nis:'22.02.1816',nama:'MUHAMMAD ZAINI YAZHILLY',kelas:'4 - IBNU RUSYD',unit:'sd'},
-  {nis:'22.02.1753',nama:'RAISYA AZ ZAHRA',kelas:'4 - IBNU RUSYD',unit:'sd'},
-  {nis:'22.02.1777',nama:'SHAFA AMEERA NUSAIBAH',kelas:'4 - IBNU RUSYD',unit:'sd'},
-  {nis:'22.02.1780',nama:'ACHMAD HAYTSAM AMIR',kelas:'4 - IBNU SINA',unit:'sd'},
-  {nis:'22.02.1783',nama:'AISYAH RAZQYA AZMI',kelas:'4 - IBNU SINA',unit:'sd'},
-  {nis:'22.02.1758',nama:'ALESHA AZZAHRA SYADDAM',kelas:'4 - IBNU SINA',unit:'sd'},
-  {nis:'22.02.1829',nama:'ALIYA SHALIHATUNISA',kelas:'4 - IBNU SINA',unit:'sd'},
-  {nis:'22.02.1787',nama:'AR RAZI ZUNNOOR MUHAMMAD',kelas:'4 - IBNU SINA',unit:'sd'},
-  {nis:'22.02.1788',nama:'AULIA RAHMANIA PURWANTO',kelas:'4 - IBNU SINA',unit:'sd'},
-  {nis:'22.02.1806',nama:'AYSHA AILANI ARHA',kelas:'4 - IBNU SINA',unit:'sd'},
-  {nis:'22.02.1790',nama:'AZKA SATRIA AL FARIZ',kelas:'4 - IBNU SINA',unit:'sd'},
-  {nis:'22.02.1792',nama:'CHELSEA BELLA WIBOWO',kelas:'4 - IBNU SINA',unit:'sd'},
-  {nis:'22.02.1742',nama:'EMRAN WAZI ALI R',kelas:'4 - IBNU SINA',unit:'sd'},
-  {nis:'22.02.1809',nama:'FATHIMAH QUEENA IKROMATUT TAZKIA',kelas:'4 - IBNU SINA',unit:'sd'},
-  {nis:'22.02.1762',nama:'FIRZHA MALIKUL HAMZAH AN-NAHULI',kelas:'4 - IBNU SINA',unit:'sd'},
-  {nis:'22.02.1763',nama:'GEMPITA ALDINO',kelas:'4 - IBNU SINA',unit:'sd'},
-  {nis:'22.02.1797',nama:'KHAYLA ALMIRA MARITZA',kelas:'4 - IBNU SINA',unit:'sd'},
-  {nis:'22.02.1798',nama:'KIANO ASHAZ RAFISQY DINATA',kelas:'4 - IBNU SINA',unit:'sd'},
-  {nis:'22.02.1834',nama:'MUHAMMAD ALTHAF',kelas:'4 - IBNU SINA',unit:'sd'},
-  {nis:'22.02.1800',nama:'MUHAMMAD NABIL HUSEIN',kelas:'4 - IBNU SINA',unit:'sd'},
-  {nis:'22.02.1771',nama:'MUHAMMAD NAUFAL ASHARY',kelas:'4 - IBNU SINA',unit:'sd'},
-  {nis:'22.02.1750',nama:'MUHAMMAD RIZKY ADITYA FADILLLAH',kelas:'4 - IBNU SINA',unit:'sd'},
-  {nis:'22.02.1768',nama:'MUHAMMAD SYAUQI RAYYAN',kelas:'4 - IBNU SINA',unit:'sd'},
-  {nis:'22.02.1823',nama:'RATU WAFIROH TAFFAN AFRIN',kelas:'4 - IBNU SINA',unit:'sd'},
-  {nis:'22.02.1754',nama:'SHAQUINNA ALNADA MARYAM',kelas:'4 - IBNU SINA',unit:'sd'},
-  {nis:'22.02.1803',nama:'SYAFA AULIA IZZATUNISHA',kelas:'4 - IBNU SINA',unit:'sd'},
-  {nis:'22.02.1826',nama:'TSABITA AYU SATYASINGGARA',kelas:'4 - IBNU SINA',unit:'sd'},
-  {nis:'22.02.1755',nama:'VANIA NASYAUQI',kelas:'4 - IBNU SINA',unit:'sd'},
-  {nis:'21.02.1649',nama:'ABIDZAR YUSUF HABIBIE',kelas:'5 - KHALID',unit:'sd'},
-  {nis:'21.02.1627',nama:'ADZKIA ANINDYA ANGGRAINI',kelas:'5 - KHALID',unit:'sd'},
-  {nis:'21.02.1698',nama:'ALARIC SAVA OGOT',kelas:'5 - KHALID',unit:'sd'},
-  {nis:'21.02.1652',nama:'AMIRA SYAFIQA ANAQI',kelas:'5 - KHALID',unit:'sd'},
-  {nis:'21.02.1633',nama:'AUDREY KHANZA MAHARANI',kelas:'5 - KHALID',unit:'sd'},
-  {nis:'21.02.1701',nama:'AZALEA HUMAIRA DESWINA',kelas:'5 - KHALID',unit:'sd'},
-  {nis:'21.02.1703',nama:'CLARISSA MIKHAYLA SYAMARDAN',kelas:'5 - KHALID',unit:'sd'},
-  {nis:'21.02.1635',nama:'IBRAZIQ HANAN SIGIT',kelas:'5 - KHALID',unit:'sd'},
-  {nis:'21.02.1665',nama:'KHANZA AZZAHRA',kelas:'5 - KHALID',unit:'sd'},
-  {nis:'22.02.1730',nama:'LUBNA AZWA MADINA',kelas:'5 - KHALID',unit:'sd'},
-  {nis:'21.02.1659',nama:'MALKA FARID ATTALAH',kelas:'5 - KHALID',unit:'sd'},
-  {nis:'21.02.1682',nama:'MUCHAMMAD TAJUDINNOOR',kelas:'5 - KHALID',unit:'sd'},
-  {nis:'21.02.1683',nama:'MUHAMMAD AZKA NIZAR SAPUTRA',kelas:'5 - KHALID',unit:'sd'},
-  {nis:'21.02.1684',nama:'MUHAMMAD FARREL ADYASTHA FAHMI',kelas:'5 - KHALID',unit:'sd'},
-  {nis:'21.02.1662',nama:'MUHAMMAD RAIHAN',kelas:'5 - KHALID',unit:'sd'},
-  {nis:'21.02.1710',nama:'MUHAMMAD UWAIS AL-QARNY',kelas:'5 - KHALID',unit:'sd'},
-  {nis:'22.02.1731',nama:'MYEISHA NAILAH MUZZAMAN',kelas:'5 - KHALID',unit:'sd'},
-  {nis:'21.02.1713',nama:'NAMEERA TAZKIA SETIAWAN',kelas:'5 - KHALID',unit:'sd'},
-  {nis:'21.02.1643',nama:'NUHA SYIFA SHIDQIA POHAN',kelas:'5 - KHALID',unit:'sd'},
-  {nis:'21.02.1688',nama:'PANDU BUMI PANDITA',kelas:'5 - KHALID',unit:'sd'},
-  {nis:'21.02.1668',nama:'RUZAIN DWI SANJAYA ICHSAN',kelas:'5 - KHALID',unit:'sd'},
-  {nis:'21.02.1715',nama:'SABRINA ALMEERA AULIA JASMINE',kelas:'5 - KHALID',unit:'sd'},
-  {nis:'23.02.1848',nama:'SACHIO ALBY YA\'AL P',kelas:'5 - KHALID',unit:'sd'},
-  {nis:'21.02.1645',nama:'SHAHNAZ ASYIFA RAHADIAN',kelas:'5 - KHALID',unit:'sd'},
-  {nis:'21.02.1695',nama:'AIERA RAISYA PUTRI',kelas:'5 - SALMAN',unit:'sd'},
-  {nis:'21.02.1699',nama:'ARJUNA AZKA SENJAYA',kelas:'5 - SALMAN',unit:'sd'},
-  {nis:'21.02.1674',nama:'ARRKHEYZA KUMALASAKTI PUTRA ARRVITA',kelas:'5 - SALMAN',unit:'sd'},
-  {nis:'21.02.1654',nama:'CHONI FARIZ ASSHIDDIQ',kelas:'5 - SALMAN',unit:'sd'},
-  {nis:'21.02.1678',nama:'HANIFATUL HUSNA',kelas:'5 - SALMAN',unit:'sd'},
-  {nis:'21.02.1657',nama:'JANEETA RUMAISHA ALMAHYYRA',kelas:'5 - SALMAN',unit:'sd'},
-  {nis:'21.02.1705',nama:'KEYSHA AGNIA PRATISTA',kelas:'5 - SALMAN',unit:'sd'},
-  {nis:'23.02.1847',nama:'KINANTI SASIKIRANA DIRGANTARA',kelas:'5 - SALMAN',unit:'sd'},
-  {nis:'21.02.1707',nama:'MUHAMMAD ALKHALIFI ANANTA',kelas:'5 - SALMAN',unit:'sd'},
-  {nis:'21.02.1708',nama:'MUHAMMAD FADHLAN ZAIDAN ARIEF',kelas:'5 - SALMAN',unit:'sd'},
-  {nis:'21.02.1685',nama:'MUHAMMAD FATIH ALI WARDHANA',kelas:'5 - SALMAN',unit:'sd'},
-  {nis:'21.02.1655',nama:'MUHAMMAD GIBRAN MANAF',kelas:'5 - SALMAN',unit:'sd'},
-  {nis:'21.02.1641',nama:'MUHAMMAD RAIHAN RAMADHAN',kelas:'5 - SALMAN',unit:'sd'},
-  {nis:'21.02.1637',nama:'M. VINZA ADLIANNOOR AL FATTIH',kelas:'5 - SALMAN',unit:'sd'},
-  {nis:'21.02.1686',nama:'NABILA OLIVIA ANGGRAENI',kelas:'5 - SALMAN',unit:'sd'},
-  {nis:'21.02.1712',nama:'NAIRA KHANZA AZZAHRA',kelas:'5 - SALMAN',unit:'sd'},
-  {nis:'23.02.1973',nama:'QOMIRA NURSYIFA RAMDHANI',kelas:'5 - SALMAN',unit:'sd'},
-  {nis:'21.02.1690',nama:'RANIA AISHA HUMAIRA',kelas:'5 - SALMAN',unit:'sd'},
-  {nis:'21.02.1714',nama:'RIANA AFIKA QUINSHA NUGROHO',kelas:'5 - SALMAN',unit:'sd'},
-  {nis:'21.02.1644',nama:'SAJIDAH YASMIN SA\'DIAH',kelas:'5 - SALMAN',unit:'sd'},
-  {nis:'21.02.1670',nama:'SOFIA CORDOBA BILQIS',kelas:'5 - SALMAN',unit:'sd'},
-  {nis:'22.02.1837',nama:'SYAFIQ NUR ADITAMA',kelas:'5 - SALMAN',unit:'sd'},
-  {nis:'21.02.1625',nama:'ABDURROHMAN ZAID AMANY',kelas:'5 - SHOLAHUDDIN',unit:'sd'},
-  {nis:'21.02.1671',nama:'ACHMAD HADI BADJEBER',kelas:'5 - SHOLAHUDDIN',unit:'sd'},
-  {nis:'21.02.1672',nama:'ADZKIA SHAFFIRA RIZAL',kelas:'5 - SHOLAHUDDIN',unit:'sd'},
-  {nis:'21.02.1650',nama:'AHMAD RAYHAN RAJENDRA',kelas:'5 - SHOLAHUDDIN',unit:'sd'},
-  {nis:'21.02.1697',nama:'AISYAH AFIQAH SHOFIYAH',kelas:'5 - SHOLAHUDDIN',unit:'sd'},
-  {nis:'21.02.1628',nama:'AISYAH LANNA SYAREEFA',kelas:'5 - SHOLAHUDDIN',unit:'sd'},
-  {nis:'21.02.1651',nama:'ALMIRA DEWIYANA SADIKIN',kelas:'5 - SHOLAHUDDIN',unit:'sd'},
-  {nis:'21.02.1631',nama:'ASHILA SAFIRA SUWANDY',kelas:'5 - SHOLAHUDDIN',unit:'sd'},
-  {nis:'21.02.1632',nama:'ASKAR DINAN RISNANDA',kelas:'5 - SHOLAHUDDIN',unit:'sd'},
-  {nis:'21.02.1700',nama:'AUFAR SATRIA AL FATIH',kelas:'5 - SHOLAHUDDIN',unit:'sd'},
-  {nis:'21.02.1702',nama:'BEBY MARITZA GWEN',kelas:'5 - SHOLAHUDDIN',unit:'sd'},
-  {nis:'21.02.1704',nama:'DIMAS NATA JAGAD',kelas:'5 - SHOLAHUDDIN',unit:'sd'},
-  {nis:'21.02.1677',nama:'HANA SHAKEELA KHAIRINA',kelas:'5 - SHOLAHUDDIN',unit:'sd'},
-  {nis:'21.02.1680',nama:'KEISHA ZAYDA WIRANATAKUSUMAH',kelas:'5 - SHOLAHUDDIN',unit:'sd'},
-  {nis:'21.02.1636',nama:'KHADIJAH HANUM WARDHANA',kelas:'5 - SHOLAHUDDIN',unit:'sd'},
-  {nis:'21.02.1709',nama:'MUHAMMAD RAYYAN ZIKRI SETIA',kelas:'5 - SHOLAHUDDIN',unit:'sd'},
-  {nis:'21.02.1663',nama:'MUHAMMAD RIZKI AL HAKIM',kelas:'5 - SHOLAHUDDIN',unit:'sd'},
-  {nis:'21.02.1711',nama:'NADIA AISYAH MAHARANI',kelas:'5 - SHOLAHUDDIN',unit:'sd'},
-  {nis:'21.02.1666',nama:'NAIRA QISYA HUMAIRA',kelas:'5 - SHOLAHUDDIN',unit:'sd'},
-  {nis:'21.02.1642',nama:'NAURA ARRIANA SALSABILA',kelas:'5 - SHOLAHUDDIN',unit:'sd'},
-  {nis:'24.02.1980',nama:'UBAID ABBASY EL- RAZIQ',kelas:'5 - SHOLAHUDDIN',unit:'sd'},
-  {nis:'21.02.1716',nama:'VIDEL PRASAV AKHTAR',kelas:'5 - SHOLAHUDDIN',unit:'sd'},
-  {nis:'21.02.1647',nama:'ZALFA QAISARA',kelas:'5 - SHOLAHUDDIN',unit:'sd'},
-  {nis:'21.02.1648',nama:'AAFIYAH ANANDAYU DANURDARA SUSANTO',kelas:'5 - THORIQ',unit:'sd'},
-  {nis:'21.02.1694',nama:'AHMAD MIZAN AUFA',kelas:'5 - THORIQ',unit:'sd'},
-  {nis:'21.02.1696',nama:'AISYA JAMILA',kelas:'5 - THORIQ',unit:'sd'},
-  {nis:'21.02.1673',nama:'AISYAH AILA VARISHA',kelas:'5 - THORIQ',unit:'sd'},
-  {nis:'21.02.1630',nama:'ARIENDRA PUTRA SANJAYA',kelas:'5 - THORIQ',unit:'sd'},
-  {nis:'21.02.1653',nama:'AYASHA PUTRI RAMADHANI',kelas:'5 - THORIQ',unit:'sd'},
-  {nis:'21.02.1675',nama:'BILQIS SYAUQIYA LUBNA',kelas:'5 - THORIQ',unit:'sd'},
-  {nis:'21.02.1634',nama:'FAKHRI ANANTA AL  FARISY',kelas:'5 - THORIQ',unit:'sd'},
-  {nis:'21.02.1676',nama:'HAFIZ RAGIEL RAFISYA',kelas:'5 - THORIQ',unit:'sd'},
-  {nis:'21.02.1656',nama:'HANIYYA AYSHA SYAKIRA',kelas:'5 - THORIQ',unit:'sd'},
-  {nis:'21.02.1706',nama:'MAUDY AYUDIA INARA',kelas:'5 - THORIQ',unit:'sd'},
-  {nis:'21.02.1660',nama:'MIKAILA LAILI IMTIYAZ',kelas:'5 - THORIQ',unit:'sd'},
-  {nis:'21.02.1638',nama:'MIKAYLA AZNII SYAKIRA',kelas:'5 - THORIQ',unit:'sd'},
-  {nis:'21.02.1661',nama:'MUHAMMAD ALTHAF ANFIDRY IRAWAN',kelas:'5 - THORIQ',unit:'sd'},
-  {nis:'21.02.1639',nama:'MUHAMMAD FADHILLAH FATHIR FAHMI',kelas:'5 - THORIQ',unit:'sd'},
-  {nis:'21.02.1640',nama:'MUHAMMAD QUTBI AL FATIH',kelas:'5 - THORIQ',unit:'sd'},
-  {nis:'21.02.1664',nama:'MUSTHAFA ADJI AL-FARIZY',kelas:'5 - THORIQ',unit:'sd'},
-  {nis:'21.02.1687',nama:'NADHIRA AFIQAH MAHARANI',kelas:'5 - THORIQ',unit:'sd'},
-  {nis:'21.02.1667',nama:'NAUFAL HAIDAR FEBRIAN',kelas:'5 - THORIQ',unit:'sd'},
-  {nis:'21.02.1669',nama:'SANDRA FORTUNELLA',kelas:'5 - THORIQ',unit:'sd'},
-  {nis:'21.02.1693',nama:'SYAUQILLA ZHAFIRA PRAMESWITA',kelas:'5 - THORIQ',unit:'sd'},
-  {nis:'21.02.1646',nama:'VIOLENZA KEISHA GLADYS',kelas:'5 - THORIQ',unit:'sd'},
-  {nis:'20.02.1564',nama:'AHMAD AHSAN FADHILA',kelas:'6 - HAMBALI',unit:'sd'},
-  {nis:'20.02.1566',nama:'AISHA ZIVANNA RIZANDA',kelas:'6 - HAMBALI',unit:'sd'},
-  {nis:'20.02.1540',nama:'AL GHAZALI DANNIWARA AJI',kelas:'6 - HAMBALI',unit:'sd'},
-  {nis:'20.02.1588',nama:'AL ZAHRAWI ZUNNOOR MUHAMMAD',kelas:'6 - HAMBALI',unit:'sd'},
-  {nis:'20.02.1591',nama:'ALYA ZHAFIRAH ROSADY',kelas:'6 - HAMBALI',unit:'sd'},
-  {nis:'20.02.1593',nama:'ANINDAYU GENDHIS NARESWARI',kelas:'6 - HAMBALI',unit:'sd'},
-  {nis:'20.02.1515',nama:'DURATU SYAUQIA WIJAYA',kelas:'6 - HAMBALI',unit:'sd'},
-  {nis:'23.02.1846',nama:'FADILA ALFARHUNIISA ZAHIYAH',kelas:'6 - HAMBALI',unit:'sd'},
-  {nis:'20.02.1598',nama:'FATIR AR RAYYAN YUSUF',kelas:'6 - HAMBALI',unit:'sd'},
-  {nis:'20.02.1600',nama:'HANNA NURHALIZA',kelas:'6 - HAMBALI',unit:'sd'},
-  {nis:'20.02.1601',nama:'HAURA CARISSA ELSYAMA',kelas:'6 - HAMBALI',unit:'sd'},
-  {nis:'20.02.1576',nama:'KHAYNAMIRA ARSYA FIRDAUZY',kelas:'6 - HAMBALI',unit:'sd'},
-  {nis:'20.02.1538',nama:'MIKHA EL SHAKA GARIEL NUGRAHA',kelas:'6 - HAMBALI',unit:'sd'},
-  {nis:'20.02.1522',nama:'MUHAMMAD ALEXANDER SUMARNA',kelas:'6 - HAMBALI',unit:'sd'},
-  {nis:'20.02.1604',nama:'MUHAMMAD AT THAHA',kelas:'6 - HAMBALI',unit:'sd'},
-  {nis:'20.02.1580',nama:'MUHAMMAD DZAKIR KHADAFI',kelas:'6 - HAMBALI',unit:'sd'},
-  {nis:'20.02.1582',nama:'NABIL ARYA YUSFA MANNAF',kelas:'6 - HAMBALI',unit:'sd'},
-  {nis:'20.02.1607',nama:'NAIRA KHALIQA AZZAHRA',kelas:'6 - HAMBALI',unit:'sd'},
-  {nis:'20.02.1558',nama:'NAURAH QONITA AMSYAR',kelas:'6 - HAMBALI',unit:'sd'},
-  {nis:'24.02.2087',nama:'RAFA AKHTAR ALFARIZI',kelas:'6 - HAMBALI',unit:'sd'},
-  {nis:'22.02.1729',nama:'RAISA TEVITA TIANA',kelas:'6 - HAMBALI',unit:'sd'},
-  {nis:'20.02.1530',nama:'RASYID OMAR PRABOWO',kelas:'6 - HAMBALI',unit:'sd'},
-  {nis:'20.02.1559',nama:'RAZZAN AHMAD ABQORY',kelas:'6 - HAMBALI',unit:'sd'},
-  {nis:'20.02.1560',nama:'SHARMA BRIA NUGRAHA',kelas:'6 - HAMBALI',unit:'sd'},
-  {nis:'20.02.1610',nama:'SYAMIL SIDIK PURWANTO',kelas:'6 - HAMBALI',unit:'sd'},
-  {nis:'20.02.1563',nama:'ACHMAD SAKHA RIFID ALFATIH',kelas:'6 - HANAFI',unit:'sd'},
-  {nis:'20.02.1536',nama:'ADHWA NABILA',kelas:'6 - HANAFI',unit:'sd'},
-  {nis:'20.02.1511',nama:'AFKAR MUSYAFFAH LUTFILLAH',kelas:'6 - HANAFI',unit:'sd'},
-  {nis:'20.02.1537',nama:'AHMAD DAHLAN RAMADANA',kelas:'6 - HANAFI',unit:'sd'},
-  {nis:'20.02.1587',nama:'AJENG NAILA MUAZARA',kelas:'6 - HANAFI',unit:'sd'},
-  {nis:'20.02.1590',nama:'ALINKA FATHIYYA QIRANI',kelas:'6 - HANAFI',unit:'sd'},
-  {nis:'20.02.1595',nama:'AZKA RAYN ALDIPASHA',kelas:'6 - HANAFI',unit:'sd'},
-  {nis:'20.02.1573',nama:'FARISHTAA AURELIA ZHAFIRA',kelas:'6 - HANAFI',unit:'sd'},
-  {nis:'20.02.1516',nama:'FARIZAH HUMAIRA',kelas:'6 - HANAFI',unit:'sd'},
-  {nis:'20.02.1517',nama:'HAFIZ RIFQI ARIBOWO',kelas:'6 - HANAFI',unit:'sd'},
-  {nis:'20.02.1575',nama:'KHANZA AZZAHRA SUSILO',kelas:'6 - HANAFI',unit:'sd'},
-  {nis:'20.02.1577',nama:'KYNAN ZIVANA SANDY',kelas:'6 - HANAFI',unit:'sd'},
-  {nis:'20.02.1549',nama:'LAKEYSHA EL-HAZIMA',kelas:'6 - HANAFI',unit:'sd'},
-  {nis:'20.02.1602',nama:'LATIEF AYYASH EL AZZAM KUSNADI',kelas:'6 - HANAFI',unit:'sd'},
-  {nis:'20.02.1553',nama:'MUHAMMAD ARIA NATA KUSUMA',kelas:'6 - HANAFI',unit:'sd'},
-  {nis:'20.02.1524',nama:'MUHAMMAD ARKA ADHYASTA',kelas:'6 - HANAFI',unit:'sd'},
-  {nis:'20.02.1555',nama:'MUHAMMAD DANISH ABIZAR',kelas:'6 - HANAFI',unit:'sd'},
-  {nis:'20.02.1525',nama:'MUHAMMAD HABIBI ABQARY ALAM',kelas:'6 - HANAFI',unit:'sd'},
-  {nis:'20.02.1556',nama:'MUHAMMAD NAVID QURROTAYUN BUDIPRASETYA',kelas:'6 - HANAFI',unit:'sd'},
-  {nis:'20.02.1581',nama:'MUHAMMAD RAFFA ZULKIFLI',kelas:'6 - HANAFI',unit:'sd'},
-  {nis:'20.02.1606',nama:'MUHAMMAD SAMUDRA DIRRAHMAN',kelas:'6 - HANAFI',unit:'sd'},
-  {nis:'20.02.1583',nama:'NABILA LARASATI WARDANI',kelas:'6 - HANAFI',unit:'sd'},
-  {nis:'25.02.2091',nama:'NAIFAH SYAFIIQAH ARSAL',kelas:'6 - HANAFI',unit:'sd'},
-  {nis:'20.02.1528',nama:'NAURAH RAJWA PUTRI',kelas:'6 - HANAFI',unit:'sd'},
-  {nis:'20.02.1532',nama:'REYYANDA ADZKIA ADDIMA WIJAYA',kelas:'6 - HANAFI',unit:'sd'},
-  {nis:'20.02.1510',nama:'ADEEVA ZAHSY WIDODARI',kelas:'6 - MALIKI',unit:'sd'},
-  {nis:'20.02.1521',nama:'AISHA LUVEENA IBNATY',kelas:'6 - MALIKI',unit:'sd'},
-  {nis:'20.02.1567',nama:'ALKA ZAVIER AL GHIFARY',kelas:'6 - MALIKI',unit:'sd'},
-  {nis:'20.02.1569',nama:'ANDI ALIYA LATISHA',kelas:'6 - MALIKI',unit:'sd'},
-  {nis:'20.02.1571',nama:'ASHRAF FAIZ AL ARKHAN',kelas:'6 - MALIKI',unit:'sd'},
-  {nis:'20.02.1596',nama:'AZKA SAFIRA KHAIRUNNISAH',kelas:'6 - MALIKI',unit:'sd'},
-  {nis:'20.02.1543',nama:'AZRAA ALESHA RAMADHANI',kelas:'6 - MALIKI',unit:'sd'},
-  {nis:'20.02.1545',nama:'BELVA ADELIA NOOR MAJID',kelas:'6 - MALIKI',unit:'sd'},
-  {nis:'20.02.1548',nama:'ENCI AHMAD ABRAHAM ARSYI ANUGRAH',kelas:'6 - MALIKI',unit:'sd'},
-  {nis:'20.02.1597',nama:'FAHMI AMMAR PUTRA SASONGKO',kelas:'6 - MALIKI',unit:'sd'},
-  {nis:'20.02.1599',nama:'GHINA ASHIRA',kelas:'6 - MALIKI',unit:'sd'},
-  {nis:'24.02.1979',nama:'HAFIZA KHAIRA LUBNA',kelas:'6 - MALIKI',unit:'sd'},
-  {nis:'20.02.1578',nama:'M. CHARRAFA PRANAJA',kelas:'6 - MALIKI',unit:'sd'},
-  {nis:'20.02.1520',nama:'MAWAR NAZWA DITYA',kelas:'6 - MALIKI',unit:'sd'},
-  {nis:'20.02.1552',nama:'MUHAMMAD ABRAR AL AUSHAF NAVARA A.',kelas:'6 - MALIKI',unit:'sd'},
-  {nis:'20.02.1579',nama:'MUHAMMAD AL FATIH HK',kelas:'6 - MALIKI',unit:'sd'},
-  {nis:'20.02.1603',nama:'MUHAMMAD ALDEN FAYREL ATHARIZZ',kelas:'6 - MALIKI',unit:'sd'},
-  {nis:'20.02.1523',nama:'MUHAMMAD ALVARO PERDANA',kelas:'6 - MALIKI',unit:'sd'},
-  {nis:'20.02.1557',nama:'MUHAMMAD RICO ARDANA',kelas:'6 - MALIKI',unit:'sd'},
-  {nis:'20.02.1526',nama:'MUHAMMAD SANDIEGO UNO',kelas:'6 - MALIKI',unit:'sd'},
-  {nis:'20.02.1612',nama:'WILDAN YAZID AQIEL',kelas:'6 - MALIKI',unit:'sd'},
-  {nis:'22.02.1838',nama:'RADITYA ARGANTHA BHIMASENA',kelas:'6 - MALIKI',unit:'sd'},
-  {nis:'20.02.1534',nama:'SENANDUNG NACITA',kelas:'6 - MALIKI',unit:'sd'},
-  {nis:'20.02.1535',nama:'SYAUQILA ANNAILA HARDIYANTO',kelas:'6 - MALIKI',unit:'sd'},
-  {nis:'20.02.1586',nama:'TITANIA ALUNA AHMAD',kelas:'6 - MALIKI',unit:'sd'},
-  {nis:'23.02.1975',nama:'VAREN ALFATHAN',kelas:'6 - MALIKI',unit:'sd'},
-  {nis:'20.02.1562',nama:'ABID ABDILLA RACHMAT',kelas:'6 - SYAFII',unit:'sd'},
-  {nis:'21.02.1624',nama:'ADJI IMAKO SALSABILA',kelas:'6 - SYAFII',unit:'sd'},
-  {nis:'20.02.1512',nama:'AHMAD AL GHAZALI IBNU SAHRONI',kelas:'6 - SYAFII',unit:'sd'},
-  {nis:'20.02.1513',nama:'AHMAD AZZAM FATURRAHMAN',kelas:'6 - SYAFII',unit:'sd'},
-  {nis:'20.02.1565',nama:'AHMAD SULAIMAN WARDHANA',kelas:'6 - SYAFII',unit:'sd'},
-  {nis:'20.02.1539',nama:'AISYAH FADHILAH PRABOWO',kelas:'6 - SYAFII',unit:'sd'},
-  {nis:'20.02.1568',nama:'ALTHAFUNISA KHAYLILA SHANUM',kelas:'6 - SYAFII',unit:'sd'},
-  {nis:'20.02.1570',nama:'ANDI KAYLA SYAFWATUNNISA',kelas:'6 - SYAFII',unit:'sd'},
-  {nis:'20.02.1514',nama:'ASYIFA OLIVIA',kelas:'6 - SYAFII',unit:'sd'},
-  {nis:'20.02.1541',nama:'AVRIL FELICIA HAMDALI',kelas:'6 - SYAFII',unit:'sd'},
-  {nis:'21.02.1720',nama:'DZAKIYA RAMADHANI',kelas:'6 - SYAFII',unit:'sd'},
-  {nis:'22.02.1722',nama:'FAIRUZA MAAHESA CETA P.',kelas:'6 - SYAFII',unit:'sd'},
-  {nis:'20.02.1518',nama:'JEEVAN FHAEYZA DANISWARA',kelas:'6 - SYAFII',unit:'sd'},
-  {nis:'20.02.1574',nama:'KEYZHIA SABRINA BASKORO',kelas:'6 - SYAFII',unit:'sd'},
-  {nis:'20.02.1550',nama:'LATISHA JAUZAA MUNJATI',kelas:'6 - SYAFII',unit:'sd'},
-  {nis:'20.02.1551',nama:'MASYITHA HUMAIRA',kelas:'6 - SYAFII',unit:'sd'},
-  {nis:'20.02.1554',nama:'MUHAMMAD ATTALAH RAMADHANA',kelas:'6 - SYAFII',unit:'sd'},
-  {nis:'20.02.1605',nama:'MUHAMMAD FERISQO HARYANTO',kelas:'6 - SYAFII',unit:'sd'},
-  {nis:'20.02.1527',nama:'MUHAMMAD ZAID',kelas:'6 - SYAFII',unit:'sd'},
-  {nis:'20.02.1529',nama:'QAIREEN TESSALOMEKHA',kelas:'6 - SYAFII',unit:'sd'},
-  {nis:'20.02.1531',nama:'RAYYA ADZKIA RAHMAH',kelas:'6 - SYAFII',unit:'sd'},
-  {nis:'22.02.1836',nama:'RAZIQ GATHAN S',kelas:'6 - SYAFII',unit:'sd'},
-  {nis:'20.02.1584',nama:'RHENO AVAIRO KHEANU AL FATIH',kelas:'6 - SYAFII',unit:'sd'},
-  {nis:'20.02.1533',nama:'RIZKY NABIL RAMADHAN',kelas:'6 - SYAFII',unit:'sd'},
-  {nis:'20.02.1611',nama:'VIONA ELYSIA',kelas:'6 - SYAFII',unit:'sd'},
-  // SMP - 283 murid
-  {nis:'25.03.0751',nama:'AISYA KIRANA ARBA',kelas:'7 AL FAROBI',unit:'smp'},
-  {nis:'25.03.0753',nama:'AJI MUHAMMAD IRFAN ZACKARY CHAIM',kelas:'7 AL FAROBI',unit:'smp'},
-  {nis:'25.03.0754',nama:'ALFAREZEL RAFFASYA SYAHMI RAMA',kelas:'7 AL FAROBI',unit:'smp'},
-  {nis:'25.03.0755',nama:'ALIFIANDRA AZKA MAHARDIKA',kelas:'7 AL FAROBI',unit:'smp'},
-  {nis:'25.03.0756',nama:'ANDARE ZAHRA MAHESWARI',kelas:'7 AL FAROBI',unit:'smp'},
-  {nis:'25.03.0757',nama:'ASHA NUR SHAFIRA RAMADHANI',kelas:'7 AL FAROBI',unit:'smp'},
-  {nis:'25.03.0759',nama:'AUDREY MAHLIKA AZZAHRA',kelas:'7 AL FAROBI',unit:'smp'},
-  {nis:'25.03.0760',nama:'DANESH FAEYZA SETIAWANPUTRA',kelas:'7 AL FAROBI',unit:'smp'},
-  {nis:'25.03.0761',nama:'DANISH RAKA NUGROHO',kelas:'7 AL FAROBI',unit:'smp'},
-  {nis:'25.03.0762',nama:'HASBULLAH CHALID',kelas:'7 AL FAROBI',unit:'smp'},
-  {nis:'25.03.0763',nama:'KHAIRU NASHRILLAH ALGHOZIE',kelas:'7 AL FAROBI',unit:'smp'},
-  {nis:'25.03.0764',nama:'MAHER ZAIN IQBAL ATTHARIZ',kelas:'7 AL FAROBI',unit:'smp'},
-  {nis:'25.03.0765',nama:'MUHAMMAD ALI RIDHA',kelas:'7 AL FAROBI',unit:'smp'},
-  {nis:'25.03.0766',nama:'MUHAMMAD AZKA MIRZA IRAWAN',kelas:'7 AL FAROBI',unit:'smp'},
-  {nis:'25.03.0769',nama:'MUHAMMAD SHINICHI ARLIE ABQARY',kelas:'7 AL FAROBI',unit:'smp'},
-  {nis:'25.03.0771',nama:'NADA FAJRIA SALSABILA',kelas:'7 AL FAROBI',unit:'smp'},
-  {nis:'25.03.0772',nama:'REGI WIRANATA',kelas:'7 AL FAROBI',unit:'smp'},
-  {nis:'25.03.0773',nama:'REYNA SHANUM ADDIMA WIJAYA',kelas:'7 AL FAROBI',unit:'smp'},
-  {nis:'25.03.0775',nama:'SELMA ALIVIA DE KIRANI',kelas:'7 AL FAROBI',unit:'smp'},
-  {nis:'25.03.0801',nama:'AFKAR ATHAILLAH',kelas:'7 AL JAZARI',unit:'smp'},
-  {nis:'25.03.0752',nama:'AISYAFIQA ISLAMADINA PRASETYA',kelas:'7 AL JAZARI',unit:'smp'},
-  {nis:'25.03.0804',nama:'AIZAAR GAZZA MUHAMMAD ALI',kelas:'7 AL JAZARI',unit:'smp'},
-  {nis:'25.03.0778',nama:'AJI MUHAMMAD RAFIF AZHFAR',kelas:'7 AL JAZARI',unit:'smp'},
-  {nis:'25.03.0758',nama:'ASYA FAEYZA VIRENDRA',kelas:'7 AL JAZARI',unit:'smp'},
-  {nis:'25.03.0808',nama:'AURA RATU BILQIS',kelas:'7 AL JAZARI',unit:'smp'},
-  {nis:'25.03.0780',nama:'BRILLIANT ATHOILLA NUGRAHA',kelas:'7 AL JAZARI',unit:'smp'},
-  {nis:'25.03.0781',nama:'HAZIQAH SHEZA ASHEEQA',kelas:'7 AL JAZARI',unit:'smp'},
-  {nis:'25.03.0811',nama:'MOHAMMAD FABIAN PRATAMA',kelas:'7 AL JAZARI',unit:'smp'},
-  {nis:'25.03.0812',nama:'MUHAMMAD ADELARD TARA EL-GHANI',kelas:'7 AL JAZARI',unit:'smp'},
-  {nis:'25.03.0813',nama:'MUHAMMAD ADHEASTA RACHMADIAN',kelas:'7 AL JAZARI',unit:'smp'},
-  {nis:'25.03.0788',nama:'MUHAMMAD FADHIL ZHAFWAN FIRDAUS',kelas:'7 AL JAZARI',unit:'smp'},
-  {nis:'25.03.0767',nama:'MUHAMMAD HALIMELFREDALQOYYUM SANTOVA',kelas:'7 AL JAZARI',unit:'smp'},
-  {nis:'25.03.0768',nama:'MUHAMMAD SEPTIADY',kelas:'7 AL JAZARI',unit:'smp'},
-  {nis:'25.03.0770',nama:'MUHAMMAD ZIO AUFA ATHAILLAH',kelas:'7 AL JAZARI',unit:'smp'},
-  {nis:'25.03.0791',nama:'MYISHA FATIMAH AZZAHRA',kelas:'7 AL JAZARI',unit:'smp'},
-  {nis:'25.03.0816',nama:'NAURAFIKA ZAAFARANI',kelas:'7 AL JAZARI',unit:'smp'},
-  {nis:'25.03.0774',nama:'SAARAH AFIFA FITIYA',kelas:'7 AL JAZARI',unit:'smp'},
-  {nis:'25.03.0798',nama:'ZAHFRAN DZAMAR RADITYA',kelas:'7 AL JAZARI',unit:'smp'},
-  {nis:'25.03.0776',nama:'AFEEFA FAUZIA JASMINE',kelas:'7 AL KHAWARIZMI',unit:'smp'},
-  {nis:'25.03.0777',nama:'AJI KHEVIN SAHINDRA FARHAN',kelas:'7 AL KHAWARIZMI',unit:'smp'},
-  {nis:'25.03.0779',nama:'AWANG MOCHAMAD RAFLY DHARMAWAN',kelas:'7 AL KHAWARIZMI',unit:'smp'},
-  {nis:'25.03.0782',nama:'JAVIER ABISATYA NUGROHO',kelas:'7 AL KHAWARIZMI',unit:'smp'},
-  {nis:'25.03.0783',nama:'JIHAN MAKAILA FAKHIRA',kelas:'7 AL KHAWARIZMI',unit:'smp'},
-  {nis:'25.03.0784',nama:'KHANSA MALIKHAH',kelas:'7 AL KHAWARIZMI',unit:'smp'},
-  {nis:'25.03.0785',nama:'LEON ALVARO ALKHALIFI',kelas:'7 AL KHAWARIZMI',unit:'smp'},
-  {nis:'25.03.0786',nama:'M. NAZHIM NUR RAHMAT',kelas:'7 AL KHAWARIZMI',unit:'smp'},
-  {nis:'25.03.0787',nama:'MUHAMMAD ABDAD KASVHA ANTHON',kelas:'7 AL KHAWARIZMI',unit:'smp'},
-  {nis:'25.03.0789',nama:'MUHAMMAD KHAIRA KHALQILLAH',kelas:'7 AL KHAWARIZMI',unit:'smp'},
-  {nis:'25.03.0790',nama:'MUHAMMAD RIZKY WARDHANA',kelas:'7 AL KHAWARIZMI',unit:'smp'},
-  {nis:'25.03.0792',nama:'NUR ANNISA PUTRI',kelas:'7 AL KHAWARIZMI',unit:'smp'},
-  {nis:'25.03.0793',nama:'RAISHA ALYA ZHAFIRA',kelas:'7 AL KHAWARIZMI',unit:'smp'},
-  {nis:'25.03.0794',nama:'REZKY AULIA ALDHANY SITANGGANG',kelas:'7 AL KHAWARIZMI',unit:'smp'},
-  {nis:'25.03.0795',nama:'SHAKILA RAISYA ARIENNE',kelas:'7 AL KHAWARIZMI',unit:'smp'},
-  {nis:'25.03.0796',nama:'SHAQUILLA ZIVARA ARDELIA',kelas:'7 AL KHAWARIZMI',unit:'smp'},
-  {nis:'25.03.0797',nama:'SYAFIRA AZALIA SUJONO',kelas:'7 AL KHAWARIZMI',unit:'smp'},
-  {nis:'25.03.0799',nama:'ZAKI MUHID MUZABBIB',kelas:'7 AL KHAWARIZMI',unit:'smp'},
-  {nis:'25.03.0826',nama:'YASMIN FARADILLA',kelas:'7 AL KHAWARIZMI',unit:'smp'},
-  {nis:'25.03.0800',nama:'ABRIL ASYAM SYAMSIR',kelas:'7 AL KINDI',unit:'smp'},
-  {nis:'25.03.0802',nama:'AHMAD AFFAN ADDIN',kelas:'7 AL KINDI',unit:'smp'},
-  {nis:'25.03.0803',nama:'AHMAD GHAIS',kelas:'7 AL KINDI',unit:'smp'},
-  {nis:'25.03.0805',nama:'AKHTAR REYNELL ANJALANI',kelas:'7 AL KINDI',unit:'smp'},
-  {nis:'25.03.0806',nama:'ALIF RAYENDRA DZAKI',kelas:'7 AL KINDI',unit:'smp'},
-  {nis:'25.03.0807',nama:'ALLISYA ATHIATUL HANIYAH',kelas:'7 AL KINDI',unit:'smp'},
-  {nis:'25.03.0825',nama:'BENING PUTRI TAZKIYAH',kelas:'7 AL KINDI',unit:'smp'},
-  {nis:'25.03.0809',nama:'IRHAMNI MIFDHALI ATHIF NIZOMY',kelas:'7 AL KINDI',unit:'smp'},
-  {nis:'25.03.0810',nama:'KEISHA CLARA WULANDARI',kelas:'7 AL KINDI',unit:'smp'},
-  {nis:'25.03.0814',nama:'NABILA ALYA MUKHBITA',kelas:'7 AL KINDI',unit:'smp'},
-  {nis:'25.03.0815',nama:'NADIA KIRANA FIRDAUS',kelas:'7 AL KINDI',unit:'smp'},
-  {nis:'25.03.0817',nama:'NAYLA NUR AMIRA',kelas:'7 AL KINDI',unit:'smp'},
-  {nis:'25.03.0818',nama:'RAIHANNA DZAKIYYA MAISYARA',kelas:'7 AL KINDI',unit:'smp'},
-  {nis:'25.03.0819',nama:'SARAH JANEETA MUMTAZ',kelas:'7 AL KINDI',unit:'smp'},
-  {nis:'25.03.0820',nama:'SAYID ALTHAN SYARIF ALBAITY',kelas:'7 AL KINDI',unit:'smp'},
-  {nis:'25.03.0821',nama:'SAYID KENZI THAARIQ YAAFI BA\'BUD',kelas:'7 AL KINDI',unit:'smp'},
-  {nis:'25.03.0822',nama:'SYAHID TRITAMA RAMADHAN',kelas:'7 AL KINDI',unit:'smp'},
-  {nis:'25.03.0823',nama:'SYAQUILA ANNASYA NUGROHO',kelas:'7 AL KINDI',unit:'smp'},
-  {nis:'24.03.0669',nama:'ADRIAN FEBRIANUR',kelas:'8 IBNU BAJJAH',unit:'smp'},
-  {nis:'24.03.0716',nama:'ADRIANA MARSHA',kelas:'8 IBNU BAJJAH',unit:'smp'},
-  {nis:'24.03.0647',nama:'AISHA PRIYANKA BUDIMAN',kelas:'8 IBNU BAJJAH',unit:'smp'},
-  {nis:'24.03.0718',nama:'AKMAL AL BAIHAQI WIBOWO',kelas:'8 IBNU BAJJAH',unit:'smp'},
-  {nis:'24.03.0648',nama:'ALDWIN RUSDIN',kelas:'8 IBNU BAJJAH',unit:'smp'},
-  {nis:'24.03.0671',nama:'ALYA HUMAIRA',kelas:'8 IBNU BAJJAH',unit:'smp'},
-  {nis:'24.03.0723',nama:'ANNISA RANIA ZAHIDAH',kelas:'8 IBNU BAJJAH',unit:'smp'},
-  {nis:'24.03.0674',nama:'ARNAYA LUTHFYA RAHITA',kelas:'8 IBNU BAJJAH',unit:'smp'},
-  {nis:'24.03.0726',nama:'ARYASATYA PRADIPTA',kelas:'8 IBNU BAJJAH',unit:'smp'},
-  {nis:'24.03.0698',nama:'ATHAYA KHANZA RAFILA',kelas:'8 IBNU BAJJAH',unit:'smp'},
-  {nis:'24.03.0699',nama:'FAIZAL JUSTIN SAMDANA',kelas:'8 IBNU BAJJAH',unit:'smp'},
-  {nis:'24.03.0681',nama:'I GEDE RAKA SANDYANA',kelas:'8 IBNU BAJJAH',unit:'smp'},
-  {nis:'24.03.0701',nama:'KHALILAH QUANEISHA',kelas:'8 IBNU BAJJAH',unit:'smp'},
-  {nis:'24.03.0658',nama:'KHAYLA NATHANIA AGITA PUTRI',kelas:'8 IBNU BAJJAH',unit:'smp'},
-  {nis:'24.03.0703',nama:'MUHAMMAD ALII MUBAROK',kelas:'8 IBNU BAJJAH',unit:'smp'},
-  {nis:'24.03.0704',nama:'MUHAMMAD ALVARO SYARIF',kelas:'8 IBNU BAJJAH',unit:'smp'},
-  {nis:'24.03.0705',nama:'MUHAMMAD ARYA DZAKI AMAR PRATAMA',kelas:'8 IBNU BAJJAH',unit:'smp'},
-  {nis:'24.03.0659',nama:'MUHAMMAD REVAN GHAILAN STYAWAN',kelas:'8 IBNU BAJJAH',unit:'smp'},
-  {nis:'24.03.0685',nama:'MUHAMMAD ZAINI ZAIN',kelas:'8 IBNU BAJJAH',unit:'smp'},
-  {nis:'24.03.0662',nama:'RACHMA NUR ASSYIFA HUDA',kelas:'8 IBNU BAJJAH',unit:'smp'},
-  {nis:'24.03.0689',nama:'RASHEESA HANANIA SIGIT',kelas:'8 IBNU BAJJAH',unit:'smp'},
-  {nis:'24.03.0712',nama:'SHAQUELL FARRAS SYAKIR',kelas:'8 IBNU BAJJAH',unit:'smp'},
-  {nis:'24.03.0690',nama:'SHAULA BINTANG LARASATI WIBOWO',kelas:'8 IBNU BAJJAH',unit:'smp'},
-  {nis:'24.03.0667',nama:'SYAZA AISYAH RAMADHANI',kelas:'8 IBNU BAJJAH',unit:'smp'},
-  {nis:'24.03.0692',nama:'ZAYNA NAMIRA AMROE',kelas:'8 IBNU BAJJAH',unit:'smp'},
-  {nis:'24.03.0646',nama:'ADHYASTHA PRASRAYA MAHANIPUNA',kelas:'8 IBNU HAITSAM',unit:'smp'},
-  {nis:'24.03.0693',nama:'ADZKIYAA LUBNAA',kelas:'8 IBNU HAITSAM',unit:'smp'},
-  {nis:'24.03.0719',nama:'AKRAM SAAID ALIIF AMIIN',kelas:'8 IBNU HAITSAM',unit:'smp'},
-  {nis:'24.03.0722',nama:'ALLAFA AHMAD WIBOWO',kelas:'8 IBNU HAITSAM',unit:'smp'},
-  {nis:'24.03.0649',nama:'ALLIA NADIFHA ALLANA',kelas:'8 IBNU HAITSAM',unit:'smp'},
-  {nis:'24.03.0673',nama:'ANINDITA DINDA HENDRAWAN',kelas:'8 IBNU HAITSAM',unit:'smp'},
-  {nis:'24.03.0724',nama:'AQILAH FILZAH ERWIN',kelas:'8 IBNU HAITSAM',unit:'smp'},
-  {nis:'24.03.0676',nama:'ATHARIZZ RASYA ADHYASTHA',kelas:'8 IBNU HAITSAM',unit:'smp'},
-  {nis:'24.03.0653',nama:'FAYZA LARAS QORY DEVI',kelas:'8 IBNU HAITSAM',unit:'smp'},
-  {nis:'24.03.0730',nama:'JANETA AMIRA RIEVYA',kelas:'8 IBNU HAITSAM',unit:'smp'},
-  {nis:'24.03.0731',nama:'JIBRIL SURYA',kelas:'8 IBNU HAITSAM',unit:'smp'},
-  {nis:'24.03.0655',nama:'KALE ALWUTSQA',kelas:'8 IBNU HAITSAM',unit:'smp'},
-  {nis:'24.03.0732',nama:'KANEYSHA ALMAYERA MAHYA SEVINA',kelas:'8 IBNU HAITSAM',unit:'smp'},
-  {nis:'24.03.0660',nama:'MAHARANI KHAIRUNNISA SURPANI',kelas:'8 IBNU HAITSAM',unit:'smp'},
-  {nis:'24.03.0734',nama:'MUHAMMAD AQIL AZIZ RIZQILLAH',kelas:'8 IBNU HAITSAM',unit:'smp'},
-  {nis:'24.03.0747',nama:'MUHAMMAD ARSY RAZAK RAMADAN',kelas:'8 IBNU HAITSAM',unit:'smp'},
-  {nis:'24.03.0683',nama:'MUHAMMAD ATHAR ABDUL GHANI',kelas:'8 IBNU HAITSAM',unit:'smp'},
-  {nis:'24.03.0706',nama:'MUHAMMAD DENY ZAID MAULANA',kelas:'8 IBNU HAITSAM',unit:'smp'},
-  {nis:'24.03.0661',nama:'MUHAMMAD RAIHAN HIDAYAT',kelas:'8 IBNU HAITSAM',unit:'smp'},
-  {nis:'24.03.0708',nama:'MUHAMMAD RIZKY RAMADHAN',kelas:'8 IBNU HAITSAM',unit:'smp'},
-  {nis:'24.03.0709',nama:'NADINE ALFRIDA DANIYA',kelas:'8 IBNU HAITSAM',unit:'smp'},
-  {nis:'24.03.0687',nama:'PRIMA ADITYA HERDIYAN',kelas:'8 IBNU HAITSAM',unit:'smp'},
-  {nis:'24.03.0737',nama:'RANIA KAYYISA ZHAFIRAH',kelas:'8 IBNU HAITSAM',unit:'smp'},
-  {nis:'24.03.0663',nama:'RATU HENOLA',kelas:'8 IBNU HAITSAM',unit:'smp'},
-  {nis:'24.03.0668',nama:'WINONA QANITAH AISYAH',kelas:'8 IBNU HAITSAM',unit:'smp'},
-  {nis:'24.03.0744',nama:'ABRISAM BAYSAN SYAMSIR',kelas:'8 IBNU HAYYAN',unit:'smp'},
-  {nis:'24.03.0717',nama:'AHMAD ZAEN HABIBI',kelas:'8 IBNU HAYYAN',unit:'smp'},
-  {nis:'24.03.0720',nama:'AL VIAN LUNG JUAN',kelas:'8 IBNU HAYYAN',unit:'smp'},
-  {nis:'24.03.0650',nama:'AMIRA ALIFIA RASYADANI TARISA',kelas:'8 IBNU HAYYAN',unit:'smp'},
-  {nis:'24.03.0672',nama:'ANDI TENRITATTA',kelas:'8 IBNU HAYYAN',unit:'smp'},
-  {nis:'24.03.0697',nama:'ARSHAKA VIRENDRA WIJAYA',kelas:'8 IBNU HAYYAN',unit:'smp'},
-  {nis:'24.03.0675',nama:'ATHALIA PUTRI SETYAWAN',kelas:'8 IBNU HAYYAN',unit:'smp'},
-  {nis:'24.03.0651',nama:'AZMAJENNA MARSYA RAHMADHANI',kelas:'8 IBNU HAYYAN',unit:'smp'},
-  {nis:'24.03.0677',nama:'DANISH FAWWAZ EL BARIZ',kelas:'8 IBNU HAYYAN',unit:'smp'},
-  {nis:'24.03.0680',nama:'HAIKAL AL GHANIY ROZZAQ',kelas:'8 IBNU HAYYAN',unit:'smp'},
-  {nis:'24.03.0700',nama:'IVANA NURIAH QUINN',kelas:'8 IBNU HAYYAN',unit:'smp'},
-  {nis:'24.03.0729',nama:'IZYAN MAHARDIKA WIBOWO',kelas:'8 IBNU HAYYAN',unit:'smp'},
-  {nis:'24.03.0682',nama:'KAIYLA ZHAFIRA RIVI SINULINGGA',kelas:'8 IBNU HAYYAN',unit:'smp'},
-  {nis:'24.03.0656',nama:'KAMAL NAGATA ALFARROS',kelas:'8 IBNU HAYYAN',unit:'smp'},
-  {nis:'24.03.0657',nama:'KENZIE PUTRA MAHESYA',kelas:'8 IBNU HAYYAN',unit:'smp'},
-  {nis:'24.03.0735',nama:'MUHAMMAD AZZAM ERWIN',kelas:'8 IBNU HAYYAN',unit:'smp'},
-  {nis:'24.03.0686',nama:'NUR ZAHRAH ALYA NABILAH',kelas:'8 IBNU HAYYAN',unit:'smp'},
-  {nis:'24.03.0688',nama:'RAISA ADELL HUMAIRA',kelas:'8 IBNU HAYYAN',unit:'smp'},
-  {nis:'24.03.0664',nama:'RAYYISIEYLA ANGGAREKSA',kelas:'8 IBNU HAYYAN',unit:'smp'},
-  {nis:'24.03.0711',nama:'RECY HANORANI',kelas:'8 IBNU HAYYAN',unit:'smp'},
-  {nis:'24.03.0666',nama:'SHALVABELLA ARURA HUMAIRA',kelas:'8 IBNU HAYYAN',unit:'smp'},
-  {nis:'24.03.0713',nama:'SIMIA GARNETA MELODIA',kelas:'8 IBNU HAYYAN',unit:'smp'},
-  {nis:'24.03.0714',nama:'SYANIA NARDELIYA',kelas:'8 IBNU HAYYAN',unit:'smp'},
-  {nis:'24.03.0739',nama:'SYIFA AQILA DANESHA RASYID',kelas:'8 IBNU HAYYAN',unit:'smp'},
-  {nis:'24.03.0691',nama:'ZAHRA RAMADHAN SOFYAR',kelas:'8 IBNU HAYYAN',unit:'smp'},
-  {nis:'24.03.0645',nama:'ABDILLAH GHAISAN TSURAYA',kelas:'8 IBNU TUFAIL',unit:'smp'},
-  {nis:'24.03.0670',nama:'AHMAD NAUFAL ALFAIZ',kelas:'8 IBNU TUFAIL',unit:'smp'},
-  {nis:'24.03.0721',nama:'ALIANDRA MAHARDIKA WIJAYA',kelas:'8 IBNU TUFAIL',unit:'smp'},
-  {nis:'24.03.0694',nama:'AMIRA DHIA SYARAFANA',kelas:'8 IBNU TUFAIL',unit:'smp'},
-  {nis:'24.03.0695',nama:'ANISA LAILI HIJRIYAH',kelas:'8 IBNU TUFAIL',unit:'smp'},
-  {nis:'24.03.0725',nama:'AQILAH SEKAR PUTRI',kelas:'8 IBNU TUFAIL',unit:'smp'},
-  {nis:'24.03.0696',nama:'ARKHAN FADIL AHMAD PRIHANDOKO',kelas:'8 IBNU TUFAIL',unit:'smp'},
-  {nis:'24.03.0727',nama:'AURA LATISHA AQUEENA',kelas:'8 IBNU TUFAIL',unit:'smp'},
-  {nis:'24.03.0728',nama:'A\'YESYA NABILA AL ZEINA LESMANA',kelas:'8 IBNU TUFAIL',unit:'smp'},
-  {nis:'24.03.0652',nama:'CALVIN ADAHEPA SORMIN',kelas:'8 IBNU TUFAIL',unit:'smp'},
-  {nis:'24.03.0678',nama:'FAHMIDA SABIELA LESTARI',kelas:'8 IBNU TUFAIL',unit:'smp'},
-  {nis:'24.03.0679',nama:'GUSTI RAFA ARSHAVIN',kelas:'8 IBNU TUFAIL',unit:'smp'},
-  {nis:'24.03.0740',nama:'HASSYA ANINDITA',kelas:'8 IBNU TUFAIL',unit:'smp'},
-  {nis:'24.03.0654',nama:'KABSYA SHALADDIN NUGROHO',kelas:'8 IBNU TUFAIL',unit:'smp'},
-  {nis:'24.03.0733',nama:'MAGHFIRAH QURRATU HANANA',kelas:'8 IBNU TUFAIL',unit:'smp'},
-  {nis:'24.03.0702',nama:'MIKAILA HASYA ABELLA',kelas:'8 IBNU TUFAIL',unit:'smp'},
-  {nis:'24.03.0684',nama:'MUHAMMAD BAYSA PUTRA',kelas:'8 IBNU TUFAIL',unit:'smp'},
-  {nis:'24.03.0736',nama:'MUHAMMAD HIBRIZI',kelas:'8 IBNU TUFAIL',unit:'smp'},
-  {nis:'24.03.0707',nama:'MUHAMMAD NARENDRA KHOSIM',kelas:'8 IBNU TUFAIL',unit:'smp'},
-  {nis:'24.03.0748',nama:'NAFISA KIARA ANINDYA',kelas:'8 IBNU TUFAIL',unit:'smp'},
-  {nis:'24.03.0710',nama:'RANGGA MAZRU\'UL KHAIR ARIYANTO',kelas:'8 IBNU TUFAIL',unit:'smp'},
-  {nis:'24.03.0738',nama:'SANAZ WASIANNAFIALIYA SANTOVA',kelas:'8 IBNU TUFAIL',unit:'smp'},
-  {nis:'24.03.0665',nama:'SAYID RIZIQ ALHASNI',kelas:'8 IBNU TUFAIL',unit:'smp'},
-  {nis:'24.03.0715',nama:'WINOLA QANITAH AFIFAH',kelas:'8 IBNU TUFAIL',unit:'smp'},
-  {nis:'25.03.0827',nama:'MUHAMMAD AZZAM KHATTAMA',kelas:'8 IBNU TUFAIL',unit:'smp'},
-  {nis:'23.03.0589',nama:'AISYA SEBILLE MAYSYAURA',kelas:'9 IMAM GHOZALI',unit:'smp'},
-  {nis:'24.03.0750',nama:'ALLISHA DEANDRA ALIFARAHMADANI',kelas:'9 IMAM GHOZALI',unit:'smp'},
-  {nis:'23.03.0563',nama:'ASTRID DAVINA QUINN HENDRAWAN',kelas:'9 IMAM GHOZALI',unit:'smp'},
-  {nis:'23.03.0622',nama:'AZKA THALITA FAHMI',kelas:'9 IMAM GHOZALI',unit:'smp'},
-  {nis:'23.03.0542',nama:'DRASYA FADILLAH PAATH',kelas:'9 IMAM GHOZALI',unit:'smp'},
-  {nis:'23.03.0627',nama:'HANIF ABIYU AL ISLAMI',kelas:'9 IMAM GHOZALI',unit:'smp'},
-  {nis:'23.03.0567',nama:'KAMILIA NUMA SYAFIA',kelas:'9 IMAM GHOZALI',unit:'smp'},
-  {nis:'23.03.0547',nama:'KENZIE DIMITRI BASKORO',kelas:'9 IMAM GHOZALI',unit:'smp'},
-  {nis:'23.03.0628',nama:'KHAIRUNNISA NADYA RAMADHANI',kelas:'9 IMAM GHOZALI',unit:'smp'},
-  {nis:'23.03.0597',nama:'MUHAMMAD ARIQ MUSYAFFA',kelas:'9 IMAM GHOZALI',unit:'smp'},
-  {nis:'23.03.0629',nama:'MUHAMMAD FADHLAN SYATHIR FIRDAUS',kelas:'9 IMAM GHOZALI',unit:'smp'},
-  {nis:'23.03.0572',nama:'MUHAMMAD FAYYAD FATURRAHMAN',kelas:'9 IMAM GHOZALI',unit:'smp'},
-  {nis:'23.03.0600',nama:'MUHAMMAD NABIL HIDAYATULLAH',kelas:'9 IMAM GHOZALI',unit:'smp'},
-  {nis:'23.03.0601',nama:'MUHAMMAD RAFFA ATHALLAH STYAWAN',kelas:'9 IMAM GHOZALI',unit:'smp'},
-  {nis:'23.03.0577',nama:'MUHAMMAD SHAUMI MAKARABIHWA',kelas:'9 IMAM GHOZALI',unit:'smp'},
-  {nis:'23.03.0578',nama:'NABILA DHIYA SYARAFANA DENTI SAIFUL',kelas:'9 IMAM GHOZALI',unit:'smp'},
-  {nis:'23.03.0603',nama:'NADINE ZAHWA KHAYYIRAH',kelas:'9 IMAM GHOZALI',unit:'smp'},
-  {nis:'23.03.0633',nama:'NADYA HANNAN',kelas:'9 IMAM GHOZALI',unit:'smp'},
-  {nis:'23.03.0555',nama:'NAYA QURRATA\'AYUNI',kelas:'9 IMAM GHOZALI',unit:'smp'},
-  {nis:'23.03.0581',nama:'NIKITA ZAHRA WAHYUDI',kelas:'9 IMAM GHOZALI',unit:'smp'},
-  {nis:'23.03.0606',nama:'NISRINA HIKARI ALTHAFUNISA',kelas:'9 IMAM GHOZALI',unit:'smp'},
-  {nis:'23.03.0607',nama:'QISHA GADIZ MIZANA',kelas:'9 IMAM GHOZALI',unit:'smp'},
-  {nis:'23.03.0569',nama:'R. KYNAN REVI ADIANSYAH',kelas:'9 IMAM GHOZALI',unit:'smp'},
-  {nis:'23.03.0612',nama:'SYARIFAH NABILA SAHEL',kelas:'9 IMAM GHOZALI',unit:'smp'},
-  {nis:'23.03.0559',nama:'SYAZA ILMIRA NUGROHO',kelas:'9 IMAM GHOZALI',unit:'smp'},
-  {nis:'23.03.0613',nama:'WIRA ZALFA ABSARINA',kelas:'9 IMAM GHOZALI',unit:'smp'},
-  {nis:'23.03.0587',nama:'ZAINAH ZHAFIRA AL JUFRIE',kelas:'9 IMAM GHOZALI',unit:'smp'},
-  {nis:'23.03.0588',nama:'ABELIANA ALEXA RAMADHANI',kelas:'9 IMAM HASAN',unit:'smp'},
-  {nis:'23.03.0617',nama:'ALFI AL GHAZALI',kelas:'9 IMAM HASAN',unit:'smp'},
-  {nis:'23.03.0561',nama:'ALIFIA AZZAHRA ACHMAD',kelas:'9 IMAM HASAN',unit:'smp'},
-  {nis:'23.03.0641',nama:'ALMA FIRJATULAH NADIN',kelas:'9 IMAM HASAN',unit:'smp'},
-  {nis:'23.03.0539',nama:'BIMANTARA REIHAN NUGRAHA',kelas:'9 IMAM HASAN',unit:'smp'},
-  {nis:'23.03.0540',nama:'DANENDRA RAFIF MAHARDIKA',kelas:'9 IMAM HASAN',unit:'smp'},
-  {nis:'23.03.0624',nama:'DEELAN RIZKY OKTARIAN',kelas:'9 IMAM HASAN',unit:'smp'},
-  {nis:'23.03.0625',nama:'DZAHRA NAMEERA AL MUSALLY',kelas:'9 IMAM HASAN',unit:'smp'},
-  {nis:'23.03.0566',nama:'HAURA ASHILAH AZZAHRA',kelas:'9 IMAM HASAN',unit:'smp'},
-  {nis:'23.03.0594',nama:'JASMINE ATIQAH KHALIDAH',kelas:'9 IMAM HASAN',unit:'smp'},
-  {nis:'23.03.0548',nama:'KENZIE PUTRI OLIVIA',kelas:'9 IMAM HASAN',unit:'smp'},
-  {nis:'23.03.0549',nama:'KHANSA AZZAHRA PUTRI GUSTAMAN',kelas:'9 IMAM HASAN',unit:'smp'},
-  {nis:'23.03.0596',nama:'MUHAMMAD ALDAN RAZZAQ',kelas:'9 IMAM HASAN',unit:'smp'},
-  {nis:'23.03.0570',nama:'MUHAMMAD DARENN AL DZAKY',kelas:'9 IMAM HASAN',unit:'smp'},
-  {nis:'23.03.0630',nama:'MUHAMMAD FAREL AZKA',kelas:'9 IMAM HASAN',unit:'smp'},
-  {nis:'23.03.0575',nama:'MUHAMMAD RAFFA RAMADHANA PUTRA',kelas:'9 IMAM HASAN',unit:'smp'},
-  {nis:'23.03.0576',nama:'MUHAMMAD SAVERIO AL GIBRAN ARIFANDI',kelas:'9 IMAM HASAN',unit:'smp'},
-  {nis:'23.03.0602',nama:'NABILLA ALVYNA XAVIERA',kelas:'9 IMAM HASAN',unit:'smp'},
-  {nis:'23.03.0579',nama:'NAIL ABISAM HARYADI',kelas:'9 IMAM HASAN',unit:'smp'},
-  {nis:'23.03.0604',nama:'NAJWA BAHRIYAH',kelas:'9 IMAM HASAN',unit:'smp'},
-  {nis:'23.03.0609',nama:'RATNA ATIKA SARI DEWI',kelas:'9 IMAM HASAN',unit:'smp'},
-  {nis:'23.03.0637',nama:'RUMAISHA KAYYISA LISUNA',kelas:'9 IMAM HASAN',unit:'smp'},
-  {nis:'23.03.0582',nama:'SABRINA RIZKY APRILIA FADHILAH',kelas:'9 IMAM HASAN',unit:'smp'},
-  {nis:'23.03.0583',nama:'SALMA ALISA RAFIFAH',kelas:'9 IMAM HASAN',unit:'smp'},
-  {nis:'23.03.0611',nama:'SASMITA MESSI MAHESWARI',kelas:'9 IMAM HASAN',unit:'smp'},
-  {nis:'24.03.0741',nama:'SOFIA NAYLA ASSAKIINAH',kelas:'9 IMAM HASAN',unit:'smp'},
-  {nis:'23.03.0640',nama:'YUSUF SHANE ATH THORIQ',kelas:'9 IMAM HASAN',unit:'smp'},
-  {nis:'23.03.0616',nama:'AHMAD IZZAN IBRAHIM',kelas:'9 IMAM NAWAWI',unit:'smp'},
-  {nis:'23.03.0535',nama:'ALIKA GHAIDA TSURAYA',kelas:'9 IMAM NAWAWI',unit:'smp'},
-  {nis:'23.03.0619',nama:'ANINDITA KEISHA ZHAFIRA HENDARSYACH',kelas:'9 IMAM NAWAWI',unit:'smp'},
-  {nis:'23.03.0538',nama:'ATIQAH FARASSHIFA UFFAIRAH IQBAL',kelas:'9 IMAM NAWAWI',unit:'smp'},
-  {nis:'23.03.0623',nama:'CHAYA WYNNE ALICIA WIJAYA',kelas:'9 IMAM NAWAWI',unit:'smp'},
-  {nis:'23.03.0642',nama:'DEVIN ANDINI WARDHANA',kelas:'9 IMAM NAWAWI',unit:'smp'},
-  {nis:'23.03.0543',nama:'FATHIA GYA NUGRAHA',kelas:'9 IMAM NAWAWI',unit:'smp'},
-  {nis:'23.03.0565',nama:'FATIMAH ZAIRINA',kelas:'9 IMAM NAWAWI',unit:'smp'},
-  {nis:'23.03.0626',nama:'HAFIZH NOOR FAHRIZA',kelas:'9 IMAM NAWAWI',unit:'smp'},
-  {nis:'23.03.0593',nama:'HAYUNINGTYAS SEKAR KINASIH',kelas:'9 IMAM NAWAWI',unit:'smp'},
-  {nis:'23.03.0546',nama:'JUWANITA AURA RAMISYA',kelas:'9 IMAM NAWAWI',unit:'smp'},
-  {nis:'23.03.0643',nama:'KHALILA IZZANDRA PUTRI',kelas:'9 IMAM NAWAWI',unit:'smp'},
-  {nis:'23.03.0550',nama:'KHANSSA RIZMA MAULIDA',kelas:'9 IMAM NAWAWI',unit:'smp'},
-  {nis:'23.03.0551',nama:'LATHIFAH NUR RAHIMAH',kelas:'9 IMAM NAWAWI',unit:'smp'},
-  {nis:'23.03.0552',nama:'MIS AIRAANIYA AULIA RAHMADHANI',kelas:'9 IMAM NAWAWI',unit:'smp'},
-  {nis:'23.03.0598',nama:'MUHAMMAD ATAYA ZAIDAN',kelas:'9 IMAM NAWAWI',unit:'smp'},
-  {nis:'23.03.0632',nama:'MUHAMMAD RIZQI MAULIDAN SIBUEA',kelas:'9 IMAM NAWAWI',unit:'smp'},
-  {nis:'23.03.0571',nama:'MUHAMMAD DAVIN SYAUQI FACHLEVI',kelas:'9 IMAM NAWAWI',unit:'smp'},
-  {nis:'23.03.0631',nama:'MUHAMMAD NABHAN ARRAYAN',kelas:'9 IMAM NAWAWI',unit:'smp'},
-  {nis:'24.03.0742',nama:'MUHAMMAD RIZQI HABRIZI',kelas:'9 IMAM NAWAWI',unit:'smp'},
-  {nis:'23.03.0556',nama:'NAYYARA VASHTIRAJANI ALIYYA',kelas:'9 IMAM NAWAWI',unit:'smp'},
-  {nis:'23.03.0634',nama:'RAINA GADIS ATMAJI',kelas:'9 IMAM NAWAWI',unit:'smp'},
-  {nis:'23.03.0635',nama:'RAKHA BYANTARA NADIF',kelas:'9 IMAM NAWAWI',unit:'smp'},
-  {nis:'23.03.0610',nama:'SALMAA NUR ZAHIRA',kelas:'9 IMAM NAWAWI',unit:'smp'},
-  {nis:'23.03.0638',nama:'TALITHA AULIA KHALILAH',kelas:'9 IMAM NAWAWI',unit:'smp'},
-  {nis:'23.03.0585',nama:'TANIA FAEYZA AZKAYRA',kelas:'9 IMAM NAWAWI',unit:'smp'},
-  {nis:'23.03.0560',nama:'YAGA NANDANA ANUGERAH',kelas:'9 IMAM NAWAWI',unit:'smp'},
-  {nis:'23.03.0615',nama:'ABIZARD AZZAM',kelas:'9 IMAM QURTUBI',unit:'smp'},
-  {nis:'23.03.0536',nama:'ALYA RIZKY PRIBADI',kelas:'9 IMAM QURTUBI',unit:'smp'},
-  {nis:'23.03.0618',nama:'ANDI AIRA QONITA',kelas:'9 IMAM QURTUBI',unit:'smp'},
-  {nis:'23.03.0591',nama:'ANMAR RAFKA FERNANDA',kelas:'9 IMAM QURTUBI',unit:'smp'},
-  {nis:'23.03.0562',nama:'ARSHQI ARKAN',kelas:'9 IMAM QURTUBI',unit:'smp'},
-  {nis:'23.03.0592',nama:'ASHILLAH MUGHBITHA GHASANI',kelas:'9 IMAM QURTUBI',unit:'smp'},
-  {nis:'23.03.0620',nama:'ATHIRA TUNGGADEWI',kelas:'9 IMAM QURTUBI',unit:'smp'},
-  {nis:'23.03.0621',nama:'AULIA ZAHRA THALITA',kelas:'9 IMAM QURTUBI',unit:'smp'},
-  {nis:'23.03.0564',nama:'AUREL SHERA NAJLA SALSABILA',kelas:'9 IMAM QURTUBI',unit:'smp'},
-  {nis:'23.03.0544',nama:'FRESHIA SAYYIDAH ELMAS IDRUS',kelas:'9 IMAM QURTUBI',unit:'smp'},
-  {nis:'23.03.0545',nama:'HANIF YANUADI WIJAYA',kelas:'9 IMAM QURTUBI',unit:'smp'},
-  {nis:'23.03.0568',nama:'KHANSA ALIFIA FEBRIKA',kelas:'9 IMAM QURTUBI',unit:'smp'},
-  {nis:'23.03.0595',nama:'MARSYA NURRAHMAH',kelas:'9 IMAM QURTUBI',unit:'smp'},
-  {nis:'23.03.0553',nama:'MOCHAMMAD ADLIAN DWIANDRA',kelas:'9 IMAM QURTUBI',unit:'smp'},
-  {nis:'23.03.0573',nama:'MUHAMMAD IRFAN FEBRIRAHMAN',kelas:'9 IMAM QURTUBI',unit:'smp'},
-  {nis:'23.03.0574',nama:'MUHAMMAD KHALID HUSRY PUTRA RAHMAT',kelas:'9 IMAM QURTUBI',unit:'smp'},
-  {nis:'23.03.0599',nama:'MUHAMMAD LATAFHAT QURANIQUE ASSAJID',kelas:'9 IMAM QURTUBI',unit:'smp'},
-  {nis:'23.03.0554',nama:'NAUFAL SYAUQILLAH PUTRA',kelas:'9 IMAM QURTUBI',unit:'smp'},
-  {nis:'23.03.0580',nama:'NAZIFA CALLYSTA PUTRI BASUKI',kelas:'9 IMAM QURTUBI',unit:'smp'},
-  {nis:'24.03.0743',nama:'NIKEISHA HAURA RAMADHANI',kelas:'9 IMAM QURTUBI',unit:'smp'},
-  {nis:'23.03.0636',nama:'RALLY DINARA AMIRA NUR',kelas:'9 IMAM QURTUBI',unit:'smp'},
-  {nis:'23.03.0584',nama:'SALWA BAYSA PUTRI',kelas:'9 IMAM QURTUBI',unit:'smp'},
-  {nis:'23.03.0558',nama:'SELMA HASNA RAFIFAH',kelas:'9 IMAM QURTUBI',unit:'smp'},
-  {nis:'23.03.0639',nama:'YURI CALYSTA SHEEVAMULYA',kelas:'9 IMAM QURTUBI',unit:'smp'},
-  {nis:'24.03.0749',nama:'YUSUF HAIKAL ATHALLAH RAFIF AZZAM',kelas:'9 IMAM QURTUBI',unit:'smp'},
-  {nis:'23.03.0614',nama:'ZAHIRA APRILIA',kelas:'9 IMAM QURTUBI',unit:'smp'},
-  {nis:'25.03.0828',nama:'MUHAMMAD AQLI ZAHIR KHAN',kelas:'9 IMAM QURTUBI',unit:'smp'},
-];
-
-// Merge with localStorage if any
-(function(){
-  try{
-    const saved = localStorage.getItem('fk_students');
-    if(saved){
-      const arr = JSON.parse(saved);
-      const seen = new Set(ALL_STUDENTS.map(s=>s.nis));
-      arr.forEach(s=>{ if(!seen.has(s.nis)){ seen.add(s.nis); ALL_STUDENTS.push(s); }});
-    }
-  }catch(e){}
-})();
-
-const UNITS = {
-  pgtk:{label:'PG-TK',color:'#0ea5e9',light:'#e0f2fe',icon:'🌱'},
-  sd:  {label:'SD',   color:'#16a34a',light:'#dcfce7',icon:'📚'},
-  smp: {label:'SMP',  color:'#7c3aed',light:'#ede9fe',icon:'🔬'},
-  sma: {label:'SMA',  color:'#ea580c',light:'#ffedd5',icon:'🎓'},
-  all: {label:'Semua Unit',color:'#0f4c81',light:'#dbeafe',icon:'🏛️'}
-};
-
-const ACCOUNTS = {
-  'koordinator': {pass:'admin123',role:'koordinator',unit:null, name:'Koordinator Inklusi',  avatar:'👑'},
-  'kepsek.pgtk': {pass:'pgtk123', role:'kepsek',    unit:'pgtk',name:'Kepsek PG-TK',         avatar:'🏫'},
-  'kepsek.sd':   {pass:'sd123',   role:'kepsek',    unit:'sd',  name:'Kepsek SD',             avatar:'🏫'},
-  'kepsek.smp':  {pass:'smp123',  role:'kepsek',    unit:'smp', name:'Kepsek SMP',            avatar:'🏫'},
-  'kepsek.sma':  {pass:'sma123',  role:'kepsek',    unit:'sma', name:'Kepsek SMA',            avatar:'🏫'},
-  'guru.smp':    {pass:'smp123',  role:'guru',      unit:'smp', name:'Guru SMP',              avatar:'👩‍🏫'},
-};
-
-const ICON = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQCAYAAACOEfKtAAAUoUlEQVR42u1ca3RcV3nd+9w7M5I9M46c+JXYVuI4EKTyKKbWjJ0gp4mTNLQUSGQaILQBkgZayipQEgJ0NLYTh0IoBQphUSiFhIAE5bF4hGCQBU1DE2gI1AkEP2JZlmxL1sN6juaes/vj3hmNbOVhR44N0beWl6R53Llnn/193/72mWVgNmZjNmZjNmZjNmZjNk5UtDTBa2mCN4vEcYRyMJVAziLydIEDqAiwA5nUX3Y3zH0tALQ1whfAWYSeCrwIpK6G1LuG1qTUn02pK5O8IXreO1VANKdivSMgAurJpD86z+eHRxwmisJE2jOfOphN3UrAEpBOgfs/pVJBjfDZjmDnqpp582LB56s9vmrIyqU9GgEYCuRSPs2Yc196TMNvWfNTjJXe85xnYFsERNfqZN28WLAt4fFVQUix4qB1Hx6y7mO+gS0KqDLmdech2daRSa9kO4K2RvjPWQbmAIMckM/DHcwmmwjcUWXMfACYcNo6au27lz0w+jAAdGfSq2PU7QnDCwhg3Gp/kbhuyf1D347SWQT0nNJ3pd8PZFKbD2XTGlmbVl82NdyTTb27MrVLLGtpgncwm/7AoWxqfGRtWoeyqeBgJnlzRQMyzwnwSoB0Z+cuPJRNfnNkbVqjF6R1KJv6RXcmvbqiGxsJlEDlYErd92A2+fJDmdSjo2vTGl6bVm829eXdL553GgDoWdSLJ2W31Aj/onYE+zNzXxgHf1LtmVc6AcMB7jxkYy9f8tPDD6hU11pAEiIh1IfgqRH+wvuHf9xT1IUjTl8DgDmGr03NcT/e25A6j62wOol18Vlh3r6Guet7ssneoTANdSCbvKkytUuMA4CBm1DTm0O6NJlIkyI7TP+5G/uyqZCJmdS+fQ3JCyo/6/cOvI5M+vWHsqlC/5qUDmVTEwcyqTeWUq9yAgGAgU14/fBmDA1tQt/hzbiyzOLSa6Ms6mpIvu1QNm0H1qTUl02NdKxOvur3CsTSQjpXJ5v6sinXm0253kyquLcheWUpLQVQLdH49m4sHr4V39Lt0OBGtAxuwjd0OzRyK77SkcN8AGjLRe+Jrt21OnVNb3ht9WVTE3sbUlf8XoDYghCUfauTF/ZlU+M9mVQwuCat7obUXwHAz1YhVgleXx5/PrIFg2Nb8Gh/HhdVsPHyiduwc3QLegbyWA8AagmZ+LNViAHAvkz67YfXptWTSdn+bOpwV8OcVUeaEr9rc60RwN5M9Vm92VRXTzblhtemtS+T2lQBnslFCxzajE3DW2CHNmNTLmKOWuCVAHjs7UgM34Lbh7fADW/CTSVwcoApMbE7k/zocFRbezLJXYdXJc8QwNzvosRpiWpVV0PynqG1KQ2uSWt/Jv2dsrMSNQUAOLwJXxm5FfsP5ZGtrHXl31smf+/fhD8evgX9AxvxuXJzycGoCZ6a4B1oSG0bWBNKnO5MqvV30g4rLb67IXXt6AVp9WRSQU8m1dOzpvrMUrMoMWtwI753eBMeHIjqm3LT21YCqFzItIM3Y8nwJvxqII8yQGULbE363L5sauBgJhUMr02rKzvvqmdbI86IJdW3qmZed0OqsyebckNr09qXmfv6ctOIGDWQR8vgJnx9OtY9idHql147mMcP+iaZ6JebSkPyrcNr0urNptz+TPIxZVAdbQp/Z9i3vyH1zpG1aQ2uSam7IbW1LEEiAPo3YtNAHi0AUKn9ntZnVLy2fyO+PbARN5ZAjEqH2Z9J/rR/TVh3uzPJN890VzYnin1ohXvsciRAXDchqSjI+GoGANTAMI9gcDP+BMAfzXP4ixIYzMM9bSckD1eqoafNw5UALuvL4eXMI6gDPALOiHmALEqS+LYWwFvXDntqj3JNMASUHph3YZw434CcEO5bdN/wf6kJHpbADuQw31n8XWDxphJo5LE7KczDtW6A4TtQAHEdDW48kEOyvg6BcjDblg/dO2b1kAEQI15yYUPqZQRUklan+CzsXh03BAl4wmejBz3m4WBwA4HPLcijSy3RY8cZG1ph23LwT/sAdkL4atzgLczD4RH4G1phfeDzhuQcj4bEqwFgQePM1EFzItKXrbBqgkfhQgAYteoNAn0bANCK4uhtWO6Ieafl0KoWeNzwzFPqojwCtcD7qPAfBJYO3YJFaEURADzrf304cMPh/alRAKM05qnIQALAoT3zlzjobD88vNh21s+He3U9YgRUGMd6Z6Kuu30GDdDtUD4PJ+A71uJiAlIO/uk/698L4D6PAMWVezPpmuhM5RmHP1OsQxPMtoPgb6vhtY3BFouF83xnklYAhO8JIJbAKof4IBE7/WE8KIHk8afutE0FIBzuGzR4U1sO/rZt0XPSPQIuA1ATA1a2NeJ/0QPTtgBu3UIIrXDH42b7M0Q5obWchgEAdGXM8pRPDQQqwnMPEBDyUG8OK31gJ1th1Rza8DN8RkDmMTG4ER1/6KP2tHbsBADR3D8UyKV98rB1Z13UjgdwshmoHAzzcN0NqYYY8eYJqUBigjL9gq6OEUZSz2KX6ABGwg4CLIYLF4VmCPmZrR/Nk5u6m8ASIPws4+weZ8xAwnA+Arx/f0OynsB8AbG4YWw0sHcsfXD0F6U1PTsMzIfsMc7u8ePcai0WOpjFpHs+wP1DgasCeJgP9B2O0lX0YeZV4cDxypanvKVo8RMW+xI+lpQeH+wf7U+fkTowGLhDAvtBPU/g43DuoOAd4Bx1Vq5pBgFs8oA6Tp+69QKARQ++dn8oraZGRwbV1PzTS2ApBzMQoA/DGDvRk9DpZ2JsoAcDZWWwA4XO0/zLDp/Rf/B596Awfe9r8cKFbn+C7vyIgNZjUQx62m3ehOkJ5WDaGuE31TXFAZnwxiavU3JenpVxcspn5Ur3Yq5fdX2s5AR5x6xlpmLCp5AjOqv21it8E3uBUxBAJCCSCCxQADFqgEEJg54wRPp90vCBPXvy49NUdxPh7IC8cOLPb6NviDQboNmG3sbUWLIkNycer1oomfnOIEW6NKXTLLxqD6qS5AEUKBnGfdmJhzs63rs1vG54vScAUAaglq74UL0RHqaJmydTTVIAKQCEYVADADoA8yjktovuf2PEr3fvft+BI5xCD9guIO9mFrecAeoJbJiSasuXb15iGTuf0ioa1gHuBQKWU5gHci4ZA/kk0x0NnB2fgEXd3r3/sAtoJpB3T1ADWwnA0QUfoqkyLhgtgE9WL0kABjRJ0iQBs5T01gCCFCCQ7V1We9t2GP1Y8rciMA92dm4Ym1zwIzzG2jKddesBTQ6gA4AFC3LJ6urkamfsxQBeLrDOoz+f9KNNtyAcBAfAQSo6aUJPUg4Cz6tOWI1tAbgBaDJPwMAWD9hgl9be8ipjqr8uFSzApzN4K8xKltJTEdVJGgPGQBhIRUjutwC+ZWXv6trz3ocqUhzHzsgmD2hxpZRatuIjL6O1bwD1Z6BZQcYgWMgFAFyI1pQpTIxgeDql0JIxL7DBJV0dN/5wsulMqRs5LlqUrI5XBw+RsZVSoGc+8kkAHQSB8sgYyRicG3cCv2OIj3Xsfs/WI5ikpy7mraaUqrW1H7zCAu8geakxiWijioJoQTAqS8+0gTkybuQKv1y4Z/7Lfo4uy2nZt3zL+z1/ziZnR+2TF4bjv5Honx8u1kEK7rGyG7v23Hz/JLOeKK0nn1t69gcbCX6A9C8mCecKpWnInJhZX9aYOZ7VyNs7d9/8iSPafF61tVtqHb1fEpgrWM7Arj1V2jsAxpgqSkEAh3/1PZvbteumwdKGTrfJixe/d0E8UbMZhteTPpwruIjpJ/rMw5EenWyPcfGXVOxQPQHIArcZk0gJVicYvKhk0ANI58atZH16iXcUnXf/mctvWxOCl6toXjkf2GDPWr7lj+NV839KL3G9ZOXcuA3ZxmfjwMhIVsYkFspMfJiVu1pb+8GLZPwfSUULnJTTKwGyNHFf0rjsxFs6O26+C2jzgW0A8sFZy2+5zjOJT4LwpWIA8GR960CI6huBOqBuXSwdeF8l/cVAIIAn4xCaAA1kLYC4MYnXpOc1Hjg8+MYHgHa3tHbLu3y/+uNSkQgz5GQeUZZGrJB9y2pve6vxEp+0drxA0psyJ3C6UYYVav9py4BjbDSEMXHjXOEGSHOMN+cjYbo6cwLKyxEyrARAhRo4EpPSwfXSpbeupO/9xvPmGslOg5qO+ikpaqSC5BA2AwmiQtkAzpD8AekzmnhKi+Qz3xwoklXRfRqSpcZNkJXHx3xCTHwA8Dz5TviboDhYBExIJ8onTdyBCUpJAfNIJQHMhVAjYgGFlMA0iTPImFep8gEb/VRpDj0OWcEScBXil8fBLES7LQL0SN+AJhquHCQLuWLgEPRSPCxiiFIPgAEAIwKGwsc1bMCC5CYkBs847Vau/JfE6OhI0lQnaoyzZzvZF1A8T8BLSKwAeJYxCQCMhG1wgjXa9FoznHN9AIJz44DYCWqHhIch/VbwHzXSHsnrr6p6fGTHjo8XjqUQErkcG7fBtFc80Qig/Hc7gMj7i05v9FSOyvOf/8HU2BjOg4eXOmkthbU05jwyEZkPExEraGaufpbriiHjjPQhBPdrgvdJ5j4Pemh0dGRHT09++MlxyTGSdqU1E41HY8Mpb1LZFyeQA+ofIbYfZOO6CMeeheErtrcKzYjcNiF0Juo5aUQebR+tWvXpWG/v8Cpn7Csg/TnpvbC0QMhZEM+gMUgQHOh54WQzAck9ROAbjuZ7nbuHHwLywdGjYLM3aZTWCWhWdMIDNOeI+kcIAI0LDnLq+usE5IFmiLX/3li159r2wnH5cwLR2mQatx9ke/1CYXurIks8MhKaK3axcqLI+ctXzGmENW8U9WpjEinnxgE4e+zSRBaIgHOFfgFfF7wvdD5++CdTjYmcH2bRlOwhciDqm1heQ1OrwzEcNXDFnZe0wTeLUFRRUBHAOIFREcMQhkD2UeoX2Etqv2g6Gbj9VdXFvkc2tE+fBrnGSNyuc8iXF8HQAqpjJRuWLfunc+HhrYD+2phE0rkxVTSdp6pxNKaazo0PCOaT1thPd++6qWMaz3Gy3ORyBthmUL9Q2DD9rP38b7wyVRgemi95S4zMWTBaTOp0ifMpN19gikBSwByuuHP9x/2axN+6kSJgzHSJHd2uoECQFeA0BuiAiC6CO2T0S1r8Ggn8ahdq9h15Y41tjX77unUOrASzxVQyc+nSW1cy5v8jwWsAA2niSdgoSyY8IIDAz8RoN+8qA9fiAa0AWl2ZZcqxcds2035Re3DkRteeX7XUOPdCAufD4cUiVkSneYthWEVD0GdJnEzNUwGsvXP9SwxxL6U5EI0In5IB6cEQNAQ8gl5UG6SyOV2WzyRUdFDRjoLcIeDnNGgX3f27r/7hY1PAzDX67Wh3KB8dTnWQly27bT098xGaxB84N1qacVmhC2VMtZEr/NzBvrPz8ff+eFobLAcDNBrkp4JWe/clLzAyWTo1CnwpoRWMmTn0zZS1lUUUwzlBVoAV5AQ4AZIVGNpZKz97+QJ6E3F5lhOKx+K01RacS5kUPaYFV0OHM0WsELiCwGIIi+Cxhr4JwXUVwEbcchN2FMAvKH6XtN/d8bofPjSZXU0hu8psnQSyZsWN85Lu9NuNib3ZuQkHOJZkIE2McsEnFHjv6ex819hRRwNHXRc454sX/xE97wpAVwB4kYl7VQBCMICQJCRkHVQU4FwfyAOCuuW4iwa7CHTTcQAGg0522Hccnoh7Y8fV9RrbGv19nVhs4S8ReT7Jeji+iFQ9gGWmyicUpbsJ2esKgYP4IInWgPzanqu//3hlI5pc8KSFtfTsLW839D8m2WgiMdZZe0Nnx02fPeK1REvlNYAVd11yHmCuJHCVgFWmyoMCF6ZdONjAjVsLaC/I/4PTr0D8H2l+49N1/8avOfBENfLoUzmBoXQpF4fwiL81auPbDxLrojYedtppbfcln141p7qqpk4xNsDpYoJrGDeLaMIUhyHoG6hgB0V+Uz7+bXfT939yNJCTbvPyc267SjItACacgtfs23Pzd8OOGkmlliZvCnB3X34x4d4i4c9MwpurwAFOYMxAVnBF10XiPkg/skb/g0Lw6J5r28enb4Y5g/pH2LjgILENaK+PZExTncKvQOSPW8CG7b85B7SGH9C+rbKuRSdhd72ixsPEBYZ4tcjLTMycqagZmbgJm5JTOx3/eecbvv/NcgqWpUTODy2sLVd6sOMdHe//TumxUIXmGDUmnvPl9VcxwN8zZrI0hCs60A8nPxXtXhD3UPxPWvPfO6655/BUoGAa1zWa9p6FCsHJY1KOPR0GzpyfES6q+WiZsPyuV9T4pvgnAN4I4WITN74rWNA34Ve0AttGuo07r/7htjKQG1pt5JRXNJy8q2TdyrvXXyrwHxkza2UFBQ4m4cFN2AKBH9B4X3AmuHfXhq2DU+rv9oNE87rwjPoZfMXkxDrOpbQ8oqif++XLXgrpOie9zkv4aTcegDETzvVOn7OFwvv3XNu+f5KNTQaoE5RXKc1X/MclyxHjrfRM+K3/QDBVHtx40EfDO+W5f9u1YeuvjmpaxyiUTy6A04G5vU4lcV1792Vn+3I3iLjOxP35biyAqfbhJuw+Bu6dO6/Z2jIpfoHS+869+7JrQH2IvrfIjZff00PhDozjMzvfdO/eyho206CdHACnKc4lVi7/wvpzPA/voeGbaRiDDYu+K9hP2eLEO0tFvu4TjcnC6VUfY4zXqmCBmAdYN+6c7jAFfqQMXEuTV7lRJ9qWPnlxhNg9565LVxvqFsa9S1zBwlT5cMXgv2NOTWMBE36MXzNx7w/duIWJG9ii+65zet+eN/zgF+URsrndnii2nXoAVgJZ31Rm5Ll3XXq9PNxCwzMAQgXbJco3cW8hSMC6bog37rz6+188WcCdWgCW62R4Ng1CKz9/0blKxO5gwrtE42H/YcKDK7pvc1Rv2/mme/ceWRtnoxRtkZuTg1nxpUtvWdlyuc69+1J37t2Xvu9ox2c2nrjRRBlyzhfXX3XOnRf/abmb554j/7XJjJQY5cxRWm42jjFamrxZ8GZjNmZjNmZjNmZjNmY0/h9+fGiqjKkRzQAAAABJRU5ErkJggg==';
-const today = new Date().toDateString();
-if(localStorage.getItem('fk_date')!==today){ localStorage.setItem('fk_date',today); localStorage.setItem('fk_today','{}'); }
-
-let attendance = JSON.parse(localStorage.getItem('fk_today')||'{}');
-
-// ════ GOOGLE SHEETS CONFIG ════════════════
-// Isi dengan URL Web App setelah deploy Apps Script
-let SHEETS_URL = localStorage.getItem('fk_sheets_url') || '';
-let sheetsEnabled = !!SHEETS_URL;
-
-function setSheetsURL(url) {
-  SHEETS_URL = url.trim();
-  sheetsEnabled = !!SHEETS_URL;
-  localStorage.setItem('fk_sheets_url', SHEETS_URL);
-}
-
-// Kirim satu absensi ke Sheets
-async function pushToSheets(record) {
-  if (!sheetsEnabled) return;
-  try {
-    const today = new Date().toLocaleDateString('id-ID', {day:'2-digit',month:'2-digit',year:'numeric'});
-    const payload = { action:'save', ...record, tanggal: today, username: session?.username||'' };
-    await fetch(SHEETS_URL, {
-      method:'POST',
-      mode:'no-cors',
-      headers:{'Content-Type':'text/plain'},
-      body: JSON.stringify(payload)
-    });
-  } catch(e) { console.warn('Sheets push failed:', e); }
-}
-
-// Sync semua absensi hari ini ke Sheets
-async function syncAllToSheets() {
-  if (!sheetsEnabled) { toast('URL Google Sheets belum diisi','e'); return; }
-  const today = new Date().toLocaleDateString('id-ID', {day:'2-digit',month:'2-digit',year:'numeric'});
-  const records = Object.entries(attendance).map(([nis, ab]) => ({
-    nis, tanggal: today, nama: ab.nama||'', kelas: ab.kelas||'',
-    unit: ab.unit||'', status: ab.status||'', waktu: ab.waktu||'',
-    username: session?.username||''
-  }));
-  if (!records.length) { toast('Belum ada data absensi hari ini','i'); return; }
-  
-  const btn = document.getElementById('btnSync');
-  if (btn) { btn.textContent = '⏳ Menyimpan...'; btn.disabled = true; }
-  
-  try {
-    await fetch(SHEETS_URL, {
-      method:'POST',
-      mode:'no-cors',
-      headers:{'Content-Type':'text/plain'},
-      body: JSON.stringify({ action:'saveMulti', records })
-    });
-    // no-cors returns opaque response, assume success
-    toast('✅ ' + records.length + ' data tersimpan ke Google Sheets', 's');
-    localStorage.setItem('fk_last_sync', new Date().toLocaleTimeString('id-ID'));
-    updateSyncStatus();
-  } catch(e) { toast('Gagal konek Sheets: ' + e.message, 'e'); }
-  finally { if(btn){btn.textContent='☁️ Sync ke Sheets';btn.disabled=false;} }
-}
-
-// Load absensi dari Sheets
-async function loadFromSheets() {
-  if (!sheetsEnabled) { toast('URL Google Sheets belum diisi','e'); return; }
-  const today = new Date().toLocaleDateString('id-ID', {day:'2-digit',month:'2-digit',year:'numeric'});
-  const unit = activeUnit==='all' ? Object.keys(UNITS).filter(k=>k!=='all') : [activeUnit];
-  
-  const btn = document.getElementById('btnLoad');
-  if (btn) { btn.textContent = '⏳ Memuat...'; btn.disabled = true; }
-  
-  try {
-    let loaded = 0;
-    for (const u of unit) {
-      const url = SHEETS_URL + '?action=load&unit=' + u + '&tanggal=' + encodeURIComponent(today);
-      const res = await fetch(url);
-      const data = await res.json();
-      if (data.ok && data.data) {
-        data.data.forEach(row => {
-          if (row.nis && row.status) {
-            attendance[row.nis] = { status:row.status, waktu:row.waktu||'—', nama:row.nama, kelas:row.kelas, unit:row.unit };
-            loaded++;
-          }
-        });
-      }
-    }
-    localStorage.setItem('fk_today', JSON.stringify(attendance));
-    renderDashboard();
-    if(document.getElementById('panel-rekap').classList.contains('active')) renderRekap();
-    toast(`📥 ${loaded} data dimuat dari Google Sheets`, 's');
-    updateSyncStatus();
-  } catch(e) { toast('Gagal load Sheets: ' + e.message, 'e'); }
-  finally { if(btn){btn.textContent='📥 Load dari Sheets';btn.disabled=false;} }
-}
-
-function updateSyncStatus() {
-  const el = document.getElementById('syncStatus');
-  if (!el) return;
-  const last = localStorage.getItem('fk_last_sync');
-  const now = new Date().toLocaleTimeString('id-ID');
-  el.textContent = sheetsEnabled 
-    ? (last ? '✓ Auto-refresh aktif · Update: ' + now : '✓ Terhubung · Auto-refresh 5 menit') 
-    : 'Belum terhubung';
-  el.style.color = sheetsEnabled ? 'var(--green)' : 'var(--muted)';
+    const res=await fetch(url+'?action=ping');
+    const data=await res.json();
+    if(data.ok){toast('✅ '+data.msg,'s');updateSyncStatus();closeSheetsModal();}
+    else toast('Respons tidak valid','e');
+  }catch(e){toast('Gagal konek: '+e.message,'e');}
 }
 let session = null;
 let activeUnit = 'all';
@@ -3654,9 +1810,7 @@ function startApp(){
   renderDashboard();
   tickClock();
   updateSyncStatus();
-  // Auto-refresh dari Sheets setiap 5 menit
-  autoRefreshSheets();
-  setInterval(autoRefreshSheets, 5 * 60 * 1000);
+  if(sheetsEnabled){ autoRefreshSheets(); setInterval(autoRefreshSheets, 5*60*1000); }
 }
 
 // ════════════════════════════════════════
@@ -3862,7 +2016,6 @@ function setStatus(nis,status){
   localStorage.setItem('fk_today',JSON.stringify(attendance));
   renderRekap();renderDashboard();
   toast(s?.nama+' → '+status,'i');
-  if(s) pushToSheets({nis,status,waktu:t,nama:s.nama,kelas:s.kelas,unit:s.unit});
 }
 function resetToday(){
   if(!confirm('Reset absensi hari ini?'))return;
@@ -3876,70 +2029,24 @@ function resetToday(){
 // SCAN
 // ════════════════════════════════════════
 async function startScan(){
-  document.getElementById('scanIdle').style.display='none';
-  document.getElementById('qr-reader').style.display='block';
-  document.getElementById('scanBox').style.border='2px solid var(--uc)';
-  document.getElementById('btnStart').style.display='none';
-  document.getElementById('btnStop').style.display='inline-flex';
-
-  const onScan = code=>{
-    if(!scanCool){scanCool=true;doAbsensi(code.trim());setTimeout(()=>scanCool=false,2500);}
-  };
-  const onErr = ()=>{};
-  const config = {fps:10, qrbox:{width:250,height:120}};
-
-  scannerInst = new Html5Qrcode('qr-reader');
-
-  // Tampilkan overlay scan frame
-  document.getElementById('scanFrame') && (document.getElementById('scanFrame').style.display='flex');
-
-  // Coba kamera belakang dulu
   try{
-    await scannerInst.start({facingMode:{exact:'environment'}}, config, onScan, onErr);
-    return;
-  }catch(e1){
-    console.warn('Kamera belakang gagal, coba environment biasa:', e1);
-  }
-
-  // Fallback: environment tanpa exact
-  try{
-    await scannerInst.start({facingMode:'environment'}, config, onScan, onErr);
-    return;
-  }catch(e2){
-    console.warn('Environment gagal, coba user:', e2);
-  }
-
-  // Fallback: kamera depan
-  try{
-    await scannerInst.start({facingMode:'user'}, config, onScan, onErr);
-    return;
-  }catch(e3){
-    console.warn('User gagal, coba deviceId:', e3);
-  }
-
-  // Fallback terakhir: cari kamera yang tersedia
-  try{
-    const devices = await Html5Qrcode.getCameras();
-    if(!devices || devices.length===0) throw new Error('Tidak ada kamera');
-    // Coba kamera terakhir (biasanya belakang)
-    const cam = devices[devices.length-1];
-    toast('Menggunakan: ' + cam.label, 'i');
-    await scannerInst.start(cam.id, config, onScan, onErr);
-    return;
-  }catch(e4){
-    toast('Kamera tidak bisa diakses: ' + e4.message, 'e');
-    resetScanUI();
-  }
+    document.getElementById('scanIdle').style.display='none';
+    document.getElementById('qr-reader').style.display='block';
+    document.getElementById('scanBox').style.border='2px solid var(--uc)';
+    document.getElementById('btnStart').style.display='none';
+    document.getElementById('btnStop').style.display='inline-flex';
+    scannerInst=new Html5Qrcode('qr-reader');
+    await scannerInst.start({facingMode:'environment'},{fps:10,qrbox:{width:220,height:100},aspectRatio:1.4},
+      code=>{if(!scanCool){scanCool=true;doAbsensi(code.trim());setTimeout(()=>scanCool=false,2500);}},()=>{});
+  }catch(e){toast('Kamera tidak tersedia. Gunakan input manual.','e');resetScanUI();}
 }
 async function stopScan(){
   if(scannerInst){try{await scannerInst.stop();}catch(e){}scannerInst=null;}
   resetScanUI();
 }
 function resetScanUI(){
-  document.getElementById('scanIdle').style.display='flex';
+  document.getElementById('scanIdle').style.display='block';
   document.getElementById('qr-reader').style.display='none';
-  const sf=document.getElementById('scanFrame');
-  if(sf) sf.style.display='none';
   document.getElementById('scanBox').style.border='2px dashed var(--border)';
   document.getElementById('btnStart').style.display='inline-flex';
   document.getElementById('btnStop').style.display='none';
@@ -3996,15 +2103,13 @@ function bcRenderUnits(){
   g.innerHTML='';
   Object.entries(UNITS).filter(([k])=>k!=='all').forEach(([k,u])=>{
     const cnt=ALL_STUDENTS.filter(s=>s.unit===k).length;
-    if(!cnt) return;
+    if(!cnt)return;
     const sel=bcUnit===k;
     const div=document.createElement('div');
     div.className='bc-ucard'+(sel?' sel':'');
-    div.style.cssText=sel?'border-color:'+u.color+';background:'+u.light:'';
-    div.innerHTML='<div class="bc-ucard-icon">'+u.icon+'</div>'
-      +'<div class="bc-ucard-name" style="color:'+(sel?u.color:'var(--text)')+'">'+u.label+'</div>'
-      +'<div class="bc-ucard-cnt">'+cnt+' murid</div>';
-    div.addEventListener('click', ()=>bcPickUnit(k));
+    div.style.cssText=sel?`border-color:${u.color};background:${u.light}`:'';
+    div.innerHTML=`<div class="bc-ucard-icon">${u.icon}</div><div class="bc-ucard-name" style="color:${sel?u.color:'var(--text)'}">${u.label}</div><div class="bc-ucard-cnt">${cnt} murid</div>`;
+    div.addEventListener('click',()=>bcPickUnit(k));
     g.appendChild(div);
   });
 }
@@ -4022,8 +2127,7 @@ function bcPickUnit(unit){
 function bcRenderKelas(){
   const u=UNITS[bcUnit];
   document.getElementById('bcp2title').textContent='Kelas '+u.label;
-  const kelasList=[...new Set(ALL_STUDENTS.filter(s=>s.unit===bcUnit).map(s=>s.kelas))]
-    .sort((a,b)=>a.localeCompare(b,undefined,{numeric:true}));
+  const kelasList=[...new Set(ALL_STUDENTS.filter(s=>s.unit===bcUnit).map(s=>s.kelas))].sort((a,b)=>a.localeCompare(b,undefined,{numeric:true}));
   const wrap=document.getElementById('bcKelasList');
   wrap.innerHTML='';
   kelasList.forEach(k=>{
@@ -4031,11 +2135,9 @@ function bcRenderKelas(){
     const sel=bcSelKelas.has(k);
     const div=document.createElement('div');
     div.className='bc-kelas-item'+(sel?' sel':'');
-    div.style.cssText=sel?'border-color:'+u.color+';background:'+u.light:'';
-    div.innerHTML='<div class="bck-chk">'+(sel?'&#10003;':'')+'</div>'
-      +'<div><div style="font-size:12px;font-weight:700">'+k+'</div>'
-      +'<div style="font-size:10px;color:var(--muted)">'+cnt+' murid</div></div>';
-    div.addEventListener('click', ()=>bcToggleKelas(k));
+    div.style.cssText=sel?`border-color:${u.color};background:${u.light}`:'';
+    div.innerHTML=`<div class="bck-chk">${sel?'✓':''}</div><div><div style="font-size:12px;font-weight:700">${k}</div><div style="font-size:10px;color:var(--muted)">${cnt} murid</div></div>`;
+    div.addEventListener('click',()=>bcToggleKelas(k));
     wrap.appendChild(div);
   });
   document.getElementById('bcN2').disabled=bcSelKelas.size===0;
@@ -4046,15 +2148,8 @@ function bcToggleKelas(k){
   bcSelNis.clear();bcRenderKelas();
   document.getElementById('bcN2').disabled=bcSelKelas.size===0;
 }
-function bcAllKelas(){
-  ALL_STUDENTS.filter(s=>s.unit===bcUnit).forEach(s=>bcSelKelas.add(s.kelas));
-  bcSelNis.clear(); bcRenderKelas();
-  document.getElementById('bcN2').disabled=false;
-}
-function bcNoneKelas(){
-  bcSelKelas.clear(); bcSelNis.clear(); bcRenderKelas();
-  document.getElementById('bcN2').disabled=true;
-}
+function bcAllKelas(){ALL_STUDENTS.filter(s=>s.unit===bcUnit).forEach(s=>bcSelKelas.add(s.kelas));bcSelNis.clear();bcRenderKelas();document.getElementById('bcN2').disabled=false;}
+function bcNoneKelas(){bcSelKelas.clear();bcSelNis.clear();bcRenderKelas();document.getElementById('bcN2').disabled=true;}
 
 function bcGetFiltered(){
   const q=document.getElementById('bcSearch').value.toLowerCase();
@@ -4071,10 +2166,8 @@ function bcRenderNama(){
     const sel=bcSelNis.has(s.nis);
     const div=document.createElement('div');
     div.className='bc-nama-item'+(sel?' sel':'');
-    div.innerHTML='<div class="bcn-chk">'+(sel?'&#10003;':'')+'</div>'
-      +'<div><div class="bcn-text">'+s.nama+'</div>'
-      +'<div class="bcn-meta">'+s.nis+' &middot; '+s.kelas+'</div></div>';
-    div.addEventListener('click', ()=>bcToggleNis(s.nis));
+    div.innerHTML=`<div class="bcn-chk">${sel?'✓':''}</div><div><div class="bcn-text">${s.nama}</div><div class="bcn-meta">${s.nis} · ${s.kelas}</div></div>`;
+    div.addEventListener('click',()=>bcToggleNis(s.nis));
     wrap.appendChild(div);
   });
   bcUpdCount();
@@ -4102,53 +2195,43 @@ function bcRenderCards(){
   empty.style.display='none';grid.style.display='grid';
   grid.innerHTML=list.map((s,i)=>{
     const u=UNITS[s.unit]||UNITS.smp;
-    return `<div class="bc-card" style="border:1.5px solid #aaa;border-radius:6px;overflow:hidden;display:flex;flex-direction:column;aspect-ratio:85.6/54;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.15)">
+    return `<div class="bc-card" style="border:1.5px solid #aaa;border-radius:6px;overflow:hidden;display:flex;flex-direction:column;aspect-ratio:85.6/54;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.1)">
 
   <!-- HEADER -->
-  <div style="background:#fff;border-bottom:3px solid ${u.color};padding:3px 7px;display:flex;align-items:center;gap:5px;flex-shrink:0">
+  <div style="background:#fff;border-bottom:3px solid ${u.color};padding:3px 8px;display:flex;align-items:center;gap:5px;flex-shrink:0">
     <img src="${ICON}" style="width:20px;height:20px;object-fit:contain;flex-shrink:0">
-    <div style="flex:1;min-width:0;overflow:hidden">
-      <div style="font-size:7px;font-weight:900;color:#000;letter-spacing:0.2px;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Yayasan Fastabiqul Khairat</div>
-      <div style="font-size:6px;font-weight:700;color:#444;margin-top:0px;white-space:nowrap">Samarinda &middot; <span style="color:${u.color};font-weight:900">${u.label}</span></div>
+    <div style="flex:1;min-width:0">
+      <div style="font-size:7px;font-weight:900;color:#000;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Yayasan Fastabiqul Khairat</div>
+      <div style="font-size:6px;font-weight:700;color:#555;margin-top:1px;white-space:nowrap">Samarinda &middot; <span style="color:${u.color};font-weight:900">${u.label}</span></div>
     </div>
-    <div style="font-family:'DM Mono',monospace;font-size:7px;color:${u.color};font-weight:800;flex-shrink:0">#${String(i+1).padStart(2,'0')}</div>
+    <div style="font-family:'DM Mono',monospace;font-size:7px;color:${u.color};font-weight:800;flex-shrink:0">#${String(i+1).padStart(2,'00')}</div>
   </div>
 
-  <!-- NAMA MURID -->
-  <div style="padding:3px 7px 2px;flex-shrink:0">
-    <div style="font-size:10px;font-weight:900;color:#000;line-height:1.2;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;word-break:break-word">${s.nama}</div>
-    <div style="display:flex;gap:4px;margin-top:2px;flex-wrap:nowrap;overflow:hidden">
-      <span style="padding:1px 5px;border-radius:3px;font-family:'DM Mono',monospace;font-size:7px;background:#f0f0f0;border:1px solid #999;color:#000;font-weight:800;white-space:nowrap;flex-shrink:0">${s.nis}</span>
-      <span style="padding:1px 5px;border-radius:3px;font-size:7px;font-weight:900;background:${u.light};color:${u.color};border:1px solid ${u.color};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex-shrink:1">${s.kelas}</span>
+  <!-- NAMA + INFO -->
+  <div style="padding:3px 8px 2px;flex-shrink:0">
+    <div style="font-size:10.5px;font-weight:900;color:#000;line-height:1.2;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;word-break:break-word">${s.nama}</div>
+    <div style="display:flex;gap:4px;margin-top:3px;align-items:center">
+      <span style="padding:1px 6px;border-radius:3px;font-family:'DM Mono',monospace;font-size:7.5px;background:#f0f0f0;border:1px solid #999;color:#000;font-weight:800;white-space:nowrap;flex-shrink:0">${s.nis}</span>
+      <span style="padding:1px 6px;border-radius:3px;font-size:7.5px;font-weight:800;background:${u.light};color:${u.color};border:1px solid ${u.color};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;max-width:120px">${s.kelas}</span>
     </div>
   </div>
 
   <!-- BARCODE -->
-  <div style="flex:1;padding:1px 5px;display:flex;align-items:center;justify-content:center;min-height:0;overflow:hidden;background:#fff">
+  <div style="flex:1;padding:2px 6px 1px;display:flex;align-items:center;justify-content:center;min-height:0;overflow:hidden">
     <svg id="bcsvg${i}" style="width:100%;display:block"></svg>
   </div>
 
   <!-- FOOTER -->
-  <div style="background:#f5f5f5;border-top:1px solid #ddd;padding:2px 7px;display:flex;justify-content:space-between;align-items:center;flex-shrink:0">
-    <div style="font-size:6px;color:#333;font-weight:800;text-transform:uppercase;letter-spacing:.5px">Kartu Absensi</div>
-    <div style="font-family:'DM Mono',monospace;font-size:6px;color:#333;font-weight:700">2025/2026</div>
+  <div style="background:#f5f5f5;border-top:1px solid #ddd;padding:2px 8px;display:flex;justify-content:space-between;flex-shrink:0">
+    <div style="font-size:6.5px;color:#333;font-weight:800;text-transform:uppercase;letter-spacing:.5px">Kartu Absensi</div>
+    <div style="font-family:'DM Mono',monospace;font-size:6.5px;color:#333;font-weight:700">2025/2026</div>
   </div>
 
 </div>`;
   }).join('');
   setTimeout(()=>{
     list.forEach((s,i)=>{
-      try{JsBarcode(`#bcsvg${i}`,s.nis,{
-  format:'CODE128',
-  width:2.2,
-  height:50,
-  displayValue:true,
-  fontSize:10,
-  margin:4,
-  background:'#ffffff',
-  lineColor:'#000000',
-  textAlign:'center'
-});}
+      try{JsBarcode(`#bcsvg${i}`,s.nis,{format:'CODE128',width:2,height:55,displayValue:true,fontSize:11,margin:6,background:'#ffffff',lineColor:'#1a1a2e',textAlign:'center'});}
       catch(e){}
     });
   },400);
@@ -4158,97 +2241,34 @@ function bcRenderCards(){
 // UNDUH PDF
 // ════════════════════════════════════════
 async function unduhPDF(){
-  const grid = document.getElementById('bcGrid');
-  if(!grid || grid.style.display==='none'){
-    toast('Generate preview dulu sebelum unduh PDF','e'); return;
-  }
-  const btn = document.getElementById('bcBtnPdf');
-  btn.textContent='⏳ Membuat PDF...'; btn.disabled=true;
+  const grid=document.getElementById('bcGrid');
+  if(!grid||grid.style.display==='none'){toast('Generate preview dulu sebelum unduh PDF','e');return;}
+  const btn=document.getElementById('bcBtnPdf');
+  btn.textContent='⏳...';btn.disabled=true;
   try{
     const{jsPDF}=window.jspdf;
     const pdf=new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
-    const pageW=210, pageH=297, margin=10;
-    const cols=4, rows=2;
-    const cW=85.6, cH=54;
-    const gX=(pageW-margin*2-cols*cW)/(cols-1);
-    const gY=(pageH-margin*2-rows*cH)/(rows-1);
-    const cardsPerPage=cols*rows;
     const cards=grid.querySelectorAll('.bc-card');
     const total=cards.length;
-
+    const margin=8,cardW=85.6,cardH=54,cols=4;
+    const gapX=(210-margin*2-cols*cardW)/(cols-1),gapY=4;
+    const rowsPerPage=Math.floor((297-margin*2)/(cardH+gapY));
+    const cardsPerPage=cols*rowsPerPage;
     for(let i=0;i<total;i++){
       const posInPage=i%cardsPerPage;
       if(i>0&&posInPage===0) pdf.addPage();
-      const col=posInPage%cols;
-      const row=Math.floor(posInPage/cols);
-      const x=margin+col*(cW+gX);
-      const y=margin+row*(cH+gY);
-
-      // Render kartu
-      const canvas=await html2canvas(cards[i],{
-        scale:4,useCORS:true,backgroundColor:'#ffffff',logging:false
-      });
-      const imgData=canvas.toDataURL('image/jpeg',0.98);
-
-      // Kotak border
-      pdf.setDrawColor(180,180,180);
-      pdf.setLineWidth(0.25);
-      pdf.roundedRect(x,y,cW,cH,1,1);
-
-      // Gambar kartu
-      pdf.addImage(imgData,'JPEG',x+0.5,y+0.5,cW-1,cH-1);
-
-      btn.textContent='⏳ '+( i+1)+'/'+total;
+      const col=posInPage%cols, row=Math.floor(posInPage/cols);
+      const x=margin+col*(cardW+gapX), y=margin+row*(cardH+gapY);
+      const canvas=await html2canvas(cards[i],{scale:3,useCORS:true,backgroundColor:'#ffffff',logging:false});
+      pdf.addImage(canvas.toDataURL('image/jpeg',.95),'JPEG',x,y,cardW,cardH);
+      btn.textContent=`⏳${i+1}/${total}`;
     }
-
     const unit=bcUnit?(UNITS[bcUnit]?.label||bcUnit):'Semua';
     const dt=new Date().toLocaleDateString('id-ID').replace(/\//g,'-');
-    pdf.save('Barcode_'+unit+'_'+dt+'.pdf');
-    btn.textContent='✅ Selesai!';
+    pdf.save(`Barcode_${unit}_${dt}.pdf`);
+    btn.textContent='✅ Selesai';
     setTimeout(()=>{btn.textContent='⬇ PDF';btn.disabled=false;},2500);
-  }catch(e){
-    btn.textContent='⬇ PDF'; btn.disabled=false;
-    toast('Gagal PDF: '+e.message,'e');
-  }
-}
-
-// ════════════════════════════════════════
-// AUTO REFRESH
-// ════════════════════════════════════════
-async function autoRefreshSheets(){
-  if(!SHEETS_URL) return;
-  const today2 = new Date().toLocaleDateString('id-ID',{day:'2-digit',month:'2-digit',year:'numeric'});
-  const units = activeUnit==='all' ? ['pgtk','sd','smp','sma'] : [activeUnit];
-  let loaded = 0;
-  try{
-    for(const u of units){
-      const url = SHEETS_URL + '?action=load&unit=' + u + '&tanggal=' + encodeURIComponent(today2);
-      const res = await fetch(url);
-      const data = await res.json();
-      if(data.ok && data.data){
-        data.data.forEach(row=>{
-          if(row.nis && row.status){
-            attendance[row.nis] = {
-              status: row.status,
-              waktu: row.waktu||'—',
-              nama: row.nama,
-              kelas: row.kelas,
-              unit: row.unit
-            };
-            loaded++;
-          }
-        });
-      }
-    }
-    if(loaded > 0){
-      localStorage.setItem('fk_today', JSON.stringify(attendance));
-      renderDashboard();
-      if(document.getElementById('panel-rekap').classList.contains('active')) renderRekap();
-      // Update sync indicator
-      document.getElementById('syncStatus') && updateSyncStatus();
-      console.log('Auto-refresh: ' + loaded + ' data dimuat dari Sheets');
-    }
-  }catch(e){ console.warn('Auto-refresh gagal:', e); }
+  }catch(e){btn.textContent='⬇ PDF';btn.disabled=false;toast('Gagal buat PDF: '+e.message,'e');}
 }
 
 // ════════════════════════════════════════
@@ -4289,51 +2309,87 @@ function toast(msg,type){
 }
 </script>
 
-<!-- SHEETS CONFIG MODAL -->
+<!-- SHEETS MODAL -->
 <div id="sheetsModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(6px);z-index:200;align-items:center;justify-content:center;padding:20px">
-  <div style="background:#fff;border-radius:16px;padding:26px;width:100%;max-width:480px;box-shadow:0 20px 50px rgba(0,0,0,.3);animation:popIn .3s ease">
-    <div style="font-size:16px;font-weight:800;margin-bottom:4px">⚙️ Pengaturan Google Sheets</div>
-    <div style="font-size:11px;color:var(--muted);margin-bottom:18px">Masukkan URL Web App dari Google Apps Script</div>
-
-    <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:6px">Web App URL</div>
-    <input type="text" id="sheetsUrlInput" style="width:100%;background:var(--bg);border:1.5px solid var(--border);border-radius:8px;padding:10px 13px;font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;color:var(--text);outline:none;margin-bottom:10px" placeholder="https://script.google.com/macros/s/...">
-    
-    <div style="background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:12px;margin-bottom:16px;font-size:11px;line-height:1.6;color:#166534">
-      <strong>Cara mendapatkan URL:</strong><br>
-      1. Buka Google Sheets → <strong>Extensions → Apps Script</strong><br>
-      2. Paste kode Apps Script yang sudah disiapkan<br>
-      3. Klik <strong>Deploy → New Deployment</strong><br>
-      4. Type: <strong>Web App</strong>, Execute as: <strong>Me</strong>, Access: <strong>Anyone</strong><br>
-      5. Copy URL yang muncul, paste di sini
-    </div>
-
-    <div style="display:flex;gap:9px">
-      <button onclick="closeSheetsModal()" style="flex:1;padding:10px;background:var(--bg);border:1.5px solid var(--border);border-radius:8px;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:700;cursor:pointer">Batal</button>
-      <button onclick="saveSheetsURL()" style="flex:2;padding:10px;background:var(--uc);color:#fff;border:none;border-radius:8px;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:700;cursor:pointer">💾 Simpan & Test</button>
+  <div style="background:var(--surface);border-radius:16px;padding:26px;width:100%;max-width:460px">
+    <div style="font-size:15px;font-weight:800;margin-bottom:4px">⚙️ Google Sheets</div>
+    <div style="font-size:11px;color:var(--muted);margin-bottom:16px">Masukkan URL Web App dari Apps Script</div>
+    <input type="text" id="sheetsUrlInput" style="width:100%;background:var(--bg);border:1.5px solid var(--border);border-radius:8px;padding:10px 13px;font-family:Plus Jakarta Sans,sans-serif;font-size:12px;color:var(--text);outline:none;margin-bottom:14px" value="https://script.google.com/macros/s/AKfycbyMo3wwT93wNond4WaKRmkS5VLPa7RE-EmjLoQ0Ll5I1pfTKiULoOHaxKvUZAYuOCX2/exec">
+    <div style="display:flex;gap:8px">
+      <button onclick="closeSheetsModal()" style="flex:1;padding:10px;background:var(--bg);border:1.5px solid var(--border);border-radius:8px;font-family:Plus Jakarta Sans,sans-serif;font-size:13px;font-weight:700;cursor:pointer;color:var(--text)">Batal</button>
+      <button onclick="saveSheetsURL()" style="flex:2;padding:10px;background:var(--uc);color:#fff;border:none;border-radius:8px;font-family:Plus Jakarta Sans,sans-serif;font-size:13px;font-weight:700;cursor:pointer">💾 Simpan & Test</button>
     </div>
   </div>
 </div>
 
 <script>
-function showSheetsConfig(){
-  document.getElementById('sheetsUrlInput').value = SHEETS_URL;
-  document.getElementById('sheetsModal').style.display='flex';
-}
-function closeSheetsModal(){ document.getElementById('sheetsModal').style.display='none'; }
-async function saveSheetsURL(){
-  const url = document.getElementById('sheetsUrlInput').value.trim();
-  if(!url){ toast('URL tidak boleh kosong','e'); return; }
-  setSheetsURL(url);
-  // Test connection
+// ════ PDF ════════════════════════════
+async function unduhPDF(){
+  const grid=document.getElementById('bcGrid');
+  if(!grid||grid.style.display==='none'){toast('Generate preview dulu','e');return;}
+  const btn=document.getElementById('bcBtnPdf');
+  btn.textContent='⏳ Membuat PDF...';btn.disabled=true;
   try{
-    const res = await fetch(url + '?action=ping');
-    const data = await res.json();
-    if(data.ok){
-      toast('✅ Terhubung: ' + data.msg, 's');
-      updateSyncStatus();
-      closeSheetsModal();
-    } else { toast('Respons tidak valid: ' + JSON.stringify(data), 'e'); }
-  } catch(e){ toast('Gagal konek: ' + e.message + ' — Pastikan deployment sudah benar', 'e'); }
+    const{jsPDF}=window.jspdf;
+    const pdf=new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
+
+    // A4: 210 x 297mm
+    // Kartu: 85.6 x 54mm
+    // 4 kolom, 2 baris = 8 kartu per halaman
+    const margin = 8;
+    const cols = 4, rows = 2;
+    const cW = 85.6, cH = 54;
+
+    // Hitung gap
+    const totalW = 210 - margin*2; // 194mm
+    const gapX = (totalW - cols*cW) / (cols-1); // (194 - 342.4)/3 — terlalu kecil
+    // Pakai 2 kolom jika tidak muat
+    // 4 kartu x 85.6 = 342.4mm > 194mm — TIDAK MUAT 4 kolom!
+    // Pakai 2 kolom saja supaya muat
+    const cols2 = 2;
+    const gapX2 = (totalW - cols2*cW) / (cols2-1); // (194 - 171.2)/1 = 22.8mm
+    const rows2 = 4; // 4 baris x 2 kolom = 8 kartu per halaman
+    const totalH = 297 - margin*2; // 281mm
+    const gapY2 = (totalH - rows2*cH) / (rows2-1); // (281 - 216)/3 = 21.67mm
+
+    const cardsPerPage = cols2 * rows2; // 8
+    const cards = grid.querySelectorAll('.bc-card');
+    const total = cards.length;
+
+    for(let i=0;i<total;i++){
+      const pos = i % cardsPerPage;
+      if(i>0 && pos===0) pdf.addPage();
+
+      const col = pos % cols2;
+      const row = Math.floor(pos / cols2);
+
+      const x = margin + col*(cW + gapX2);
+      const y = margin + row*(cH + gapY2);
+
+      // Render kartu
+      const canvas = await html2canvas(cards[i],{
+        scale:3, useCORS:true, backgroundColor:'#ffffff', logging:false
+      });
+
+      // Kotak border dulu
+      pdf.setDrawColor(160,160,160);
+      pdf.setLineWidth(0.3);
+      pdf.roundedRect(x, y, cW, cH, 1.5, 1.5);
+
+      // Gambar kartu
+      pdf.addImage(canvas.toDataURL('image/jpeg',0.95),'JPEG',x+0.3,y+0.3,cW-0.6,cH-0.6);
+
+      btn.textContent='⏳ '+(i+1)+'/'+total;
+    }
+
+    const unit=typeof bcUnit!=='undefined'&&bcUnit?(UNITS[bcUnit]?.label||bcUnit):'Semua';
+    pdf.save('Barcode_'+unit+'_'+new Date().toLocaleDateString('id-ID').replace(/\//g,'-')+'.pdf');
+    btn.textContent='✅ Selesai!';
+    setTimeout(()=>{btn.textContent='⬇ PDF';btn.disabled=false;},2500);
+  }catch(e){
+    btn.textContent='⬇ PDF';btn.disabled=false;
+    toast('Gagal PDF: '+e.message,'e');
+  }
 }
 </script>
 </body>
