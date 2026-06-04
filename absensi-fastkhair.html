@@ -1678,7 +1678,7 @@ async function pushToSheets(record){
   if(!sheetsEnabled) return;
   try{
     const n=new Date();
-    const today2=n.getFullYear()+'-'+String(n.getMonth()+1).padStart(2,'0')+'-'+String(n.getDate()).padStart(2,'0');
+    const today2=String(n.getDate()).padStart(2,'0')+'/'+String(n.getMonth()+1).padStart(2,'0')+'/'+n.getFullYear();
     const params=new URLSearchParams({
       action:'save',
       nis:record.nis||'',
@@ -1697,7 +1697,7 @@ async function pushToSheets(record){
 async function syncAllToSheets(){
   if(!sheetsEnabled){toast('URL Google Sheets belum diisi','e');return;}
   const n=new Date();
-  const today2=n.getFullYear()+'-'+String(n.getMonth()+1).padStart(2,'0')+'-'+String(n.getDate()).padStart(2,'0');
+  const today2=String(n.getDate()).padStart(2,'0')+'/'+String(n.getMonth()+1).padStart(2,'0')+'/'+n.getFullYear();
   const records=Object.entries(attendance).map(([nis,ab])=>({
     nis,tanggal:today2,nama:ab.nama||'',kelas:ab.kelas||'',
     unit:ab.unit||'',status:ab.status||'',waktu:ab.waktu||'',
@@ -1729,7 +1729,7 @@ async function syncAllToSheets(){
 async function autoRefreshSheets(){
   if(!sheetsEnabled) return;
   const n=new Date();
-  const today2=n.getFullYear()+'-'+String(n.getMonth()+1).padStart(2,'0')+'-'+String(n.getDate()).padStart(2,'0');
+  const today2=String(n.getDate()).padStart(2,'0')+'/'+String(n.getMonth()+1).padStart(2,'0')+'/'+n.getFullYear();
   const units=activeUnit==='all'?['pgtk','sd','smp','sma']:[activeUnit];
   let loaded=0;
 
@@ -1754,8 +1754,8 @@ async function autoRefreshSheets(){
           const mm=String(n2.getMonth()+1).padStart(2,'0');
           const yyyy=n2.getFullYear();
           const formats=[
+            dd+'/'+mm+'/'+yyyy,          // 04/06/2026 (primary)
             yyyy+'-'+mm+'-'+dd,          // 2026-06-04
-            dd+'/'+mm+'/'+yyyy,          // 04/06/2026
             mm+'/'+dd+'/'+yyyy,          // 06/04/2026
             dd+'-'+mm+'-'+yyyy,          // 04-06-2026
             String(n2.toDateString()),   // Thu Jun 04 2026

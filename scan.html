@@ -481,7 +481,7 @@ body {
     <div class="modal-handle"></div>
     <div class="modal-title">⚙️ Google Sheets</div>
     <div class="modal-sub">Masukkan URL Web App dari Apps Script</div>
-    <input type="text" class="modal-inp" id="sheetsUrlInp" placeholder="https://script.google.com/macros/s/...">
+    <input type="text" class="modal-inp" id="sheetsUrlInp" placeholder="https://script.google.com/macros/s/..." value="https://script.google.com/macros/s/AKfycbwOlRbhx9RbzaBvkLYXCTxVY7GZEfhexG5ehKOlGjDq5_8PNGZSn4VePikSNOkZzuesEw/exec">
     <div class="modal-info">
       <strong>URL yang sama</strong> dengan yang dipakai di aplikasi utama.<br>
       Data akan otomatis tersinkron ke sheet yang sama.
@@ -1506,7 +1506,7 @@ let attendance = JSON.parse(localStorage.getItem('fk_today') || '{}');
 let session = null;
 let activeUnit = 'all';
 let scannerInst = null, scanCool = false;
-let SHEETS_URL = localStorage.getItem('fk_sheets_url') || '';
+let SHEETS_URL = localStorage.getItem('fk_sheets_url') || 'https://script.google.com/macros/s/AKfycbwOlRbhx9RbzaBvkLYXCTxVY7GZEfhexG5ehKOlGjDq5_8PNGZSn4VePikSNOkZzuesEw/exec';
 
 
 // ════ SOUND EFFECTS ═══════════════════
@@ -1806,15 +1806,21 @@ function clearLog(){
 async function pushToSheets(record){
   if(!SHEETS_URL) return;
   try{
-    const today2=(()=>{const n=new Date();return String(n.getDate()).padStart(2,'0')+'/'+String(n.getMonth()+1).padStart(2,'0')+'/'+n.getFullYear();})();
-    const payload = {action:'save',...record,tanggal:today2,username:session?.username||''};
-    // Use no-cors mode to bypass CORS restriction
-    await fetch(SHEETS_URL, {
-      method:'POST',
-      mode:'no-cors',
-      headers:{'Content-Type':'text/plain'},
-      body:JSON.stringify(payload)
+    const n=new Date();
+    const today2=String(n.getDate()).padStart(2,'0')+'/'+String(n.getMonth()+1).padStart(2,'0')+'/'+n.getFullYear();
+    // Use GET request - works without CORS issues
+    const params = new URLSearchParams({
+      action:'save',
+      nis: record.nis||'',
+      nama: record.nama||'',
+      kelas: record.kelas||'',
+      unit: record.unit||'',
+      status: record.status||'hadir',
+      waktu: record.waktu||'',
+      tanggal: today2,
+      username: session?.username||''
     });
+    await fetch(SHEETS_URL+'?'+params.toString());
   }catch(e){ console.warn('Sheets push failed:',e); }
 }
 
@@ -1830,14 +1836,20 @@ async function syncToSheets(){
   if(!records.length){ toast('Belum ada data absensi','i'); btn.textContent='☁️ Sync'; btn.disabled=false; return; }
   try{
     // Use no-cors - Apps Script doesn't support CORS from external origins
-    await fetch(SHEETS_URL, {
-      method:'POST',
-      mode:'no-cors',
-      headers:{'Content-Type':'text/plain'},
-      body:JSON.stringify({action:'saveMulti',records})
-    });
-    // no-cors returns opaque response, assume success
-    toast('✅ '+records.length+' data dikirim ke Sheets','s');
+    // Send each record via GET
+    let sent=0;
+    for(const r of records){
+      try{
+        const params=new URLSearchParams({
+          action:'save',nis:r.nis||'',nama:r.nama||'',
+          kelas:r.kelas||'',unit:r.unit||'',status:r.status||'',
+          waktu:r.waktu||'',tanggal:r.tanggal||'',username:r.username||''
+        });
+        await fetch(SHEETS_URL+'?'+params.toString());
+        sent++;
+      }catch(e2){}
+    }
+    toast('✅ '+sent+'/'+records.length+' data terkirim ke Sheets','s');
     localStorage.setItem('fk_last_sync', new Date().toLocaleTimeString('id-ID'));
     updateSheetsStatus();
   }catch(e){ toast('Gagal konek Sheets: '+e.message,'e'); }
