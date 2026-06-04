@@ -449,7 +449,7 @@ tr:hover td{background:#fafaf8}
       <div class="nav-section">
         <div class="nav-section-lbl">Menu</div>
         <button class="nitem active" onclick="showPanel('dashboard',this)"><span class="nico">📊</span>Dashboard</button>
-        <button class="nitem" onclick="showPanel('scan',this)"><span class="nico">📷</span>Scan Absensi</button>
+
         <button class="nitem" onclick="showPanel('rekap',this)"><span class="nico">📋</span>Rekap Murid</button>
       </div>
       <div class="nav-section">
@@ -509,39 +509,6 @@ tr:hover td{background:#fafaf8}
               </div>
               <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px" id="hmGrid"></div>
             </div></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ── SCAN ── -->
-      <div class="panel" id="panel-scan">
-        <div class="page-title"><span>📷</span>Scan Absensi</div>
-        <div class="scan-grid">
-          <div class="card">
-            <div class="card-h"><h3>Kamera Barcode</h3><p>Arahkan ke barcode murid</p></div>
-            <div class="card-b">
-              <div class="scan-box" id="scanBox">
-                <div id="scanIdle"><div style="font-size:44px;margin-bottom:10px;opacity:.2">📷</div><p style="color:var(--muted);font-size:13px">Tap tombol untuk aktifkan kamera</p></div>
-                <div id="qr-reader" style="width:100%;display:none"></div>
-              </div>
-              <div style="display:flex;gap:9px;margin-top:12px;flex-wrap:wrap">
-                <button class="btn btn-p" id="btnStart" onclick="startScan()">▶ Mulai Scan</button>
-                <button class="btn btn-g" id="btnStop" onclick="stopScan()" style="display:none">⏹ Stop</button>
-              </div>
-              <div style="margin-top:14px">
-                <p style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:7px">Input Manual NIS</p>
-                <div style="display:flex;gap:7px">
-                  <input type="text" class="inp" id="manualNis" placeholder="Ketik NIS lalu Enter" style="flex:1" onkeydown="if(event.key==='Enter')doManual()">
-                  <button class="btn btn-g" onclick="doManual()">Absen</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="card">
-            <div class="card-h"><h3>✅ Log Absensi</h3><p id="scCount">0 murid absen</p></div>
-            <div class="card-b scan-log" id="scLog">
-              <div style="text-align:center;padding:28px;color:var(--muted)"><div style="font-size:32px;margin-bottom:8px;opacity:.25">👀</div><p style="font-size:12px">Hasil scan muncul di sini</p></div>
-            </div>
           </div>
         </div>
       </div>
