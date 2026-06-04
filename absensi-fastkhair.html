@@ -1669,7 +1669,7 @@ if(localStorage.getItem('fk_date')!==today){ localStorage.setItem('fk_date',toda
 let attendance = JSON.parse(localStorage.getItem('fk_today')||'{}');
 
 // ════ GOOGLE SHEETS ════════════════════
-let SHEETS_URL = localStorage.getItem('fk_sheets_url') || 'https://script.google.com/macros/s/AKfycbyMo3wwT93wNond4WaKRmkS5VLPa7RE-EmjLoQ0Ll5I1pfTKiULoOHaxKvUZAYuOCX2/exec';
+let SHEETS_URL = localStorage.getItem('fk_sheets_url') || 'https://script.google.com/macros/s/AKfycbwOlRbhx9RbzaBvkLYXCTxVY7GZEfhexG5ehKOlGjDq5_8PNGZSn4VePikSNOkZzuesEw/exec';
 let sheetsEnabled = !!SHEETS_URL;
 
 function setSheetsURL(url){ SHEETS_URL=url.trim(); sheetsEnabled=!!SHEETS_URL; localStorage.setItem('fk_sheets_url',SHEETS_URL); }
@@ -1677,39 +1677,63 @@ function setSheetsURL(url){ SHEETS_URL=url.trim(); sheetsEnabled=!!SHEETS_URL; l
 async function pushToSheets(record){
   if(!sheetsEnabled) return;
   try{
-    const today2=(()=>{const n=new Date();return String(n.getDate()).padStart(2,'0')+'/'+String(n.getMonth()+1).padStart(2,'0')+'/'+n.getFullYear();})();
-    await fetch(SHEETS_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},
-      body:JSON.stringify({action:'save',...record,tanggal:today2,username:session?.username||''})});
+    const n=new Date();
+    const today2=n.getFullYear()+'-'+String(n.getMonth()+1).padStart(2,'0')+'-'+String(n.getDate()).padStart(2,'0');
+    const params=new URLSearchParams({
+      action:'save',
+      nis:record.nis||'',
+      nama:record.nama||'',
+      kelas:record.kelas||'',
+      unit:record.unit||'',
+      status:record.status||'hadir',
+      waktu:record.waktu||'',
+      tanggal:today2,
+      username:session?.username||''
+    });
+    await fetch(SHEETS_URL+'?'+params.toString());
   }catch(e){ console.warn('push failed',e); }
 }
 
 async function syncAllToSheets(){
   if(!sheetsEnabled){toast('URL Google Sheets belum diisi','e');return;}
-  const today2=(()=>{const n=new Date();return String(n.getDate()).padStart(2,'0')+'/'+String(n.getMonth()+1).padStart(2,'0')+'/'+n.getFullYear();})();
+  const n=new Date();
+  const today2=n.getFullYear()+'-'+String(n.getMonth()+1).padStart(2,'0')+'-'+String(n.getDate()).padStart(2,'0');
   const records=Object.entries(attendance).map(([nis,ab])=>({
-    nis,tanggal:today2,nama:ab.nama||'',kelas:ab.kelas||'',unit:ab.unit||'',status:ab.status||'',waktu:ab.waktu||'',username:session?.username||''
+    nis,tanggal:today2,nama:ab.nama||'',kelas:ab.kelas||'',
+    unit:ab.unit||'',status:ab.status||'',waktu:ab.waktu||'',
+    username:session?.username||''
   }));
   if(!records.length){toast('Belum ada data absensi','i');return;}
   const btn=document.getElementById('btnSync');
   if(btn){btn.textContent='⏳ Menyimpan...';btn.disabled=true;}
   try{
-    await fetch(SHEETS_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},
-      body:JSON.stringify({action:'saveMulti',records})});
-    toast('✅ '+records.length+' data tersimpan ke Sheets','s');
+    let sent=0;
+    for(const r of records){
+      try{
+        const params=new URLSearchParams({
+          action:'save',nis:r.nis||'',nama:r.nama||'',
+          kelas:r.kelas||'',unit:r.unit||'',status:r.status||'',
+          waktu:r.waktu||'',tanggal:r.tanggal||'',username:r.username||''
+        });
+        await fetch(SHEETS_URL+'?'+params.toString());
+        sent++;
+      }catch(e2){}
+    }
+    toast('✅ '+sent+' data tersimpan ke Sheets','s');
     localStorage.setItem('fk_last_sync',new Date().toLocaleTimeString('id-ID'));
     updateSyncStatus();
-  }catch(e){toast('Gagal sync: '+e.message,'e');}
+  }catch(e){toast('Gagal: '+e.message,'e');}
   finally{if(btn){btn.textContent='☁️ Sync ke Sheets';btn.disabled=false;}}
 }
 
 async function autoRefreshSheets(){
   if(!sheetsEnabled) return;
-  const today2=(()=>{const n=new Date();return String(n.getDate()).padStart(2,'0')+'/'+String(n.getMonth()+1).padStart(2,'0')+'/'+n.getFullYear();})();
+  const n=new Date();
+  const today2=n.getFullYear()+'-'+String(n.getMonth()+1).padStart(2,'0')+'-'+String(n.getDate()).padStart(2,'0');
   const units=activeUnit==='all'?['pgtk','sd','smp','sma']:[activeUnit];
   let loaded=0;
 
-  // Helper fetch dengan timeout 8 detik
-  const fetchWithTimeout = (url, ms=8000) => {
+  const fetchWithTimeout = (url, ms=10000) => {
     const ctrl = new AbortController();
     const timer = setTimeout(()=>ctrl.abort(), ms);
     return fetch(url, {signal:ctrl.signal}).finally(()=>clearTimeout(timer));
@@ -1718,17 +1742,42 @@ async function autoRefreshSheets(){
   try{
     for(const u of units){
       try{
-        const url=SHEETS_URL+'?action=load&unit='+u+'&tanggal='+encodeURIComponent(today2);
+        // Load ALL data (no tanggal filter) then filter in JS
+        const url=SHEETS_URL+'?action=load&unit='+u;
         const res=await fetchWithTimeout(url);
         if(!res.ok) continue;
         const data=await res.json();
-        if(data.ok&&data.data){
+        if(data.ok && data.data && data.data.length>0){
+          // Build all possible formats for today
+          const n2=new Date();
+          const dd=String(n2.getDate()).padStart(2,'0');
+          const mm=String(n2.getMonth()+1).padStart(2,'0');
+          const yyyy=n2.getFullYear();
+          const formats=[
+            yyyy+'-'+mm+'-'+dd,          // 2026-06-04
+            dd+'/'+mm+'/'+yyyy,          // 04/06/2026
+            mm+'/'+dd+'/'+yyyy,          // 06/04/2026
+            dd+'-'+mm+'-'+yyyy,          // 04-06-2026
+            String(n2.toDateString()),   // Thu Jun 04 2026
+          ];
+
           data.data.forEach(row=>{
-            if(row.nis&&row.status){
-              attendance[row.nis]={status:row.status,waktu:row.waktu||'—',nama:row.nama,kelas:row.kelas,unit:row.unit};
-              loaded++;
-            }
+            if(!row.nis || !row.status) return;
+            const rowDate = String(row.tanggal||'').trim().substring(0,10);
+            const rowDateFull = String(row.tanggal||'').trim();
+            // Check if matches any format
+            const match = formats.some(f=>rowDateFull.startsWith(f)||rowDate===f.substring(0,10));
+            if(!match) return;
+            attendance[row.nis]={
+              status:row.status,
+              waktu:row.waktu||'—',
+              nama:row.nama||'',
+              kelas:row.kelas||'',
+              unit:row.unit||u
+            };
+            loaded++;
           });
+          console.log('Unit '+u+': '+data.data.length+' total, '+loaded+' matched today ('+formats[0]+' or '+formats[1]+')');
         }
       }catch(e){ console.warn('fetch unit '+u+' failed:',e.message); }
     }
@@ -2394,7 +2443,7 @@ function toast(msg,type){
   <div style="background:var(--surface);border-radius:16px;padding:26px;width:100%;max-width:460px">
     <div style="font-size:15px;font-weight:800;margin-bottom:4px">⚙️ Google Sheets</div>
     <div style="font-size:11px;color:var(--muted);margin-bottom:16px">Masukkan URL Web App dari Apps Script</div>
-    <input type="text" id="sheetsUrlInput" style="width:100%;background:var(--bg);border:1.5px solid var(--border);border-radius:8px;padding:10px 13px;font-family:Plus Jakarta Sans,sans-serif;font-size:12px;color:var(--text);outline:none;margin-bottom:14px" value="https://script.google.com/macros/s/AKfycbyMo3wwT93wNond4WaKRmkS5VLPa7RE-EmjLoQ0Ll5I1pfTKiULoOHaxKvUZAYuOCX2/exec">
+    <input type="text" id="sheetsUrlInput" style="width:100%;background:var(--bg);border:1.5px solid var(--border);border-radius:8px;padding:10px 13px;font-family:Plus Jakarta Sans,sans-serif;font-size:12px;color:var(--text);outline:none;margin-bottom:14px" value="https://script.google.com/macros/s/AKfycbwOlRbhx9RbzaBvkLYXCTxVY7GZEfhexG5ehKOlGjDq5_8PNGZSn4VePikSNOkZzuesEw/exec">
     <div style="display:flex;gap:8px">
       <button onclick="closeSheetsModal()" style="flex:1;padding:10px;background:var(--bg);border:1.5px solid var(--border);border-radius:8px;font-family:Plus Jakarta Sans,sans-serif;font-size:13px;font-weight:700;cursor:pointer;color:var(--text)">Batal</button>
       <button onclick="saveSheetsURL()" style="flex:2;padding:10px;background:var(--uc);color:#fff;border:none;border-radius:8px;font-family:Plus Jakarta Sans,sans-serif;font-size:13px;font-weight:700;cursor:pointer">💾 Simpan & Test</button>
