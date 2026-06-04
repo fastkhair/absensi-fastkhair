@@ -9,6 +9,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 /* ═══════════════════════════════════════
@@ -454,7 +455,7 @@ tr:hover td{background:#fafaf8}
       <div class="nav-section">
         <div class="nav-section-lbl">Kartu</div>
         <button class="nitem" onclick="showPanel('barcode',this)"><span class="nico">🔖</span>Cetak Barcode</button>
-        <button class="nitem" onclick="exportCSV()"><span class="nico">⬇️</span>Export CSV</button>
+        <button class="nitem" onclick="exportExcel()"><span class="nico">📊</span>Export Excel</button>
       </div>
       <div style="padding:8px 12px;border-top:1px solid var(--border);flex-shrink:0">
         <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:5px">☁️ Google Sheets</div>
@@ -2410,18 +2411,97 @@ async function unduhPDF(){
 // EXPORT CSV
 // ════════════════════════════════════════
 function exportCSV(){
-  const unit=activeUnit==='all'?null:activeUnit;
-  const list=getStu(unit);
-  if(!list.length){toast('Tidak ada data','e');return;}
-  const rows=[['No','Nama','NIS','Kelas','Unit','Status','Waktu']];
+  exportExcel();
+}
+
+function exportExcel(){
+  if(typeof XLSX === 'undefined'){ toast('Library Excel belum dimuat, coba refresh','e'); return; }
+
+  const unit = activeUnit==='all' ? null : activeUnit;
+  const list = getStu(unit);
+  if(!list.length){ toast('Tidak ada data','e'); return; }
+
+  const wb = XLSX.utils.book_new();
+  const today = new Date().toLocaleDateString('id-ID');
+  const unitLabel = UNITS[activeUnit]?.label || 'Semua Unit';
+
+  // ── SHEET 1: REKAP SEMUA ──────────────────
+  const allRows = [
+    ['REKAP ABSENSI ' + unitLabel.toUpperCase()],
+    ['Tanggal: ' + today],
+    [''],
+    ['No', 'Nama Murid', 'NIS', 'Kelas', 'Unit', 'Status', 'Waktu Absen']
+  ];
   list.forEach((s,i)=>{
-    const ab=attendance[s.nis];
-    rows.push([i+1,s.nama,s.nis,s.kelas,UNITS[s.unit]?.label||s.unit,ab?.status||'alpha',ab?.waktu||'-']);
+    const ab = attendance[s.nis];
+    allRows.push([
+      i+1, s.nama, s.nis, s.kelas,
+      UNITS[s.unit]?.label||s.unit,
+      ab?.status||'Alpha',
+      ab?.waktu||'-'
+    ]);
   });
-  const csv=rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\n');
-  const a=Object.assign(document.createElement('a'),{href:URL.createObjectURL(new Blob(['\ufeff'+csv],{type:'text/csv'})),download:`Absensi_${UNITS[activeUnit]?.label||'Semua'}_${new Date().toLocaleDateString('id-ID').replace(/\//g,'-')}.csv`});
-  a.click();URL.revokeObjectURL(a.href);
-  toast('CSV diunduh','s');
+
+  // Summary row
+  const hadir = list.filter(s=>attendance[s.nis]?.status==='hadir').length;
+  const alpha = list.filter(s=>!attendance[s.nis]||attendance[s.nis]?.status==='alpha').length;
+  const izin  = list.filter(s=>attendance[s.nis]?.status==='izin').length;
+  const sakit = list.filter(s=>attendance[s.nis]?.status==='sakit').length;
+  allRows.push(['']);
+  allRows.push(['TOTAL', list.length + ' murid', '', '', '', 'Hadir: '+hadir, 'Alpha: '+alpha]);
+  allRows.push(['', '', '', '', '', 'Izin: '+izin, 'Sakit: '+sakit]);
+
+  const wsAll = XLSX.utils.aoa_to_sheet(allRows);
+  // Column widths
+  wsAll['!cols'] = [{wch:5},{wch:35},{wch:15},{wch:20},{wch:10},{wch:10},{wch:12}];
+  // Merge title
+  wsAll['!merges'] = [{s:{r:0,c:0},e:{r:0,c:6}},{s:{r:1,c:0},e:{r:1,c:6}}];
+  XLSX.utils.book_append_sheet(wb, wsAll, 'Rekap '+unitLabel);
+
+  // ── SHEET PER KELAS ───────────────────────
+  const kelasList = [...new Set(list.map(s=>s.kelas))].sort((a,b)=>a.localeCompare(b,undefined,{numeric:true}));
+
+  kelasList.forEach(kelas=>{
+    const murid = list.filter(s=>s.kelas===kelas);
+    const rows = [
+      ['REKAP ABSENSI KELAS ' + kelas.toUpperCase()],
+      ['Tanggal: ' + today + '  |  Total: ' + murid.length + ' murid'],
+      [''],
+      ['No', 'Nama Murid', 'NIS', 'Status', 'Waktu Absen', 'Keterangan']
+    ];
+    let hadirK=0, alphaK=0, izinK=0, sakitK=0;
+    murid.forEach((s,i)=>{
+      const ab = attendance[s.nis];
+      const status = ab?.status || 'alpha';
+      if(status==='hadir') hadirK++;
+      else if(status==='izin') izinK++;
+      else if(status==='sakit') sakitK++;
+      else alphaK++;
+      rows.push([
+        i+1,
+        s.nama,
+        s.nis,
+        status.charAt(0).toUpperCase()+status.slice(1),
+        ab?.waktu||'-',
+        status==='hadir'?'':status==='izin'?'Izin':status==='sakit'?'Sakit':'Tidak hadir'
+      ]);
+    });
+    rows.push(['']);
+    rows.push(['', 'HADIR: '+hadirK, 'ALPHA: '+alphaK, 'IZIN: '+izinK, 'SAKIT: '+sakitK, 'TOTAL: '+murid.length]);
+
+    const ws = XLSX.utils.aoa_to_sheet(rows);
+    ws['!cols'] = [{wch:5},{wch:35},{wch:15},{wch:10},{wch:12},{wch:15}];
+    ws['!merges'] = [{s:{r:0,c:0},e:{r:0,c:5}},{s:{r:1,c:0},e:{r:1,c:5}}];
+
+    // Nama sheet maksimal 31 karakter
+    const sheetName = kelas.length > 31 ? kelas.substring(0,28)+'...' : kelas;
+    XLSX.utils.book_append_sheet(wb, ws, sheetName);
+  });
+
+  // Download
+  const dt = new Date().toLocaleDateString('id-ID').replace(/\//g,'-');
+  XLSX.writeFile(wb, 'Rekap_'+unitLabel+'_'+dt+'.xlsx');
+  toast('✅ Excel diunduh — '+(kelasList.length+1)+' sheet (1 rekap + '+kelasList.length+' kelas)','s');
 }
 
 // ════════════════════════════════════════
