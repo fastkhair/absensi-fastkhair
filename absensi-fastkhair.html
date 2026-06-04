@@ -552,7 +552,15 @@ tr:hover td{background:#fafaf8}
         <div class="card">
           <div class="card-h">
             <div><h3>Data Absensi</h3><p id="rekapSub">—</p></div>
-            <div style="display:flex;gap:7px;flex-wrap:wrap">
+            <div style="display:flex;gap:7px;flex-wrap:wrap;align-items:center">
+              <!-- Date picker -->
+              <div style="display:flex;align-items:center;gap:5px;background:var(--bg);border:1.5px solid var(--border);border-radius:8px;padding:4px 9px">
+                <span style="font-size:12px">📅</span>
+                <input type="date" id="fTanggal" class="inp" 
+                  style="border:none;background:transparent;padding:2px;font-size:11px;outline:none;color:var(--text)"
+                  onchange="onTanggalChange()">
+                <button onclick="clearTanggal()" id="btnClearDate" style="display:none;background:none;border:none;cursor:pointer;color:var(--muted);font-size:12px;padding:0 2px" title="Hapus filter tanggal">✕</button>
+              </div>
               <select class="inp" id="fKelas" onchange="renderRekap()" style="font-size:11px"><option value="">Semua Kelas</option></select>
               <select class="inp" id="fStatus" onchange="renderRekap()" style="font-size:11px">
                 <option value="">Semua Status</option>
@@ -560,6 +568,7 @@ tr:hover td{background:#fafaf8}
                 <option value="izin">Izin</option><option value="sakit">Sakit</option>
               </select>
               <button class="btn btn-d btn-sm" onclick="resetToday()">🗑 Reset</button>
+              <button class="btn btn-p btn-sm" onclick="loadTanggal()" id="btnLoadDate" style="display:none">📥 Load Tanggal Ini</button>
             </div>
           </div>
           <div class="tbl-wrap">
@@ -1951,7 +1960,14 @@ function showPanel(name,btn){
   document.querySelectorAll('.nitem').forEach(b=>b.classList.remove('active'));
   document.getElementById('panel-'+name).classList.add('active');
   if(btn) btn.classList.add('active');
-  if(name==='rekap') renderRekap();
+  if(name==='rekap'){
+    // Set default date to today
+    const n=new Date();
+    const todayVal=n.getFullYear()+'-'+String(n.getMonth()+1).padStart(2,'0')+'-'+String(n.getDate()).padStart(2,'0');
+    const dp=document.getElementById('fTanggal');
+    if(dp && !dp.value) dp.value=todayVal;
+    renderRekap();
+  }
   if(name==='barcode') bcRenderUnits();
   if(name!=='scan'&&scannerInst) stopScan();
 }
@@ -2115,12 +2131,14 @@ function renderRekap(){
   const list=getStu(unit);
   const fk=document.getElementById('fKelas').value;
   const fs=document.getElementById('fStatus').value;
-  document.getElementById('rekapSub').textContent=list.length+' murid · '+( UNITS[activeUnit]?.label||'Semua');
+  const activeAtt = getActiveAttendance();
+  const tglLabel = rekapTanggal ? ' · '+rekapTanggal : ' · Hari ini';
+  document.getElementById('rekapSub').textContent=list.length+' murid · '+(UNITS[activeUnit]?.label||'Semua')+tglLabel;
   const allKelas=[...new Set(list.map(s=>s.kelas))].sort();
   const sel=document.getElementById('fKelas'),cur=sel.value;
   sel.innerHTML='<option value="">Semua Kelas</option>';
   allKelas.forEach(k=>{const o=document.createElement('option');o.value=k;o.textContent=k;if(k===cur)o.selected=true;sel.appendChild(o);});
-  let rows=list.map(s=>{const ab=attendance[s.nis];return{...s,status:ab?.status||'alpha',waktu:ab?.waktu||'—'};});
+  let rows=list.map(s=>{const ab=activeAtt[s.nis];return{...s,status:ab?.status||'alpha',waktu:ab?.waktu||'—'};});
   if(fk) rows=rows.filter(r=>r.kelas===fk);
   if(fs) rows=rows.filter(r=>r.status===fs);
   const colors=['#0ea5e9','#16a34a','#7c3aed','#ea580c','#0f4c81','#dc2626'];
@@ -2410,6 +2428,88 @@ async function unduhPDF(){
 // ════════════════════════════════════════
 // EXPORT CSV
 // ════════════════════════════════════════
+// ════ DATE PICKER REKAP ══════════════════
+let rekapTanggal = null; // null = hari ini (dari localStorage)
+let rekapAttendance = null; // attendance untuk tanggal yang dipilih
+
+function onTanggalChange(){
+  const val = document.getElementById('fTanggal').value;
+  if(!val){
+    clearTanggal();
+    return;
+  }
+  // val = YYYY-MM-DD (format HTML date input)
+  const [y,m,d] = val.split('-');
+  rekapTanggal = d+'/'+m+'/'+y; // dd/mm/yyyy
+  document.getElementById('btnClearDate').style.display = 'inline';
+  document.getElementById('btnLoadDate').style.display = 'inline-flex';
+  // Reset attendance untuk tanggal baru
+  rekapAttendance = null;
+  renderRekap();
+}
+
+function clearTanggal(){
+  rekapTanggal = null;
+  rekapAttendance = null;
+  document.getElementById('fTanggal').value = '';
+  document.getElementById('btnClearDate').style.display = 'none';
+  document.getElementById('btnLoadDate').style.display = 'none';
+  renderRekap();
+}
+
+async function loadTanggal(){
+  if(!rekapTanggal || !sheetsEnabled){
+    toast('Pilih tanggal dan pastikan Sheets terhubung','e');
+    return;
+  }
+  const btn = document.getElementById('btnLoadDate');
+  btn.textContent = '⏳ Memuat...';
+  btn.disabled = true;
+
+  const unit = activeUnit==='all' ? null : activeUnit;
+  const units = unit ? [unit] : ['pgtk','sd','smp','sma'];
+  rekapAttendance = {};
+
+  // Convert dd/mm/yyyy → for API query
+  const [d,m,y] = rekapTanggal.split('/');
+  const tanggalQuery = rekapTanggal; // dd/mm/yyyy
+
+  try{
+    for(const u of units){
+      const url = SHEETS_URL+'?action=load&unit='+u+'&tanggal='+encodeURIComponent(tanggalQuery);
+      const res = await fetch(url);
+      const data = await res.json();
+      if(data.ok && data.data){
+        data.data.forEach(row=>{
+          if(row.nis && row.status){
+            rekapAttendance[row.nis] = {
+              status: row.status,
+              waktu: row.waktu||'—',
+              nama: row.nama||'',
+              kelas: row.kelas||'',
+              unit: row.unit||u
+            };
+          }
+        });
+      }
+    }
+    toast('✅ Data tanggal '+rekapTanggal+' dimuat ('+Object.keys(rekapAttendance).length+' murid)','s');
+    renderRekap();
+  }catch(e){
+    toast('Gagal load: '+e.message,'e');
+  }
+  finally{
+    btn.textContent = '📥 Load Tanggal Ini';
+    btn.disabled = false;
+  }
+}
+
+function getActiveAttendance(){
+  // Kalau ada tanggal dipilih dan sudah di-load, pakai itu
+  // Kalau belum di-load, pakai attendance hari ini
+  return rekapAttendance || attendance;
+}
+
 function exportCSV(){
   exportExcel();
 }
@@ -2432,8 +2532,10 @@ function exportExcel(){
     [''],
     ['No', 'Nama Murid', 'NIS', 'Kelas', 'Unit', 'Status', 'Waktu Absen']
   ];
+  const expAtt = getActiveAttendance();
+  const expDate = rekapTanggal || today;
   list.forEach((s,i)=>{
-    const ab = attendance[s.nis];
+    const ab = expAtt[s.nis];
     allRows.push([
       i+1, s.nama, s.nis, s.kelas,
       UNITS[s.unit]?.label||s.unit,
@@ -2443,10 +2545,10 @@ function exportExcel(){
   });
 
   // Summary row
-  const hadir = list.filter(s=>attendance[s.nis]?.status==='hadir').length;
-  const alpha = list.filter(s=>!attendance[s.nis]||attendance[s.nis]?.status==='alpha').length;
-  const izin  = list.filter(s=>attendance[s.nis]?.status==='izin').length;
-  const sakit = list.filter(s=>attendance[s.nis]?.status==='sakit').length;
+  const hadir = list.filter(s=>expAtt[s.nis]?.status==='hadir').length;
+  const alpha = list.filter(s=>!expAtt[s.nis]||expAtt[s.nis]?.status==='alpha').length;
+  const izin  = list.filter(s=>expAtt[s.nis]?.status==='izin').length;
+  const sakit = list.filter(s=>expAtt[s.nis]?.status==='sakit').length;
   allRows.push(['']);
   allRows.push(['TOTAL', list.length + ' murid', '', '', '', 'Hadir: '+hadir, 'Alpha: '+alpha]);
   allRows.push(['', '', '', '', '', 'Izin: '+izin, 'Sakit: '+sakit]);
@@ -2471,7 +2573,7 @@ function exportExcel(){
     ];
     let hadirK=0, alphaK=0, izinK=0, sakitK=0;
     murid.forEach((s,i)=>{
-      const ab = attendance[s.nis];
+      const ab = expAtt[s.nis];
       const status = ab?.status || 'alpha';
       if(status==='hadir') hadirK++;
       else if(status==='izin') izinK++;
