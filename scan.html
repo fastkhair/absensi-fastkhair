@@ -1806,7 +1806,7 @@ function clearLog(){
 async function pushToSheets(record){
   if(!SHEETS_URL) return;
   try{
-    const today2 = new Date().toLocaleDateString('id-ID',{day:'2-digit',month:'2-digit',year:'numeric'});
+    const today2=(()=>{const n=new Date();return String(n.getDate()).padStart(2,'0')+'/'+String(n.getMonth()+1).padStart(2,'0')+'/'+n.getFullYear();})();
     const payload = {action:'save',...record,tanggal:today2,username:session?.username||''};
     // Use no-cors mode to bypass CORS restriction
     await fetch(SHEETS_URL, {
@@ -1822,7 +1822,7 @@ async function syncToSheets(){
   if(!SHEETS_URL){ toast('URL Google Sheets belum diisi','e'); openModal(); return; }
   const btn = document.getElementById('btnSync');
   btn.textContent='⏳...'; btn.disabled=true;
-  const today2 = new Date().toLocaleDateString('id-ID',{day:'2-digit',month:'2-digit',year:'numeric'});
+  const today2=(()=>{const n=new Date();return String(n.getDate()).padStart(2,'0')+'/'+String(n.getMonth()+1).padStart(2,'0')+'/'+n.getFullYear();})();
   const records = Object.entries(attendance).map(([nis,ab])=>({
     nis,tanggal:today2,nama:ab.nama||'',kelas:ab.kelas||'',
     unit:ab.unit||'',status:ab.status||'',waktu:ab.waktu||'',username:session?.username||''
