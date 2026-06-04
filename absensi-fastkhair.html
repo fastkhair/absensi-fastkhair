@@ -1707,35 +1707,75 @@ async function autoRefreshSheets(){
   const today2=new Date().toLocaleDateString('id-ID',{day:'2-digit',month:'2-digit',year:'numeric'});
   const units=activeUnit==='all'?['pgtk','sd','smp','sma']:[activeUnit];
   let loaded=0;
+
+  // Helper fetch dengan timeout 8 detik
+  const fetchWithTimeout = (url, ms=8000) => {
+    const ctrl = new AbortController();
+    const timer = setTimeout(()=>ctrl.abort(), ms);
+    return fetch(url, {signal:ctrl.signal}).finally(()=>clearTimeout(timer));
+  };
+
   try{
     for(const u of units){
-      const url=SHEETS_URL+'?action=load&unit='+u+'&tanggal='+encodeURIComponent(today2);
-      const res=await fetch(url);
-      const data=await res.json();
-      if(data.ok&&data.data){
-        data.data.forEach(row=>{
-          if(row.nis&&row.status){
-            attendance[row.nis]={status:row.status,waktu:row.waktu||'—',nama:row.nama,kelas:row.kelas,unit:row.unit};
-            loaded++;
-          }
-        });
-      }
+      try{
+        const url=SHEETS_URL+'?action=load&unit='+u+'&tanggal='+encodeURIComponent(today2);
+        const res=await fetchWithTimeout(url);
+        if(!res.ok) continue;
+        const data=await res.json();
+        if(data.ok&&data.data){
+          data.data.forEach(row=>{
+            if(row.nis&&row.status){
+              attendance[row.nis]={status:row.status,waktu:row.waktu||'—',nama:row.nama,kelas:row.kelas,unit:row.unit};
+              loaded++;
+            }
+          });
+        }
+      }catch(e){ console.warn('fetch unit '+u+' failed:',e.message); }
     }
     if(loaded>0){
       localStorage.setItem('fk_today',JSON.stringify(attendance));
+      // Save today's percentage to history for each unit
+      ['pgtk','sd','smp','sma'].forEach(u=>{
+        const list=ALL_STUDENTS.filter(s=>s.unit===u);
+        const total=list.length;
+        const hadir=list.filter(s=>attendance[s.nis]?.status==='hadir').length;
+        const pct=total>0?Math.round(hadir/total*100):0;
+        const histKey='fk_hist_'+u;
+        let hist=[];
+        try{ hist=JSON.parse(localStorage.getItem(histKey)||'[]'); }catch(e){}
+        while(hist.length<7) hist.push(null);
+        hist[6]=pct;
+        localStorage.setItem(histKey, JSON.stringify(hist));
+      });
       renderDashboard();
       if(document.getElementById('panel-rekap').classList.contains('active')) renderRekap();
     }
-  }catch(e){console.warn('auto-refresh failed',e);}
+  }catch(e){ console.warn('auto-refresh failed',e); }
+  finally{
+    // Update status
+    const el=document.getElementById('syncStatus');
+    if(el){
+      const now=new Date().toLocaleTimeString('id-ID');
+      el.textContent='✓ Terhubung · Update: '+now;
+      el.style.color='var(--green)';
+    }
+    // Release load button if stuck
+    const btn=document.getElementById('btnLoad');
+    if(btn){btn.textContent='📥 Load dari Sheets';btn.disabled=false;}
+  }
 }
 
 async function loadFromSheets(){
   if(!sheetsEnabled){toast('URL Sheets belum diisi','e');return;}
   const btn=document.getElementById('btnLoad');
   if(btn){btn.textContent='⏳ Memuat...';btn.disabled=true;}
-  try{await autoRefreshSheets();toast('📥 Data dimuat dari Sheets','s');}
-  catch(e){toast('Gagal: '+e.message,'e');}
-  finally{if(btn){btn.textContent='📥 Load dari Sheets';btn.disabled=false;}}
+  try{
+    await autoRefreshSheets();
+    toast('📥 Data berhasil dimuat','s');
+  }catch(e){
+    toast('Gagal load: '+e.message,'e');
+    if(btn){btn.textContent='📥 Load dari Sheets';btn.disabled=false;}
+  }
 }
 
 function updateSyncStatus(){
@@ -1888,13 +1928,30 @@ function renderAllDash(){
         <div><div class="ucb-sv" style="color:#ca8a04">${st.izin+st.sakit}</div><div class="ucb-sl">Izin</div></div>
       </div></div>`;
   }).join('');
-  const labs=['Sen','Sel','Rab','Kam','Jum','Sab','Hari ini'];
+  // Build real 7-day labels
+  const now7=new Date();
+  const labs=[];
+  const dayNames=['Min','Sen','Sel','Rab','Kam','Jum','Sab'];
+  for(let d=6;d>=0;d--){
+    const dt=new Date(now7); dt.setDate(dt.getDate()-d);
+    labs.push(d===0?'Hari ini':dayNames[dt.getDay()]+' '+dt.getDate());
+  }
   if(cMT) cMT.destroy();
   cMT=new Chart(document.getElementById('cMT').getContext('2d'),{
     type:'line',data:{labels:labs,datasets:ukeys.map(uk=>{
       const u=UNITS[uk],st=getStats(uk);
-      return{label:u.label,data:labs.map((_,i)=>i===6?st.pct:Math.floor(75+Math.sin(i*1.5+ukeys.indexOf(uk))*12)),
-        borderColor:u.color,backgroundColor:u.color+'22',borderWidth:2.5,pointRadius:4,tension:.4,fill:false};
+      // Hari ini = data real, hari sebelumnya = dari histori jika ada
+      const histKey='fk_hist_'+uk;
+      let hist=[];
+      try{ hist=JSON.parse(localStorage.getItem(histKey)||'[]'); }catch(e){}
+      const data=labs.map((_,i)=>{
+        if(i===6) return st.pct; // hari ini = real
+        return hist[i]||null; // hari lain dari histori
+      });
+      return{label:u.label,data,
+        borderColor:u.color,backgroundColor:u.color+'22',
+        borderWidth:2.5,pointRadius:4,tension:.4,fill:false,
+        spanGaps:true};
     })},
     options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{font:{family:'Plus Jakarta Sans',size:10},boxWidth:10,padding:10}}},
       scales:{x:{grid:{display:false},ticks:{font:{family:'DM Mono',size:9}}},y:{min:50,max:100,grid:{color:'#f0ede6'},ticks:{font:{family:'DM Mono',size:9},callback:v=>v+'%'}}}}
@@ -1923,21 +1980,44 @@ function renderUnitDash(unit){
   document.getElementById('kHP').textContent=pct(st.hadir,st.total);
   document.getElementById('kAP').textContent=pct(st.alpha,st.total);
   document.getElementById('kIP').textContent=pct(st.izin+st.sakit,st.total);
-  const labs=['Sen','Sel','Rab','Kam','Jum','Sab','Hari ini'];
+  // Build real 7-day labels
+  const now7u=new Date();
+  const labs=[];
+  const dayNm=['Min','Sen','Sel','Rab','Kam','Jum','Sab'];
+  for(let d=6;d>=0;d--){
+    const dt=new Date(now7u); dt.setDate(dt.getDate()-d);
+    labs.push(d===0?'Hari ini':dayNm[dt.getDay()]+' '+dt.getDate());
+  }
+  // Save today's data to history
+  const histKey='fk_hist_'+unit;
+  let hist=[];
+  try{ hist=JSON.parse(localStorage.getItem(histKey)||'[]'); }catch(e){}
+  // Update index 6 (today) with real data
+  while(hist.length<7) hist.push(null);
+  hist[6]=st.pct;
+  localStorage.setItem(histKey, JSON.stringify(hist));
+
   if(cTrend) cTrend.destroy();
   cTrend=new Chart(document.getElementById('cTrend').getContext('2d'),{
     type:'bar',data:{labels:labs,datasets:[
-      {label:'Hadir',data:labs.map((_,i)=>i===6?st.hadir:Math.floor(st.total*.8+Math.sin(i*1.7)*st.total*.1)),backgroundColor:'#dcfce7',borderColor:'#16a34a',borderWidth:2,borderRadius:5,stack:'a'},
-      {label:'Alpha',data:labs.map((_,i)=>i===6?st.alpha:Math.max(0,Math.floor(st.total*.12+Math.cos(i*2)*2))),backgroundColor:'#fee2e2',borderColor:'#dc2626',borderWidth:2,borderRadius:5,stack:'a'},
-      {label:'Izin',data:labs.map((_,i)=>i===6?st.izin+st.sakit:Math.max(0,Math.floor(st.total*.05+Math.sin(i)*1))),backgroundColor:'#fef9c3',borderColor:'#ca8a04',borderWidth:2,borderRadius:5,stack:'a'}
+      {label:'Hadir',data:labs.map((_,i)=>i===6?st.hadir:null),backgroundColor:'#dcfce7',borderColor:'#16a34a',borderWidth:2,borderRadius:5,stack:'a'},
+      {label:'Alpha',data:labs.map((_,i)=>i===6?st.alpha:null),backgroundColor:'#fee2e2',borderColor:'#dc2626',borderWidth:2,borderRadius:5,stack:'a'},
+      {label:'Izin',data:labs.map((_,i)=>i===6?st.izin+st.sakit:null),backgroundColor:'#fef9c3',borderColor:'#ca8a04',borderWidth:2,borderRadius:5,stack:'a'}
     ]},
     options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{font:{family:'Plus Jakarta Sans',size:10},boxWidth:10}}},
       scales:{x:{stacked:true,grid:{display:false},ticks:{font:{family:'DM Mono',size:9}}},y:{stacked:true,beginAtZero:true,max:st.total+2,grid:{color:'#f0ede6'},ticks:{font:{family:'DM Mono',size:9}}}}}
   });
   if(cDonut) cDonut.destroy();
   cDonut=new Chart(document.getElementById('cDonut').getContext('2d'),{
-    type:'doughnut',data:{labels:['Hadir','Alpha','Izin','Sakit'],
-      datasets:[{data:[st.hadir,st.alpha,st.izin,st.sakit],backgroundColor:['#16a34a','#dc2626','#1d4ed8','#ca8a04'],borderWidth:3,borderColor:'#fff',hoverOffset:5}]},
+    type:'doughnut',
+    data:{
+      labels:['Hadir','Alpha','Izin','Sakit'],
+      datasets:[{
+        data:[st.hadir, st.alpha, st.izin, st.sakit],
+        backgroundColor:['#16a34a','#dc2626','#1d4ed8','#ca8a04'],
+        borderWidth:3,borderColor:'#fff',hoverOffset:5
+      }]
+    },
     options:{responsive:true,maintainAspectRatio:false,cutout:'72%',plugins:{legend:{position:'bottom',labels:{font:{family:'Plus Jakarta Sans',size:10},padding:10,boxWidth:10}}}}
   });
   // Kelas progress
