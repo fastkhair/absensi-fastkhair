@@ -403,6 +403,33 @@ tr:hover td{background:#fafaf8}
       </div>
     </div>
     <button class="lbtn" onclick="doLogin()">Masuk →</button>
+<script>
+// Early doLogin stub - ensures button works before main script loads
+function doLogin(){
+  var u=document.getElementById('lUser').value.trim();
+  var p=document.getElementById('lPass').value.trim();
+  var unit=document.getElementById('lUnit').value;
+  var err=document.getElementById('lErr');
+  err.style.display='none';
+  var acc=ACCOUNTS[u];
+  if(!acc||acc.pass!==p){err.textContent='Username atau password salah.';err.style.display='block';return;}
+  if(acc.role==='koordinator'){session={...acc,username:u};activeUnit='all';startApp();return;}
+  if(!unit){err.textContent='Pilih unit terlebih dahulu.';err.style.display='block';return;}
+  if(acc.unit!==unit){err.textContent='Unit tidak sesuai akun ini.';err.style.display='block';return;}
+  session={...acc,username:u};activeUnit=acc.unit;startApp();
+}
+function onUserInput(){
+  var acc=ACCOUNTS[document.getElementById('lUser').value.trim()];
+  document.getElementById('unitWrap').style.display=(acc&&acc.role==='koordinator')?'none':'block';
+}
+function setL(u,p,unit,isKoord){
+  document.getElementById('lUser').value=u;
+  document.getElementById('lPass').value=p;
+  document.getElementById('lUnit').value=unit;
+  document.getElementById('unitWrap').style.display=isKoord?'none':'block';
+  document.getElementById('lErr').style.display='none';
+}
+</script>
     <div class="lerr" id="lErr">Username, password, atau unit tidak sesuai.</div>
     <div class="ldemo">
       <p>Akun Demo</p>
@@ -1610,6 +1637,7 @@ const ALL_STUDENTS = [
   {nis:'24.03.0749',nama:'YUSUF HAIKAL ATHALLAH RAFIF AZZAM',kelas:'9 IMAM QURTUBI',unit:'smp'},
   {nis:'23.03.0614',nama:'ZAHIRA APRILIA',kelas:'9 IMAM QURTUBI',unit:'smp'},
   {nis:'25.03.0828',nama:'MUHAMMAD AQLI ZAHIR KHAN',kelas:'9 IMAM QURTUBI',unit:'smp'},
+
   // SMA — 114 murid
   {nis:'25.04.0545',nama:'ADAM AL GHAISAN',kelas:'10 AHMAD DAHLAN',unit:'sma'},
   {nis:'25.04.0546',nama:'ADINATA FIRZAN FIRLANA',kelas:'10 AHMAD DAHLAN',unit:'sma'},
@@ -1654,29 +1682,29 @@ const ALL_STUDENTS = [
   {nis:'24.04.0534',nama:'SYAZA MAGHFIROH SAPUTRI',kelas:'11 IBNU BATTUTAH',unit:'sma'},
   {nis:'24.04.0545',nama:'YAFI FARRAS ADINATA',kelas:'11 IBNU BATTUTAH',unit:'sma'},
   {nis:'24.04.0546',nama:'MUHAMMAD FAHRY SYAMBULO',kelas:'11 IBNU BATTUTAH',unit:'sma'},
-  {nis:'24.04.0501',nama:'ABDILLAH KARIM AL KAYYIS',kelas:'11 SA\\'AD BIN ABI WAQQASH',unit:'sma'},
-  {nis:'24.04.0503',nama:'ANNISA RAMADHANI AZZAHRA',kelas:'11 SA\\'AD BIN ABI WAQQASH',unit:'sma'},
-  {nis:'24.04.0542',nama:'ASSYFA AMALIA THALITA',kelas:'11 SA\\'AD BIN ABI WAQQASH',unit:'sma'},
-  {nis:'24.04.0505',nama:'CRYSTAL AIMEE LAKEISHA',kelas:'11 SA\\'AD BIN ABI WAQQASH',unit:'sma'},
-  {nis:'24.04.0510',nama:'FATIMAH TASYA ADAMS',kelas:'11 SA\\'AD BIN ABI WAQQASH',unit:'sma'},
-  {nis:'24.04.0511',nama:'GHAYATA RIFQI ANANDA',kelas:'11 SA\\'AD BIN ABI WAQQASH',unit:'sma'},
-  {nis:'24.04.0512',nama:'ISTIQOMAH NOER AFNI AULIA',kelas:'11 SA\\'AD BIN ABI WAQQASH',unit:'sma'},
-  {nis:'24.04.0527',nama:'M. PRAMUDYA WARDHANA',kelas:'11 SA\\'AD BIN ABI WAQQASH',unit:'sma'},
-  {nis:'24.04.0514',nama:'M. RAFIIF NURHABIBIE',kelas:'11 SA\\'AD BIN ABI WAQQASH',unit:'sma'},
-  {nis:'24.04.0516',nama:'MIECCAIL SURYA',kelas:'11 SA\\'AD BIN ABI WAQQASH',unit:'sma'},
-  {nis:'24.04.0518',nama:'MUHAMMAD DEDEK CHASTIO',kelas:'11 SA\\'AD BIN ABI WAQQASH',unit:'sma'},
-  {nis:'24.04.0519',nama:'MUHAMMAD GATHAN ABHINAYA',kelas:'11 SA\\'AD BIN ABI WAQQASH',unit:'sma'},
-  {nis:'24.04.0521',nama:'MUHAMMAD IQBAL IRWANSYAH',kelas:'11 SA\\'AD BIN ABI WAQQASH',unit:'sma'},
-  {nis:'24.04.0523',nama:'MUHAMMAD RADITYA',kelas:'11 SA\\'AD BIN ABI WAQQASH',unit:'sma'},
-  {nis:'24.04.0543',nama:'NUMA FAKIH JAWHAR ABILARD',kelas:'11 SA\\'AD BIN ABI WAQQASH',unit:'sma'},
-  {nis:'24.04.0528',nama:'RADEN HAIDAR PRADIPTA SAMUDRA',kelas:'11 SA\\'AD BIN ABI WAQQASH',unit:'sma'},
-  {nis:'24.04.0529',nama:'RAFAN WIKAN TYASA',kelas:'11 SA\\'AD BIN ABI WAQQASH',unit:'sma'},
-  {nis:'24.04.0530',nama:'SALWA KAYANA EKSTRADA',kelas:'11 SA\\'AD BIN ABI WAQQASH',unit:'sma'},
-  {nis:'24.04.0535',nama:'TIRTA SOUFWAN',kelas:'11 SA\\'AD BIN ABI WAQQASH',unit:'sma'},
-  {nis:'24.04.0536',nama:'ZULFA AWALIA',kelas:'11 SA\\'AD BIN ABI WAQQASH',unit:'sma'},
-  {nis:'24.04.0544',nama:'ATHAYA GHAITSA TSURAYA',kelas:'11 SA\\'AD BIN ABI WAQQASH',unit:'sma'},
-  {nis:'24.04.0565',nama:'MUHAMMAD RAFI IHSAN IRAWAN',kelas:'11 SA\\'AD BIN ABI WAQQASH',unit:'sma'},
-  {nis:'24.04.0566',nama:'MUHAMMAD GAITSA AKMAL',kelas:'11 SA\\'AD BIN ABI WAQQASH',unit:'sma'},
+  {nis:'24.04.0501',nama:'ABDILLAH KARIM AL KAYYIS',kelas:'11 SAAD BIN ABI WAQQASH',unit:'sma'},
+  {nis:'24.04.0503',nama:'ANNISA RAMADHANI AZZAHRA',kelas:'11 SAAD BIN ABI WAQQASH',unit:'sma'},
+  {nis:'24.04.0542',nama:'ASSYFA AMALIA THALITA',kelas:'11 SAAD BIN ABI WAQQASH',unit:'sma'},
+  {nis:'24.04.0505',nama:'CRYSTAL AIMEE LAKEISHA',kelas:'11 SAAD BIN ABI WAQQASH',unit:'sma'},
+  {nis:'24.04.0510',nama:'FATIMAH TASYA ADAMS',kelas:'11 SAAD BIN ABI WAQQASH',unit:'sma'},
+  {nis:'24.04.0511',nama:'GHAYATA RIFQI ANANDA',kelas:'11 SAAD BIN ABI WAQQASH',unit:'sma'},
+  {nis:'24.04.0512',nama:'ISTIQOMAH NOER AFNI AULIA',kelas:'11 SAAD BIN ABI WAQQASH',unit:'sma'},
+  {nis:'24.04.0527',nama:'M. PRAMUDYA WARDHANA',kelas:'11 SAAD BIN ABI WAQQASH',unit:'sma'},
+  {nis:'24.04.0514',nama:'M. RAFIIF NURHABIBIE',kelas:'11 SAAD BIN ABI WAQQASH',unit:'sma'},
+  {nis:'24.04.0516',nama:'MIECCAIL SURYA',kelas:'11 SAAD BIN ABI WAQQASH',unit:'sma'},
+  {nis:'24.04.0518',nama:'MUHAMMAD DEDEK CHASTIO',kelas:'11 SAAD BIN ABI WAQQASH',unit:'sma'},
+  {nis:'24.04.0519',nama:'MUHAMMAD GATHAN ABHINAYA',kelas:'11 SAAD BIN ABI WAQQASH',unit:'sma'},
+  {nis:'24.04.0521',nama:'MUHAMMAD IQBAL IRWANSYAH',kelas:'11 SAAD BIN ABI WAQQASH',unit:'sma'},
+  {nis:'24.04.0523',nama:'MUHAMMAD RADITYA',kelas:'11 SAAD BIN ABI WAQQASH',unit:'sma'},
+  {nis:'24.04.0543',nama:'NUMA FAKIH JAWHAR ABILARD',kelas:'11 SAAD BIN ABI WAQQASH',unit:'sma'},
+  {nis:'24.04.0528',nama:'RADEN HAIDAR PRADIPTA SAMUDRA',kelas:'11 SAAD BIN ABI WAQQASH',unit:'sma'},
+  {nis:'24.04.0529',nama:'RAFAN WIKAN TYASA',kelas:'11 SAAD BIN ABI WAQQASH',unit:'sma'},
+  {nis:'24.04.0530',nama:'SALWA KAYANA EKSTRADA',kelas:'11 SAAD BIN ABI WAQQASH',unit:'sma'},
+  {nis:'24.04.0535',nama:'TIRTA SOUFWAN',kelas:'11 SAAD BIN ABI WAQQASH',unit:'sma'},
+  {nis:'24.04.0536',nama:'ZULFA AWALIA',kelas:'11 SAAD BIN ABI WAQQASH',unit:'sma'},
+  {nis:'24.04.0544',nama:'ATHAYA GHAITSA TSURAYA',kelas:'11 SAAD BIN ABI WAQQASH',unit:'sma'},
+  {nis:'24.04.0565',nama:'MUHAMMAD RAFI IHSAN IRAWAN',kelas:'11 SAAD BIN ABI WAQQASH',unit:'sma'},
+  {nis:'24.04.0566',nama:'MUHAMMAD GAITSA AKMAL',kelas:'11 SAAD BIN ABI WAQQASH',unit:'sma'},
   {nis:'23.04.0401',nama:'ADE FAHMI ANWAR',kelas:'12 AL AQSA',unit:'sma'},
   {nis:'23.04.0402',nama:'ADELIA DWI SAPUTRI',kelas:'12 AL AQSA',unit:'sma'},
   {nis:'23.04.0407',nama:'ANANDA RAYHAN KHADAFI',kelas:'12 AL AQSA',unit:'sma'},
@@ -1687,8 +1715,8 @@ const ALL_STUDENTS = [
   {nis:'23.04.0416',nama:'KAEYLA',kelas:'12 AL AQSA',unit:'sma'},
   {nis:'23.04.0417',nama:'KEISHA NAFILA MARITZA',kelas:'12 AL AQSA',unit:'sma'},
   {nis:'23.04.0422',nama:'MUHAMMAD ATHALLAH NOOR IMAN',kelas:'12 AL AQSA',unit:'sma'},
-  {nis:'23.04.0423',nama:'MUHAMMAD EMIR ZAIDAN',kelas:'12 AL AQSA',unit:'sma'},
   {nis:'24.04.0537',nama:'MUHAMMAD FACHRY AZHAR',kelas:'12 AL AQSA',unit:'sma'},
+  {nis:'23.04.0423',nama:'MUHAMMAD EMIR ZAIDAN',kelas:'12 AL AQSA',unit:'sma'},
   {nis:'23.04.0427',nama:'MUHAMMAD NAUFAL ALIFI SIHFA',kelas:'12 AL AQSA',unit:'sma'},
   {nis:'23.04.0420',nama:'MUHAMMAD RAFA AINDREA NAJWAN',kelas:'12 AL AQSA',unit:'sma'},
   {nis:'23.04.0442',nama:'MUHAMMAD RIZQY RAMADHAN',kelas:'12 AL AQSA',unit:'sma'},
