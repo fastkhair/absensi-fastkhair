@@ -388,7 +388,7 @@ tr:hover td{background:#fafaf8}
     </div>
     <div class="lrow">
       <label class="llbl">Password</label>
-      <input type="password" class="linp" id="lPass" placeholder="Password" onkeydown="if(event.key==='Enter')doLogin()">
+      <input type="password" class="linp" id="lPass" placeholder="Password" id="lPassInput">
     </div>
     <div id="unitWrap">
       <div class="lrow">
@@ -402,34 +402,7 @@ tr:hover td{background:#fafaf8}
         </select>
       </div>
     </div>
-    <button class="lbtn" onclick="doLogin()">Masuk →</button>
-<script>
-// Early doLogin stub - ensures button works before main script loads
-function doLogin(){
-  var u=document.getElementById('lUser').value.trim();
-  var p=document.getElementById('lPass').value.trim();
-  var unit=document.getElementById('lUnit').value;
-  var err=document.getElementById('lErr');
-  err.style.display='none';
-  var acc=ACCOUNTS[u];
-  if(!acc||acc.pass!==p){err.textContent='Username atau password salah.';err.style.display='block';return;}
-  if(acc.role==='koordinator'){session={...acc,username:u};activeUnit='all';startApp();return;}
-  if(!unit){err.textContent='Pilih unit terlebih dahulu.';err.style.display='block';return;}
-  if(acc.unit!==unit){err.textContent='Unit tidak sesuai akun ini.';err.style.display='block';return;}
-  session={...acc,username:u};activeUnit=acc.unit;startApp();
-}
-function onUserInput(){
-  var acc=ACCOUNTS[document.getElementById('lUser').value.trim()];
-  document.getElementById('unitWrap').style.display=(acc&&acc.role==='koordinator')?'none':'block';
-}
-function setL(u,p,unit,isKoord){
-  document.getElementById('lUser').value=u;
-  document.getElementById('lPass').value=p;
-  document.getElementById('lUnit').value=unit;
-  document.getElementById('unitWrap').style.display=isKoord?'none':'block';
-  document.getElementById('lErr').style.display='none';
-}
-</script>
+    <button class="lbtn" id="loginBtn">Masuk →</button>
     <div class="lerr" id="lErr">Username, password, atau unit tidak sesuai.</div>
     <div class="ldemo">
       <p>Akun Demo</p>
@@ -2721,6 +2694,21 @@ function exportExcel(){
 // ════════════════════════════════════════
 // CLOCK & TOAST
 // ════════════════════════════════════════
+// Attach login button events after ACCOUNTS is defined
+document.addEventListener('DOMContentLoaded', function(){
+  var btn = document.getElementById('loginBtn');
+  if(btn) btn.addEventListener('click', doLogin);
+  var pw = document.getElementById('lPassInput');
+  if(pw) pw.addEventListener('keydown', function(e){ if(e.key==='Enter') doLogin(); });
+});
+// Also attach immediately in case DOMContentLoaded already fired
+(function(){
+  var btn = document.getElementById('loginBtn');
+  if(btn) btn.addEventListener('click', doLogin);
+  var pw = document.getElementById('lPassInput');
+  if(pw) pw.addEventListener('keydown', function(e){ if(e.key==='Enter') doLogin(); });
+})();
+
 function tickClock(){
   const now=new Date();
   const s=now.toLocaleTimeString('id-ID')+' · '+now.toLocaleDateString('id-ID',{weekday:'short',day:'2-digit',month:'short'});
