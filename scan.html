@@ -354,7 +354,7 @@ body {
     <label class="login-lbl">Username</label>
     <input type="text" class="login-inp" id="lUser" placeholder="Username" oninput="onUserInput()">
     <label class="login-lbl">Password</label>
-    <input type="password" class="login-inp" id="lPass" placeholder="Password" id="lPassInput">
+    <input type="password" class="login-inp" id="lPass" style="display:none" placeholder="Password" id="lPassInput">
     <div id="unitWrap">
       <label class="login-lbl">Unit Sekolah</label>
       <select class="login-inp" id="lUnit">
@@ -1604,15 +1604,15 @@ const UNITS = {
 };
 
 const ACCOUNTS = {
-  'koordinator': {pass:'admin123',role:'koordinator',unit:null, name:'Koordinator'},
-  'kepsek.pgtk': {pass:'pgtk123', role:'kepsek',    unit:'pgtk',name:'Kepsek PG-TK'},
-  'kepsek.sd':   {pass:'sd123',   role:'kepsek',    unit:'sd',  name:'Kepsek SD'},
-  'kepsek.smp':  {pass:'smp123',  role:'kepsek',    unit:'smp', name:'Kepsek SMP'},
-  'kepsek.sma':  {pass:'sma123',  role:'kepsek',    unit:'sma', name:'Kepsek SMA'},
-  'guru.pgtk':   {pass:'pgtk123', role:'guru',      unit:'pgtk',name:'Guru PG-TK'},
-  'guru.sd':     {pass:'sd123',   role:'guru',      unit:'sd',  name:'Guru SD'},
-  'guru.smp':    {pass:'smp123',  role:'guru',      unit:'smp', name:'Guru SMP'},
-  'guru.sma':    {pass:'sma123',  role:'guru',      unit:'sma', name:'Guru SMA'},
+  'koordinator': {pass:'',role:'koordinator',unit:null, name:'Koordinator Inklusi',avatar:'👑'},
+  'kepsek.pgtk': {pass:'',role:'kepsek',    unit:'pgtk',name:'Kepsek PG-TK',      avatar:'🏫'},
+  'kepsek.sd':   {pass:'',role:'kepsek',    unit:'sd',  name:'Kepsek SD',          avatar:'🏫'},
+  'kepsek.smp':  {pass:'',role:'kepsek',    unit:'smp', name:'Kepsek SMP',         avatar:'🏫'},
+  'kepsek.sma':  {pass:'',role:'kepsek',    unit:'sma', name:'Kepsek SMA',         avatar:'🏫'},
+  'guru.pgtk':   {pass:'',role:'guru',      unit:'pgtk',name:'Guru PG-TK',         avatar:'👩‍🏫'},
+  'guru.sd':     {pass:'',role:'guru',      unit:'sd',  name:'Guru SD',            avatar:'👩‍🏫'},
+  'guru.smp':    {pass:'',role:'guru',      unit:'smp', name:'Guru SMP',           avatar:'👩‍🏫'},
+  'guru.sma':    {pass:'',role:'guru',      unit:'sma', name:'Guru SMA',           avatar:'👩‍🏫'},
 };
 
 const today = new Date().toDateString();
@@ -1739,7 +1739,7 @@ function doLogin(){
   const err=document.getElementById('lErr');
   const acc=ACCOUNTS[u];
   err.style.display='none';
-  if(!acc||acc.pass!==p){err.textContent='Username atau password salah.';err.style.display='block';return;}
+  if(!acc){err.textContent='Username tidak ditemukan.';err.style.display='block';return;}
   if(acc.role==='koordinator'){session={...acc,username:u};activeUnit='all';startApp();return;}
   if(!unit){err.textContent='Pilih unit terlebih dahulu.';err.style.display='block';return;}
   if(acc.unit!==unit){err.textContent='Unit tidak sesuai.';err.style.display='block';return;}
