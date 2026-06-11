@@ -34,8 +34,20 @@ body{background:var(--bg);font-family:'Plus Jakarta Sans',sans-serif;color:var(-
 ═══════════════════════════════════════ */
 #loginScreen{
   position:fixed;inset:0;z-index:999;
-  background:linear-gradient(135deg,#0f4c81,#1e3a5f,#0c2340);
+  background:#0a1420;
   display:flex;align-items:center;justify-content:center;padding:20px;
+  overflow:hidden;
+}
+#loginScreen::before{
+  content:'';position:absolute;left:0;right:0;bottom:0;height:38%;
+  background:linear-gradient(100deg,#0a3d6e 0%,#0f4c81 35%,#157a47 75%,#16a34a 100%);
+  clip-path:polygon(0 22%, 48% 22%, 50% 12%, 52% 22%, 100% 22%, 100% 100%, 0 100%);
+  z-index:0;
+}
+#loginScreen::after{
+  content:'';position:absolute;left:0;right:0;bottom:0;height:38%;
+  background:radial-gradient(ellipse at 50% 100%,rgba(255,255,255,.06) 0%,transparent 60%);
+  z-index:0;
 }
 #loginScreen::before{content:'';position:absolute;inset:0;
   background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),
@@ -56,7 +68,7 @@ body{background:var(--bg);font-family:'Plus Jakarta Sans',sans-serif;color:var(-
   color:var(--text);outline:none;transition:border-color .2s}
 .linp:focus{border-color:#0f4c81;box-shadow:0 0 0 3px rgba(15,76,129,.1)}
 #unitWrap{margin-bottom:12px}
-.lbtn{width:100%;background:linear-gradient(135deg,#0f4c81,#1d4ed8);color:#fff;border:none;
+.lbtn{width:100%;background:linear-gradient(100deg,#0f4c81 0%,#157a47 70%,#16a34a 100%);color:#fff;border:none;
   border-radius:9px;padding:12px;font-family:'Plus Jakarta Sans',sans-serif;
   font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;margin-top:4px}
 .lbtn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(15,76,129,.35)}
@@ -76,9 +88,17 @@ body{background:var(--bg);font-family:'Plus Jakarta Sans',sans-serif;color:var(-
 
 /* HEADER */
 .app-header{
-  background:var(--uc);padding:10px 18px;
+  background:linear-gradient(100deg,#0a3d6e 0%,#0f4c81 40%,#157a47 80%,#16a34a 100%);
+  padding:10px 18px;
   display:flex;align-items:center;gap:12px;
   flex-shrink:0;transition:background .35s;
+  position:relative;overflow:hidden;
+}
+.app-header::after{
+  content:'';position:absolute;right:-20px;bottom:-30px;
+  width:140px;height:140px;
+  background:radial-gradient(circle,rgba(255,255,255,.08) 0%,transparent 70%);
+  pointer-events:none;
 }
 .ah-logo{height:28px;object-fit:contain;filter:brightness(0) invert(1);opacity:.88}
 .ah-title{font-size:14px;font-weight:800;color:#fff;flex:1}
@@ -97,7 +117,7 @@ body{background:var(--bg);font-family:'Plus Jakarta Sans',sans-serif;color:var(-
 .sidebar{
   width:220px;flex-shrink:0;background:#fff;
   border-right:1px solid var(--border);
-  display:flex;flex-direction:column;
+  display:flex;flex-direction:column;position:relative;
   transition:background .35s;
 }
 .sb-unit-switcher{padding:10px 12px;border-bottom:1px solid var(--border);flex-shrink:0;display:none}
@@ -117,7 +137,7 @@ body{background:var(--bg);font-family:'Plus Jakarta Sans',sans-serif;color:var(-
   font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:600;
   cursor:pointer;transition:all .15s;text-align:left;border-left:2px solid transparent}
 .nitem:hover{background:var(--bg);color:var(--text)}
-.nitem.active{background:var(--ul);color:var(--uc);border-left-color:var(--uc)}
+.nitem.active{background:linear-gradient(100deg,#0f4c81,#157a47);color:#fff;border-left-color:#16a34a}
 .nico{font-size:14px;width:18px;text-align:center;flex-shrink:0}
 .sb-clock{margin-top:auto;padding:12px 14px;border-top:1px solid var(--border);
   font-family:'DM Mono',monospace;font-size:10px;color:var(--muted)}
@@ -164,6 +184,7 @@ select.inp option{background:#fff}
 .kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
 @media(max-width:900px){.kpi-row{grid-template-columns:repeat(2,1fr)}}
 .kpi{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#0f4c81,#157a47,#16a34a)}
 .kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
 .kpi.kt::before{background:var(--uc)}.kpi.kh::before{background:var(--green)}
 .kpi.ka::before{background:var(--red)}.kpi.ki::before{background:var(--yellow)}
@@ -2013,7 +2034,9 @@ function setTheme(unit){
   const u=UNITS[unit]||UNITS.all;
   document.documentElement.style.setProperty('--uc',u.color);
   document.documentElement.style.setProperty('--ul',u.light);
-  document.getElementById('appHeader').style.background=u.color;
+  // Header keeps brand blue-green gradient; unit color tints the accent
+  document.getElementById('appHeader').style.background=
+    'linear-gradient(100deg,#0a3d6e 0%,#0f4c81 40%,#157a47 80%,#16a34a 100%)';
   document.getElementById('ahSub').textContent=u.label;
 }
 function switchUnit(unit,btn){
